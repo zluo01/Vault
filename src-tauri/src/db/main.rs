@@ -17,7 +17,7 @@ use tauri::{Manager, Runtime};
 pub fn initialize<R: Runtime>(app: &tauri::AppHandle<R>) -> Result<(), String> {
     tauri::async_runtime::block_on(async move {
         let app_dir = app.path().app_data_dir().unwrap();
-        debug!("App Directory: {:?}", &app_dir);
+        debug!("App Directory: {:?}", app_dir);
 
         let create_dir_result = fs::create_dir_all(&app_dir);
         if let Err(e) = create_dir_result {
@@ -27,16 +27,16 @@ pub fn initialize<R: Runtime>(app: &tauri::AppHandle<R>) -> Result<(), String> {
         }
 
         let db_url = get_database_path(app);
-        debug!("Database URL: {:?}", &db_url);
+        debug!("Database URL: {:?}", db_url);
         if !Sqlite::database_exists(&db_url).await.unwrap_or(false) {
             if let Err(e) = Sqlite::create_database(&db_url).await {
-                let err_msg = format!("Fail to create db at {:?}. Error: {:?}", &db_url, e);
+                let err_msg = format!("Fail to create db at {:?}. Error: {:?}", db_url, e);
                 error!("{:?}", err_msg);
                 return Err(err_msg);
             }
             let pool = SqlitePool::connect(&db_url)
                 .await
-                .map_err(|e| format!("Fail to connect to db at {:?}. Error: {:?}", &db_url, e))?;
+                .map_err(|e| format!("Fail to connect to db at {:?}. Error: {:?}", db_url, e))?;
             if let Err(e) = create_tables(&pool).await {
                 let err_msg = format!("Fail to create tables. Error: {:?}", e);
                 error!("{:?}", err_msg);

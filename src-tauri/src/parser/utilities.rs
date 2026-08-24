@@ -55,7 +55,7 @@ pub fn convert_image(src_path: &str, dst_path: &str) -> Result<(), String> {
     if let Err(e) = fs::rename(&dst_conversion_path, dst_path) {
         return Err(format!(
             "Fail to rename file from {:?} to {:?}. Raising error {}",
-            &dst_conversion_path, dst_path, e
+            dst_conversion_path, dst_path, e
         ));
     }
 

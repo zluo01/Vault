@@ -86,7 +86,7 @@ fn read_dir<R: tauri::Runtime>(
             let relative_path = utilities::get_relative_path(path.as_path(), root_path);
             let extension = path.extension();
             if extension.is_none() {
-                error!("File does not have proper extension. {:?}", &path);
+                error!("File does not have proper extension. {:?}", path);
                 continue;
             }
             let Some(ext) = extension.unwrap().to_str() else {
@@ -248,7 +248,7 @@ fn handle_images(app_dir: &Path, name: &str, path: &str, posters: &HashSet<PathB
     if let Err(e) = fs::create_dir_all(&cover_folder_path) {
         error!(
             "Fail to create cover directory {}. Raising error {}",
-            &cover_folder_path.to_string_lossy(),
+            cover_folder_path.to_string_lossy(),
             e
         );
         return;
