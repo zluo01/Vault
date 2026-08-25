@@ -49,6 +49,8 @@
         <app.type>APP_IMAGE</app.type>
         <!-- Linux/default icon; the mac/windows natives-* profiles override with .icns/.ico. -->
         <app.icon>${project.basedir}/assets/icons/vault.png</app.icon>
+        <!-- Temporary workaround on macOS version restriction until reach version 1.0. -->
+        <app.version>${project.version}</app.version>
     </properties>
 
     <build>
@@ -254,6 +256,7 @@
             <properties>
                 <sqlite.native.keep>Mac/aarch64</sqlite.native.keep>
                 <app.icon>${project.basedir}/assets/icons/vault.icns</app.icon>
+                <app.version>1.0</app.version>
             </properties>
         </profile>
         <profile>
@@ -264,6 +267,7 @@
             <properties>
                 <sqlite.native.keep>Mac/x86_64</sqlite.native.keep>
                 <app.icon>${project.basedir}/assets/icons/vault.icns</app.icon>
+                <app.version>1.0</app.version>
             </properties>
         </profile>
         <profile>
@@ -394,7 +398,7 @@
                         </executions>
                         <configuration>
                             <name>Vault</name>
-                            <appVersion>${project.version}</appVersion>
+                            <appVersion>${app.version}</appVersion>
                             <input>${project.build.directory}/mods</input>
                             <mainJar>${project.build.finalName}.jar</mainJar>
                             <mainClass>${main.class}</mainClass>
