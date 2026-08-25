@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--created on 2022-05-09 12:20:23 - tinyMediaManager 4.2.8-->
+<tvshow>
+  <title>Peaky Blinders</title>
+  <originaltitle>Peaky Blinders</originaltitle>
+  <showtitle>Peaky Blinders</showtitle>
+  <sorttitle/>
+  <year>2013</year>
+  <rating>8.8</rating>
+  <userrating>0.0</userrating>
+  <votes>0</votes>
+  <outline/>
+  <plot>A gangster family epic set in 1919 Birmingham, England and centered on a gang who sew razor blades in the peaks of their caps, and their fierce boss Tommy Shelby, who means to move up in the world.</plot>
+  <tagline/>
+  <runtime>60</runtime>
+  <thumb aspect="poster">https://image.tmdb.org/t/p/original/6PX0r5TRRU5y0jZ70y1OtbLYmoD.jpg</thumb>
+  <thumb aspect="banner">https://assets.fanart.tv/fanart/tv/270915/tvbanner/peaky-blinders-52790b363b98d.jpg</thumb>
+  <thumb aspect="clearart">https://assets.fanart.tv/fanart/tv/270915/hdclearart/peaky-blinders-527902e3a6db8.png</thumb>
+  <thumb aspect="clearlogo">https://assets.fanart.tv/fanart/tv/270915/hdtvlogo/peaky-blinders-523f348a82bb0.png</thumb>
+  <thumb aspect="landscape">https://assets.fanart.tv/fanart/tv/270915/tvthumb/peaky-blinders-5277bdad6f903.jpg</thumb>
+  <thumb aspect="keyart">https://assets.fanart.tv/fanart/tv/270915/tvposter/peaky-blinders-585c44c081441.jpg</thumb>
+  <thumb aspect="logo">https://assets.fanart.tv/fanart/tv/270915/hdtvlogo/peaky-blinders-523f348a82bb0.png</thumb>
+  <thumb aspect="characterart">https://assets.fanart.tv/fanart/tv/270915/characterart/peaky-blinders-580fa9bca7063.png</thumb>
+  <namedseason number="0">Specials</namedseason>
+  <thumb aspect="poster" season="0" type="season">https://image.tmdb.org/t/p/original/o5VrKdfN5Xg2pRnQVSqBCi4iNG9.jpg</thumb>
+  <thumb aspect="poster" season="1" type="season">https://image.tmdb.org/t/p/original/vPlsKun2WZEsqe3yZTmebxtwElW.jpg</thumb>
+  <thumb aspect="poster" season="2" type="season">https://image.tmdb.org/t/p/original/zePPYlrmiSzJchtfqL5XpSJfeUf.jpg</thumb>
+  <thumb aspect="poster" season="3" type="season">https://image.tmdb.org/t/p/original/js9mpNeYFuU88RBjXYyy0yczUd0.jpg</thumb>
+  <thumb aspect="poster" season="4" type="season">https://image.tmdb.org/t/p/original/iAI8YEAZJc2FEj9caLCPK1XCZxL.jpg</thumb>
+  <thumb aspect="poster" season="5" type="season">https://image.tmdb.org/t/p/original/kFy0iBDmyC5A5YTsYuNai1Ko0Ja.jpg</thumb>
+  <thumb aspect="poster" season="6" type="season">https://image.tmdb.org/t/p/w500/vUUqzWa2LnHIVqkaKVlVGkVcZIW.jpg</thumb>
+  <thumb aspect="banner" season="1" type="season">https://assets.fanart.tv/fanart/tv/270915/seasonbanner/peaky-blinders-58861e2103414.jpg</thumb>
+  <thumb aspect="banner" season="2" type="season">https://assets.fanart.tv/fanart/tv/270915/seasonbanner/peaky-blinders-58861e2a946b9.jpg</thumb>
+  <thumb aspect="banner" season="3" type="season">https://assets.fanart.tv/fanart/tv/270915/seasonbanner/peaky-blinders-58861e35e95da.jpg</thumb>
+  <fanart>
+    <thumb>https://image.tmdb.org/t/p/original/wiE9doxiLwq3WCGamDIOb2PqBqc.jpg</thumb>
+  </fanart>
+  <mpaa>US:TV-MA</mpaa>
+  <certification>US:TV-MA</certification>
+  <episodeguide>
+    <url cache="auth.json" post="yes">https://api.thetvdb.com/login?{"apikey":"439DFEBA9D3059C6","id":270915}|Content-Type=application/json</url>
+  </episodeguide>
+  <id>270915</id>
+  <imdbid>tt2442560</imdbid>
+  <tmdbid>60574</tmdbid>
+  <uniqueid default="false" type="tmdb">60574</uniqueid>
+  <uniqueid default="false" type="tvrage">37240</uniqueid>
+  <uniqueid default="false" type="imdb">tt2442560</uniqueid>
+  <uniqueid default="false" type="zap2it">SH01804499</uniqueid>
+  <uniqueid default="true" type="tvdb">270915</uniqueid>
+  <premiered>2013-09-12</premiered>
+  <status>Ended</status>
+  <watched>false</watched>
+  <playcount/>
+  <genre>Drama</genre>
+  <genre>Crime</genre>
+  <studio>BBC One</studio>
+  <studio>BBC Two</studio>
+  <studio>Tiger Aspect Productions</studio>
+  <studio>BBC Studios</studio>
+  <studio>Caryn Mandabach Productions</studio>
+  <studio>Screen Yorkshire</studio>
+  <country>United Kingdom</country>
+  <tag>london, england</tag>
+  <tag>england</tag>
+  <tag>gypsy</tag>
+  <tag>world war i</tag>
+  <tag>gangster</tag>
+  <tag>outlaw</tag>
+  <tag>drugs</tag>
+  <tag>ireland</tag>
+  <tag>criminal</tag>
+  <tag>period drama</tag>
+  <tag>illegal gambling</tag>
+  <tag>historical drama</tag>
+  <tag>1910s</tag>
+  <tag>birmingham</tag>
+  <actor>
+    <name>Cillian Murphy</name>
+    <role>Tommy Shelby</role>
+    <thumb>https://image.tmdb.org/t/p/h632/i8dOTC0w6V274ev5iAAvo4Ahhpr.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/2037</profile>
+    <tmdbid>2037</tmdbid>
+  </actor>
+  <actor>
+    <name>Paul Anderson</name>
+    <role>Arthur Shelby</role>
+    <thumb>https://image.tmdb.org/t/p/h632/nds5rTBZvJ4rEsP4N6OaoEgQDkW.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/220448</profile>
+    <tmdbid>220448</tmdbid>
+  </actor>
+  <actor>
+    <name>Sophie Rundle</name>
+    <role>Ada Shelby</role>
+    <thumb>https://image.tmdb.org/t/p/h632/9HxJ6pG1Q0BBbIV1UXk5iU9zDM9.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/1088620</profile>
+    <tmdbid>1088620</tmdbid>
+  </actor>
+  <trailer>plugin://plugin.video.youtube/?action=play_video&amp;videoid=EM12mcTEI88&amp;hd=1</trailer>
+  <dateadded>2021-03-12 16:40:28</dateadded>
+  <!--tinyMediaManager meta data-->
+  <user_note/>
+</tvshow>

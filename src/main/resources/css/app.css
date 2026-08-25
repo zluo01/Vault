@@ -1,0 +1,860 @@
+/* ============================================================
+   Vault — JavaFX stylesheet (futuristic / minimal, monochrome)
+   Falls back to a system sans-serif if "Sora" is not loaded.
+   ============================================================ */
+
+.root {
+    /* palette tokens (looked-up colors): the single source of truth, mirrored
+       by ui.Theme for the few paints that must be set from code */
+    -vault-bg: #060607;
+    -vault-surface: #0c0d0f;
+    -vault-text: #f2f2f0;
+    -vault-bright: #f7f7f5;
+    -vault-mid: #cfd0d2;
+    -vault-dim: #9a9da3;
+    -vault-dim2: #6f7176;
+    -vault-dim3: #5e6166;
+    -vault-faint: #46484e;
+    -vault-soft: #a9abb0;
+    -vault-muted: #7a7d84;
+    -vault-line: rgba(255, 255, 255, 0.14);
+    -vault-divider: rgba(255, 255, 255, 0.07);
+    -vault-accent: -vault-text;
+
+    -fx-background-color: -vault-bg;
+    -fx-font-family: "Sora", "Segoe UI", "Helvetica Neue", sans-serif;
+}
+
+/* ---------- Title bar ---------- */
+.title-bar {
+    -fx-background-color: -vault-bg;
+    -fx-border-color: transparent transparent -vault-divider transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.wordmark {
+    -fx-text-fill: -vault-bright;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.burger-line {
+    -fx-background-color: -vault-dim;
+}
+
+/* the accent "." that punctuates the wordmark and page titles */
+.accent-dot-wordmark {
+    -fx-text-fill: -vault-accent;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.accent-dot-h1 {
+    -fx-text-fill: -vault-accent;
+    -fx-font-size: 50px;
+    -fx-font-weight: bold;
+}
+
+.accent-dot-series {
+    -fx-text-fill: -vault-accent;
+    -fx-font-size: 44px;
+    -fx-font-weight: bold;
+}
+
+.title-btn {
+    -fx-cursor: hand;
+}
+
+.win-btn, .win-btn-close {
+    -fx-cursor: hand;
+    -fx-background-color: transparent;
+}
+
+.win-btn:hover {
+    -fx-background-color: -vault-divider;
+}
+
+.win-btn-close:hover {
+    -fx-background-color: rgba(255, 90, 90, 0.18);
+}
+
+/* ---------- Sidebar ---------- */
+.sidebar {
+    -fx-background-color: -vault-bg;
+    -fx-border-color: transparent -vault-divider transparent transparent;
+    -fx-border-width: 0 1 0 0;
+}
+
+.side-head {
+    -fx-text-fill: -vault-dim2;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+.side-count {
+    -fx-text-fill: -vault-faint;
+    -fx-font-size: 10px;
+}
+
+/* inactive rows are dimmed and brighten on hover; opacity lives here only —
+   a programmatic setOpacity would silently override every one of these rules */
+.side-item {
+    -fx-cursor: hand;
+    -fx-opacity: 0.62;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent rgba(255, 255, 255, 0.045) transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.side-item:hover {
+    -fx-opacity: 1;
+}
+
+.side-item:active {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-opacity: 1;
+}
+
+.side-id {
+    -fx-text-fill: -vault-dim3;
+    -fx-font-size: 10px;
+}
+
+.side-item:active .side-id {
+    -fx-text-fill: -vault-accent;
+}
+
+.side-name {
+    -fx-text-fill: -vault-mid;
+    -fx-font-size: 15px;
+    -fx-font-weight: 500;
+}
+
+.side-item:active .side-name {
+    -fx-text-fill: -vault-bright;
+}
+
+.side-meta {
+    -fx-text-fill: -vault-dim3;
+    -fx-font-size: 9.5px;
+}
+
+.side-accent-bar {
+    -fx-background-color: -vault-accent;
+}
+
+.import-btn {
+    -fx-cursor: hand;
+    -fx-border-color: -vault-line;
+    -fx-border-width: 1;
+}
+
+.import-btn:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.04);
+}
+
+.import-label {
+    -fx-text-fill: -vault-mid;
+    -fx-font-size: 11px;
+    -fx-font-weight: 500;
+}
+
+.import-square {
+    -fx-background-color: -vault-text;
+}
+
+.settings-row {
+    -fx-cursor: hand;
+}
+
+.settings-row:hover .settings-label {
+    -fx-text-fill: -vault-text;
+}
+
+.settings-label {
+    -fx-text-fill: -vault-dim;
+    -fx-font-size: 12px;
+    -fx-font-weight: 500;
+}
+
+/* ---------- Main / header ---------- */
+.main {
+    -fx-background-color: -vault-bg;
+}
+
+.kicker {
+    -fx-text-fill: -vault-dim2;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.kicker-sub {
+    -fx-text-fill: -vault-dim2;
+    -fx-font-size: 10px;
+    -fx-font-weight: 500;
+}
+
+.h1 {
+    -fx-text-fill: -vault-bright;
+    -fx-font-size: 50px;
+    -fx-font-weight: bold;
+}
+
+.kicker-tick {
+    -fx-background-color: rgba(255, 255, 255, 0.35);
+}
+
+.header-divider {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* search (underline style) */
+.search {
+    -fx-border-color: transparent transparent -vault-line transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.search-field {
+    -fx-background-color: transparent;
+    -fx-text-fill: -vault-text;
+    -fx-prompt-text-fill: -vault-dim2;
+    -fx-font-size: 13px;
+    -fx-padding: 4 0 4 0;
+    -fx-background-insets: 0;
+}
+
+.search-field:focused {
+    -fx-background-color: transparent;
+}
+
+.filter-label {
+    -fx-text-fill: -vault-dim3;
+    -fx-font-size: 9px;
+    -fx-font-weight: 500;
+}
+
+.result-count {
+    -fx-text-fill: -vault-dim3;
+    -fx-font-size: 10px;
+    -fx-font-weight: 500;
+}
+
+/* facet + sort dropdowns */
+.facet {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-border-color: -vault-line;
+    -fx-border-width: 1;
+    -fx-background-radius: 0;
+    -fx-text-fill: -vault-dim;
+    -fx-font-size: 12px;
+    -fx-font-weight: 500;
+    /* padding and the fixed 36px height are set in code on the trigger buttons */
+    -fx-cursor: hand;
+}
+
+.facet:hover {
+    -fx-border-color: rgba(255, 255, 255, 0.30);
+}
+
+.facet > .label {
+    -fx-text-fill: -vault-mid;
+}
+
+.facet .arrow {
+    -fx-background-color: -vault-dim2;
+}
+
+.context-menu {
+    -fx-background-color: -vault-surface;
+    -fx-border-color: -vault-line;
+    -fx-border-width: 1;
+    -fx-background-radius: 0;
+    -fx-padding: 6;
+}
+
+.menu-item {
+    -fx-background-color: transparent;
+    -fx-padding: 8 12 8 12;
+}
+
+.menu-item .label {
+    -fx-text-fill: -vault-soft;
+    -fx-font-size: 12px;
+}
+
+.menu-item:focused {
+    -fx-background-color: -vault-divider;
+}
+
+.menu-item:focused .label {
+    -fx-text-fill: -vault-bright;
+}
+
+.check-menu-item:checked .label, .radio-menu-item:selected .label {
+    -fx-text-fill: -vault-bright;
+}
+
+/* sort dropdown (ContextMenu of CustomMenuItems): the rows carry their own
+   padding, so the .menu-item container contributes none */
+.sort-pop .menu-item {
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+
+/* active filter chips */
+.chip {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-border-color: rgba(255, 255, 255, 0.10);
+    -fx-border-width: 1;
+    -fx-cursor: hand;
+}
+
+.chip:hover {
+    -fx-border-color: rgba(255, 255, 255, 0.28);
+}
+
+.chip-facet {
+    -fx-text-fill: -vault-dim2;
+    -fx-font-size: 9px;
+}
+
+.chip-val {
+    -fx-text-fill: -vault-mid;
+    -fx-font-size: 11px;
+}
+
+.clear-all {
+    -fx-text-fill: -vault-dim2;
+    -fx-font-size: 10px;
+    -fx-font-weight: 500;
+    -fx-cursor: hand;
+    -fx-padding: 0 6 0 6;
+}
+
+.clear-all:hover {
+    -fx-text-fill: -vault-text;
+}
+
+/* ---------- Poster grid ---------- */
+.grid-scroll {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.grid-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+.grid-scroll:focused {
+    -fx-background-color: transparent;
+}
+
+/* the hover lift is the eased TranslateTransition in PosterGridCell; a CSS
+   -fx-translate-y here would be dead the moment the transition first runs */
+.poster {
+    -fx-cursor: hand;
+}
+
+/* the hairline frame is an overlay child so it stays visible above cover art */
+.poster-frame {
+    -fx-border-color: rgba(255, 255, 255, 0.10);
+    -fx-border-width: 1;
+}
+
+.poster:hover > .poster-frame {
+    -fx-border-color: rgba(255, 255, 255, 0.50);
+}
+
+.poster:selected > .poster-frame {
+    -fx-border-color: rgba(255, 255, 255, 0.85);
+}
+
+.poster-scrim {
+    -fx-background-color: linear-gradient(to bottom, transparent 46%, rgba(6, 6, 7, 0.5) 76%, rgba(6, 6, 7, 0.95) 100%);
+}
+
+/* corner "open in folder" chip; dark backing so it reads over any artwork */
+.card-folder-btn {
+    -fx-background-color: rgba(6, 6, 7, 0.72);
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-color: rgba(255, 255, 255, 0.22);
+    -fx-border-width: 1;
+    -fx-cursor: hand;
+}
+
+.card-folder-btn:hover {
+    -fx-border-color: rgba(255, 255, 255, 0.60);
+}
+
+.poster-title {
+    -fx-text-fill: -vault-bright;
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+}
+
+.card-year {
+    -fx-text-fill: -vault-muted;
+    -fx-font-size: 10px;
+}
+
+.card-detail {
+    -fx-text-fill: -vault-faint;
+    -fx-font-size: 10px;
+}
+
+.empty-title {
+    -fx-text-fill: -vault-soft;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.empty-sub {
+    -fx-text-fill: -vault-faint;
+    -fx-font-size: 10px;
+}
+
+/* ---------- Series detail ---------- */
+.series {
+    -fx-background-color: -vault-bg;
+}
+
+.back {
+    -fx-cursor: hand;
+}
+
+.back:hover .back-label {
+    -fx-text-fill: -vault-text;
+}
+
+.back-label {
+    -fx-text-fill: -vault-dim;
+    -fx-font-size: 12px;
+    -fx-font-weight: 500;
+}
+
+.keyart, .keyart-frame {
+    -fx-border-color: rgba(255, 255, 255, 0.12);
+    -fx-border-width: 1;
+}
+
+.keyart-scrim {
+    -fx-background-color: linear-gradient(to bottom, transparent 55%, rgba(6, 6, 7, 0.85) 100%);
+}
+
+.meta-row {
+    -fx-border-color: transparent transparent -vault-divider transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.meta-key {
+    -fx-text-fill: -vault-dim2;
+    -fx-font-size: 9px;
+    -fx-font-weight: 500;
+}
+
+.meta-val {
+    -fx-text-fill: -vault-mid;
+    -fx-font-size: 11px;
+    -fx-font-weight: 500;
+}
+
+.series-title {
+    -fx-text-fill: -vault-bright;
+    -fx-font-size: 44px;
+    -fx-font-weight: bold;
+}
+
+/* season index strip: uniform compact ToggleButton pills ("SP 01 02 …");
+   :selected is the active season */
+.season-tab {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-color: -vault-line;
+    -fx-border-width: 1;
+    -fx-text-fill: -vault-mid;
+    -fx-font-size: 11px;
+    -fx-font-weight: 500;
+    -fx-padding: 6 0 6 0;
+    -fx-cursor: hand;
+}
+
+.season-tab:hover {
+    -fx-border-color: rgba(255, 255, 255, 0.30);
+}
+
+.season-tab:selected {
+    -fx-background-color: -vault-text;
+    -fx-border-color: -vault-text;
+    -fx-text-fill: -vault-bg;
+}
+
+.ep-row {
+    -fx-cursor: hand;
+    -fx-border-color: transparent transparent -vault-divider transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.ep-row:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.035);
+}
+
+.ep-num {
+    -fx-text-fill: -vault-dim2;
+    -fx-font-size: 11px;
+    -fx-font-weight: 500;
+}
+
+.ep-thumb {
+    -fx-border-color: rgba(255, 255, 255, 0.10);
+    -fx-border-width: 1;
+}
+
+.ep-title {
+    -fx-text-fill: -vault-text;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.ep-dur {
+    -fx-text-fill: -vault-dim2;
+    -fx-font-size: 11px;
+}
+
+/* ---------- Toast ---------- */
+.toast {
+    -fx-background-color: -vault-surface;
+    -fx-border-color: -vault-line;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 44, 0.2, 0, 16);
+}
+
+.toast-label {
+    -fx-text-fill: -vault-text;
+    -fx-font-size: 12px;
+    -fx-font-weight: 500;
+}
+
+.toast-dot {
+    -fx-background-color: -vault-accent;
+    -fx-background-radius: 4;
+}
+
+/* ---------- Import dialog ---------- */
+.dialog-backdrop {
+    -fx-background-color: rgba(4, 5, 7, 0.66);
+}
+
+.dialog {
+    -fx-background-color: -vault-surface;
+    -fx-border-color: -vault-line;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 60, 0.25, 0, 24);
+}
+
+.dialog-title {
+    -fx-text-fill: -vault-bright;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.dialog-sub {
+    -fx-text-fill: -vault-muted;
+    -fx-font-size: 12px;
+}
+
+.field-label {
+    -fx-text-fill: -vault-dim2;
+    -fx-font-size: 9px;
+    -fx-font-weight: 500;
+}
+
+.dialog-input {
+    -fx-background-color: transparent;
+    -fx-text-fill: -vault-text;
+    -fx-prompt-text-fill: -vault-dim3;
+    -fx-font-size: 13px;
+    -fx-border-color: -vault-line;
+    -fx-border-width: 1;
+    -fx-background-radius: 0;
+    -fx-padding: 11 13 11 13;
+}
+
+.dialog-input:focused {
+    -fx-border-color: rgba(255, 255, 255, 0.45);
+    -fx-background-color: transparent;
+}
+
+.browse-btn {
+    -fx-text-fill: -vault-mid;
+    -fx-font-size: 11px;
+    -fx-font-weight: 500;
+    -fx-border-color: rgba(255, 255, 255, 0.18);
+    -fx-border-width: 1;
+    -fx-padding: 11 16 11 16;
+    -fx-cursor: hand;
+}
+
+.browse-btn:hover {
+    -fx-border-color: rgba(255, 255, 255, 0.4);
+    -fx-text-fill: -vault-text;
+}
+
+.ghost-btn {
+    -fx-text-fill: -vault-dim;
+    -fx-font-size: 12px;
+    -fx-font-weight: 500;
+    -fx-padding: 11 16 11 16;
+    -fx-cursor: hand;
+}
+
+.ghost-btn:hover {
+    -fx-text-fill: -vault-text;
+}
+
+.primary-btn {
+    -fx-background-color: -vault-text;
+    -fx-text-fill: -vault-bg;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 11 20 11 20;
+    -fx-cursor: hand;
+}
+
+.primary-btn:hover {
+    -fx-opacity: 0.88;
+}
+
+/* ---------- Settings ---------- */
+.section-header {
+    -fx-text-fill: -vault-dim2;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+.setting-row {
+    -fx-border-color: transparent transparent -vault-divider transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.setting-title {
+    -fx-text-fill: -vault-text;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+}
+
+.setting-sub {
+    -fx-text-fill: -vault-dim2;
+    -fx-font-size: 11px;
+}
+
+.info-val {
+    -fx-text-fill: -vault-mid;
+    -fx-font-size: 12px;
+    -fx-font-weight: 500;
+}
+
+/* ---------- Scrollbars ---------- */
+.scroll-bar:vertical, .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: -vault-line;
+    -fx-background-radius: 0;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.30);
+}
+
+.scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* ============================================================
+   Additions: classes the Vault views reference but the source
+   stylesheet leaves to defaults — styled in the same language.
+   ============================================================ */
+
+/* facet / sort popup panels — no drop shadow: the effect would inflate the popup
+   window's bounds and shift the visible panel away from its anchor point */
+.facet-pop {
+    -fx-background-color: -vault-surface;
+    -fx-border-color: -vault-line;
+    -fx-border-width: 1;
+}
+
+.facet-search {
+    -fx-background-color: transparent;
+    -fx-text-fill: -vault-text;
+    -fx-prompt-text-fill: -vault-dim3;
+    -fx-font-size: 12px;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-color: transparent transparent rgba(255, 255, 255, 0.10) transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 10 12 10 12;
+}
+
+.facet-search:focused {
+    -fx-background-color: transparent;
+}
+
+.facet-scroll {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-padding: 6;
+}
+
+.facet-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+.facet-row {
+    -fx-cursor: hand;
+}
+
+.facet-row:hover {
+    -fx-background-color: -vault-divider;
+}
+
+.facet-opt {
+    -fx-text-fill: -vault-soft;
+    -fx-font-size: 12px;
+}
+
+.facet-opt-on {
+    -fx-text-fill: -vault-bright;
+    -fx-font-size: 12px;
+}
+
+.facet-text {
+    -fx-text-fill: -vault-mid;
+    -fx-font-size: 12px;
+    -fx-font-weight: 500;
+}
+
+.facet-badge {
+    -fx-background-color: -vault-text;
+    -fx-text-fill: -vault-bg;
+    -fx-font-size: 9px;
+    -fx-font-weight: bold;
+    -fx-padding: 1 5 1 5;
+}
+
+.facet-empty {
+    -fx-text-fill: -vault-dim3;
+    -fx-font-size: 11px;
+}
+
+/* facet option rows: real CheckBoxes drawn as the Vault check square */
+.facet-check-box {
+    -fx-background-color: transparent;
+    -fx-text-fill: -vault-soft;
+    -fx-font-size: 12px;
+    -fx-cursor: hand;
+    -fx-label-padding: 0 0 0 11;
+}
+
+.facet-check-box > .box {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-color: rgba(255, 255, 255, 0.25);
+    -fx-border-width: 1;
+    -fx-padding: 2;
+}
+
+.facet-check-box:selected > .box {
+    -fx-background-color: -vault-text;
+    -fx-border-color: -vault-text;
+}
+
+.facet-check-box > .box > .mark {
+    -fx-background-color: transparent;
+    -fx-padding: 4.5 5 4.5 5;
+}
+
+.facet-check-box:selected > .box > .mark {
+    -fx-background-color: -vault-bg;
+}
+
+.facet-check-box:focus-visible > .box {
+    -fx-border-color: rgba(255, 255, 255, 0.60);
+}
+
+.sort-tag {
+    -fx-text-fill: -vault-dim2;
+    -fx-font-size: 9px;
+    -fx-font-weight: 500;
+}
+
+/* virtualized poster grid (ControlsFX GridView rendering the Vault cards) */
+.grid-view {
+    -fx-background-color: transparent;
+}
+
+.grid-view .grid-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* ============================================================
+   Real Buttons in the Vault flat look: these classes sit on
+   javafx.scene.control.Button, so strip the Modena chrome
+   (gradient backgrounds, insets, radius) they would inherit.
+   ============================================================ */
+.ghost-btn, .primary-btn, .browse-btn, .clear-all,
+.title-btn, .win-btn, .win-btn-close, .refresh-btn, .chip, .back,
+.import-btn, .settings-row, .side-item, .ep-row {
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+
+.ghost-btn, .browse-btn, .clear-all, .title-btn, .refresh-btn,
+.back, .import-btn, .settings-row, .ep-row {
+    -fx-background-color: transparent;
+}
+
+/* Keyboard-only focus indication (:focus-visible never fires on mouse clicks).
+   Classes that already draw a border brighten it; borderless ones get a soft
+   glow so focusing never shifts layout. */
+.browse-btn:focus-visible, .import-btn:focus-visible,
+.refresh-btn:focus-visible, .chip:focus-visible, .facet:focus-visible {
+    -fx-border-color: rgba(255, 255, 255, 0.60);
+}
+
+.ghost-btn:focus-visible, .primary-btn:focus-visible, .clear-all:focus-visible,
+.title-btn:focus-visible, .win-btn:focus-visible, .win-btn-close:focus-visible,
+.back:focus-visible, .settings-row:focus-visible,
+.side-item:focus-visible, .ep-row:focus-visible, .season-tab:focus-visible {
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.65), 8, 0.45, 0, 0);
+}
+
+/* toolbar refresh button */
+.refresh-btn {
+    -fx-border-color: -vault-line;
+    -fx-border-width: 1;
+    -fx-cursor: hand;
+}
+
+.refresh-btn:hover {
+    -fx-border-color: rgba(255, 255, 255, 0.30);
+}
+
+.refresh-btn:active {
+    -fx-border-color: rgba(255, 255, 255, 0.45);
+}

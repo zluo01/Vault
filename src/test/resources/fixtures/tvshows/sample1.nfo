@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--created on 2022-01-11 01:26:10 - tinyMediaManager 4.2.5.1-->
+<tvshow>
+  <title>Westworld</title>
+  <originaltitle>Westworld</originaltitle>
+  <showtitle>Westworld</showtitle>
+  <sorttitle/>
+  <year>2016</year>
+  <rating>8.6</rating>
+  <userrating>0.0</userrating>
+  <votes>0</votes>
+  <outline/>
+  <plot>Westworld is a dark odyssey about the dawn of artificial consciousness and the evolution of sin. Set at the intersection of the near future and the reimagined past, it explores a world in which every human appetite, no matter how noble or depraved, can be indulged.</plot>
+  <tagline/>
+  <runtime>62</runtime>
+  <thumb aspect="poster">https://assets.fanart.tv/fanart/tv/296762/tvposter/westworld-57c8a1e9a32ea.jpg</thumb>
+  <thumb aspect="banner">https://assets.fanart.tv/fanart/tv/296762/tvbanner/westworld-5982946c9e40a.jpg</thumb>
+  <thumb aspect="clearart">https://assets.fanart.tv/fanart/tv/296762/hdclearart/westworld-581ecbeb431e1.png</thumb>
+  <thumb aspect="clearlogo">https://assets.fanart.tv/fanart/tv/296762/hdtvlogo/westworld-576b6e578c9a0.png</thumb>
+  <thumb aspect="landscape">https://assets.fanart.tv/fanart/tv/296762/tvthumb/westworld-5982942a7e071.jpg</thumb>
+  <thumb aspect="keyart">https://assets.fanart.tv/fanart/tv/296762/tvposter/westworld-5abe5f663f720.jpg</thumb>
+  <thumb aspect="logo">https://assets.fanart.tv/fanart/tv/296762/hdtvlogo/westworld-576b6e578c9a0.png</thumb>
+  <thumb aspect="characterart">https://assets.fanart.tv/fanart/tv/296762/characterart/westworld-58f87eccca2ed.png</thumb>
+  <namedseason number="0">Specials</namedseason>
+  <namedseason number="1">Season One: The Maze</namedseason>
+  <namedseason number="2">Season Two: The Door</namedseason>
+  <namedseason number="3">Season Three: The New World</namedseason>
+  <thumb aspect="poster" season="0" type="season">https://artworks.thetvdb.com/banners/seasons/296762-0.jpg</thumb>
+  <thumb aspect="poster" season="1" type="season">https://assets.fanart.tv/fanart/tv/296762/seasonposter/westworld-598294a17a293.jpg</thumb>
+  <thumb aspect="poster" season="2" type="season">https://assets.fanart.tv/fanart/tv/296762/seasonposter/westworld-5ab5441a91a7d.jpg</thumb>
+  <thumb aspect="poster" season="3" type="season">https://assets.fanart.tv/fanart/tv/296762/seasonposter/westworld-5e4c1d84f2e4a.jpg</thumb>
+  <thumb aspect="banner" season="0" type="season">https://artworks.thetvdb.com/banners/seasonswide/296762-0.jpg</thumb>
+  <thumb aspect="banner" season="1" type="season">https://assets.fanart.tv/fanart/tv/296762/seasonbanner/westworld-5982947f8e41e.jpg</thumb>
+  <thumb aspect="banner" season="2" type="season">https://assets.fanart.tv/fanart/tv/296762/seasonbanner/westworld-5982948c2a27c.jpg</thumb>
+  <thumb aspect="banner" season="3" type="season">https://assets.fanart.tv/fanart/tv/296762/seasonbanner/westworld-5eb8fb774d230.jpg</thumb>
+  <thumb aspect="thumb" season="1" type="season">https://assets.fanart.tv/fanart/tv/296762/seasonthumb/westworld-59829442755a6.jpg</thumb>
+  <thumb aspect="thumb" season="2" type="season">https://assets.fanart.tv/fanart/tv/296762/seasonthumb/westworld-5c0b7376171b8.jpg</thumb>
+  <thumb aspect="thumb" season="3" type="season">https://assets.fanart.tv/fanart/tv/296762/seasonthumb/westworld-5eb8fa3e94c2a.jpg</thumb>
+  <fanart>
+    <thumb>https://assets.fanart.tv/fanart/tv/296762/showbackground/westworld-584c07a4902be.jpg</thumb>
+  </fanart>
+  <mpaa>US:TV-MA</mpaa>
+  <certification>US:TV-MA</certification>
+  <episodeguide>
+    <url cache="auth.json" post="yes">https://api.thetvdb.com/login?{"apikey":"439DFEBA9D3059C6","id":296762}|Content-Type=application/json</url>
+  </episodeguide>
+  <id>296762</id>
+  <imdbid>tt0475784</imdbid>
+  <tmdbid>63247</tmdbid>
+  <uniqueid default="false" type="tmdb">63247</uniqueid>
+  <uniqueid default="false" type="tvrage">37537</uniqueid>
+  <uniqueid default="false" type="imdb">tt0475784</uniqueid>
+  <uniqueid default="false" type="zap2it">SH02476964</uniqueid>
+  <uniqueid default="true" type="tvdb">296762</uniqueid>
+  <premiered>2016-10-02</premiered>
+  <status>Continuing</status>
+  <watched>false</watched>
+  <playcount/>
+  <genre>Science Fiction</genre>
+  <genre>Drama</genre>
+  <genre>Adventure</genre>
+  <genre>Western</genre>
+  <studio>HBO</studio>
+  <country/>
+  <actor>
+    <name>Anthony Hopkins</name>
+    <role>Robert Ford</role>
+    <thumb>https://artworks.thetvdb.com/banners/actors/351973.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>James Marsden</name>
+    <role>Teddy Flood</role>
+    <thumb>https://artworks.thetvdb.com/banners/actors/351974.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Ben Barnes</name>
+    <role>Logan Delos</role>
+    <thumb>https://artworks.thetvdb.com/banners/actors/368275.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Ingrid Bolsø Berdal</name>
+    <role>Armistice</role>
+    <thumb>https://artworks.thetvdb.com/banners/actors/368276.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Ed Harris</name>
+    <role>The Man in Black</role>
+    <thumb>https://artworks.thetvdb.com/banners/actors/368277.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Sidse Babett Knudsen</name>
+    <role>Theresa Cullen</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/321419/61441784.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Thandiwe Newton</name>
+    <role>Maeve Millay</role>
+    <thumb>https://artworks.thetvdb.com/banners/actors/368279.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Angela Sarafyan</name>
+    <role>Clementine Pennyfeather</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/252852/61441786.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Evan Rachel Wood</name>
+    <role>Dolores Abernathy</role>
+    <thumb>https://image.tmdb.org/t/p/h632/dWmzryckjVXOVoIVa3in1Cg6v4r.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/38940</profile>
+    <tmdbid>38940</tmdbid>
+  </actor>
+  <actor>
+    <name>Jeffrey Wright</name>
+    <role>Bernard Lowe</role>
+    <thumb>https://image.tmdb.org/t/p/h632/npJjOiFiAP4wiRDNjKsO8ho03Mg.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/2954</profile>
+    <tmdbid>2954</tmdbid>
+  </actor>
+  <actor>
+    <name>Rodrigo Santoro</name>
+    <role>Hector Escaton</role>
+    <thumb>https://artworks.thetvdb.com/banners/actors/395380.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Louis Herthum</name>
+    <role>Peter Abernathy</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/272411/61441790.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Jimmi Simpson</name>
+    <role>William</role>
+    <thumb>https://artworks.thetvdb.com/banners/actors/396239.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Shannon Woodward</name>
+    <role>Elsie Hughes</role>
+    <thumb>https://artworks.thetvdb.com/banners/actors/396478.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Clifton Collins Jr.</name>
+    <role>Lawrence</role>
+    <thumb>https://artworks.thetvdb.com/banners/actors/396516.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Luke Hemsworth</name>
+    <role>Ashley Stubbs</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/392109/61441794.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Simon Quarterman</name>
+    <role>Lee Sizemore</role>
+    <thumb>https://artworks.thetvdb.com/banners/actors/396519.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Tessa Thompson</name>
+    <role>Charlotte Hale</role>
+    <thumb>https://image.tmdb.org/t/p/h632/ewRWXNfS3ehaalCQtvHCa7BhibC.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/62561</profile>
+    <tmdbid>62561</tmdbid>
+  </actor>
+  <actor>
+    <name>Talulah Riley</name>
+    <role>Angela</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/615953/61441797.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Gustaf Skarsgård</name>
+    <role>Karl Strand</role>
+    <thumb>https://artworks.thetvdb.com/banners/actors/480256.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Katja Herbers</name>
+    <role>Emily</role>
+    <thumb>https://artworks.thetvdb.com/banners/actors/484221.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Fares Fares</name>
+    <role>Antoine Costa</role>
+    <thumb>https://artworks.thetvdb.com/banners/actors/484222.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Hiroyuki Sanada</name>
+    <role>Musashi</role>
+    <thumb>https://artworks.thetvdb.com/banners/actors/485308.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Rinko Kikuchi</name>
+    <role>Akane</role>
+    <thumb>https://artworks.thetvdb.com/banners/actors/485309.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Zahn McClarnon</name>
+    <role>Akecheta</role>
+    <thumb>https://artworks.thetvdb.com/banners/actors/487725.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Aaron Paul</name>
+    <role>Caleb Nichols</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/275750/62110371.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Vincent Cassel</name>
+    <role>Engerraund Serac</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/307583/62110372.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Lena Waithe</name>
+    <role>Ash</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/311339/62110373.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>John Gallagher Jr.</name>
+    <role>Liam Dempsey, Jr.</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/588308/5e8ec3d1cc3d4.jpg</thumb>
+    <profile/>
+  </actor>
+  <trailer>plugin://plugin.video.youtube/?action=play_video&amp;videoid=JctIuZfSsa4&amp;hd=1</trailer>
+  <dateadded>2021-03-12 16:40:28</dateadded>
+  <!--tinyMediaManager meta data-->
+  <user_note/>
+</tvshow>

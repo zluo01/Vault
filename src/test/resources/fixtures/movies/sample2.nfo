@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--created on 2022-01-13 17:37:34 - tinyMediaManager 4.2.5.1-->
+<movie>
+  <title>The Godfather</title>
+  <originaltitle>The Godfather</originaltitle>
+  <sorttitle/>
+  <epbookmark/>
+  <year>1972</year>
+  <ratings>
+    <rating default="false" max="10" name="themoviedb">
+      <value>8.7</value>
+      <votes>15328</votes>
+    </rating>
+    <rating default="true" max="10" name="imdb">
+      <value>9.2</value>
+      <votes>1737677</votes>
+    </rating>
+  </ratings>
+  <userrating>0.0</userrating>
+  <top250>0</top250>
+  <set>
+    <name>The Godfather Collection</name>
+    <overview/>
+  </set>
+  <plot>Spanning the years 1945 to 1955, a chronicle of the fictional Italian-American Corleone crime family. When organized crime family patriarch, Vito Corleone barely survives an attempt on his life, his youngest son, Michael steps in to take care of the would-be killers, launching a campaign of bloody revenge.</plot>
+  <outline>Spanning the years 1945 to 1955, a chronicle of the fictional Italian-American Corleone crime family. When organized crime family patriarch, Vito Corleone barely survives an attempt on his life, his youngest son, Michael steps in to take care of the would-be killers, launching a campaign of bloody revenge.</outline>
+  <tagline>An offer you can't refuse.</tagline>
+  <runtime>175</runtime>
+  <thumb aspect="poster">https://image.tmdb.org/t/p/original/3bhkrj58Vtu7enYsRolD1fZdja1.jpg</thumb>
+  <thumb aspect="banner">https://assets.fanart.tv/fanart/movies/238/moviebanner/the-godfather-5300ea041900a.jpg</thumb>
+  <thumb aspect="clearart">https://assets.fanart.tv/fanart/movies/238/hdmovieclearart/the-godfather-519a16fc3a524.png</thumb>
+  <thumb aspect="clearlogo">https://assets.fanart.tv/fanart/movies/238/hdmovielogo/the-godfather-55853bd90c109.png</thumb>
+  <thumb aspect="discart">https://assets.fanart.tv/fanart/movies/238/moviedisc/the-godfather-514d86e38ae59.png</thumb>
+  <thumb aspect="landscape">https://assets.fanart.tv/fanart/movies/238/moviethumb/the-godfather-508d945641aed.jpg</thumb>
+  <thumb aspect="keyart">https://assets.fanart.tv/fanart/movies/238/movieposter/the-godfather-598cdff3b7c5f.jpg</thumb>
+  <thumb aspect="logo">https://assets.fanart.tv/fanart/movies/238/hdmovielogo/the-godfather-55853bd90c109.png</thumb>
+  <fanart>
+    <thumb>https://image.tmdb.org/t/p/original/vJ8H8skNbNzXWVyDNSgxTZMTPA6.jpg</thumb>
+  </fanart>
+  <mpaa>US:R / US:Rated R</mpaa>
+  <certification>US:R / US:Rated R</certification>
+  <id>tt0068646</id>
+  <tmdbid>238</tmdbid>
+  <tmdbCollectionId>230</tmdbCollectionId>
+  <uniqueid default="false" type="tmdb">238</uniqueid>
+  <uniqueid default="false" type="tmdbSet">230</uniqueid>
+  <uniqueid default="true" type="imdb">tt0068646</uniqueid>
+  <country>United States</country>
+  <status/>
+  <code/>
+  <premiered>1972-03-15</premiered>
+  <watched>false</watched>
+  <playcount>0</playcount>
+  <lastplayed/>
+  <genre>Drama</genre>
+  <genre>Crime</genre>
+  <studio>Paramount</studio>
+  <studio>Alfran Productions</studio>
+  <credits>Francis Ford Coppola</credits>
+  <credits>Mario Puzo</credits>
+  <director>Francis Ford Coppola</director>
+  <tag>italy</tag>
+  <tag>loss of loved one</tag>
+  <tag>love at first sight</tag>
+  <tag>italian american</tag>
+  <tag>based on novel or book</tag>
+  <tag>europe</tag>
+  <tag>symbolism</tag>
+  <tag>gangster</tag>
+  <tag>patriarch</tag>
+  <tag>revenge</tag>
+  <tag>organized crime</tag>
+  <tag>mafia</tag>
+  <tag>lawyer</tag>
+  <tag>crime family</tag>
+  <tag>rise to power</tag>
+  <tag>mob boss</tag>
+  <tag>1940s</tag>
+  <tag>1950s</tag>
+  <actor>
+    <name>Marlon Brando</name>
+    <role>Don Vito Corleone</role>
+    <thumb>https://image.tmdb.org/t/p/h632/fuTEPMsBtV1zE98ujPONbKiYDc2.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/3084</profile>
+    <tmdbid>3084</tmdbid>
+  </actor>
+  <actor>
+    <name>Al Pacino</name>
+    <role>Don Michael Corleone</role>
+    <thumb>https://image.tmdb.org/t/p/h632/fMDFeVf0pjopTJbyRSLFwNDm8Wr.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/1158</profile>
+    <tmdbid>1158</tmdbid>
+  </actor>
+  <actor>
+    <name>James Caan</name>
+    <role>Santino "Sonny" Corleone</role>
+    <thumb>https://image.tmdb.org/t/p/h632/bGyOCCOIgcIyKjOGLoXoyp0XWHf.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/3085</profile>
+    <tmdbid>3085</tmdbid>
+  </actor>
+  <actor>
+    <name>Robert Duvall</name>
+    <role>Tom Hagen</role>
+    <thumb>https://image.tmdb.org/t/p/h632/ybMmK25h4IVtfE7qrnlVp47RQlh.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/3087</profile>
+    <tmdbid>3087</tmdbid>
+  </actor>
+  <actor>
+    <name>Richard S. Castellano</name>
+    <role>Pete Clemenza</role>
+    <thumb>https://image.tmdb.org/t/p/h632/1vr75BdHWret81vuSJ3ugiCBkxw.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/3086</profile>
+    <tmdbid>3086</tmdbid>
+  </actor>
+  <actor>
+    <name>Diane Keaton</name>
+    <role>Kay Adams</role>
+    <thumb>https://image.tmdb.org/t/p/h632/7gEdH5vGwpUpogscTb2JivnoRBb.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/3092</profile>
+    <tmdbid>3092</tmdbid>
+  </actor>
+  <actor>
+    <name>Talia Shire</name>
+    <role>Constanzia "Connie" Corleone-Rizzi</role>
+    <thumb>https://image.tmdb.org/t/p/h632/yOp69Un3ZiWMoCKZfq1vy7h5QyW.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/3094</profile>
+    <tmdbid>3094</tmdbid>
+  </actor>
+  <actor>
+    <name>Gianni Russo</name>
+    <role>Carlo Rizzi</role>
+    <thumb>https://image.tmdb.org/t/p/h632/5fjg2WPvuk1NvUpLyQ7aMJqOqy.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/3095</profile>
+    <tmdbid>3095</tmdbid>
+  </actor>
+  <actor>
+    <name>Sterling Hayden</name>
+    <role>Capt. Mark McCluskey</role>
+    <thumb>https://image.tmdb.org/t/p/h632/twzaqv1ymkWYKHFF3kbvwaTIrFO.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/3088</profile>
+    <tmdbid>3088</tmdbid>
+  </actor>
+  <actor>
+    <name>Al Lettieri</name>
+    <role>Virgil "The Turk" Sollozzo</role>
+    <thumb>https://image.tmdb.org/t/p/h632/fE5mEWPkkVJlCji0EoKht8PYw89.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/3091</profile>
+    <tmdbid>3091</tmdbid>
+  </actor>
+  <actor>
+    <name>Abe Vigoda</name>
+    <role>Salvatore "Sal" Tessio</role>
+    <thumb>https://image.tmdb.org/t/p/h632/luWKPNb58IgJ2ovrtgPAzHGLLYL.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/3093</profile>
+    <tmdbid>3093</tmdbid>
+  </actor>
+  <actor>
+    <name>John Cazale</name>
+    <role>Frederico "Fredo" Corleone</role>
+    <thumb>https://image.tmdb.org/t/p/h632/tRBImYIYk9tuR4fjJc8gHXC8ENj.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/3096</profile>
+    <tmdbid>3096</tmdbid>
+  </actor>
+  <actor>
+    <name>Richard Conte</name>
+    <role>Don Emilio Barzini</role>
+    <thumb>https://image.tmdb.org/t/p/h632/pTTzNets0bgWAqx18D7by0hWUea.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/3090</profile>
+    <tmdbid>3090</tmdbid>
+  </actor>
+  <actor>
+    <name>John Marley</name>
+    <role>Jack Woltz</role>
+    <thumb>https://image.tmdb.org/t/p/h632/17yS4z3BXZmOL1ocoINXDDGic8b.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/3142</profile>
+    <tmdbid>3142</tmdbid>
+  </actor>
+  <actor>
+    <name>Rudy Bond</name>
+    <role>Carmine Cuneo</role>
+    <thumb>https://image.tmdb.org/t/p/h632/kP77m6ot9dfOR2V3ykbyOAx2diK.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/3143</profile>
+    <tmdbid>3143</tmdbid>
+  </actor>
+  <actor>
+    <name>Al Martino</name>
+    <role>Johnny Fontane</role>
+    <thumb>https://image.tmdb.org/t/p/h632/9luOyyiqWFNQgSOSStH66LTWZ3p.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/3144</profile>
+    <tmdbid>3144</tmdbid>
+  </actor>
+  <actor>
+    <name>Morgana King</name>
+    <role>Carmela "Mama" Corleone</role>
+    <thumb>https://image.tmdb.org/t/p/h632/zPsFAqH4NXD7rMWl2Kj3rEyGrKj.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/933716</profile>
+    <tmdbid>933716</tmdbid>
+  </actor>
+  <actor>
+    <name>Lenny Montana</name>
+    <role>Luca Brasi</role>
+    <thumb>https://image.tmdb.org/t/p/h632/xeS6QidWkgv23v6Bz8qFeWiuS6v.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/106811</profile>
+    <tmdbid>106811</tmdbid>
+  </actor>
+  <actor>
+    <name>John Martino</name>
+    <role>Paulie Gatto</role>
+    <thumb>https://image.tmdb.org/t/p/h632/3c8BOgJ8UdHi5x5BS3lYnFngxB5.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/99724</profile>
+    <tmdbid>99724</tmdbid>
+  </actor>
+  <actor>
+    <name>Alex Rocco</name>
+    <role>Moe Greene</role>
+    <thumb>https://image.tmdb.org/t/p/h632/uAG4qvYhYHuCyyXGm3lqC4o6ujc.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/20752</profile>
+    <tmdbid>20752</tmdbid>
+  </actor>
+  <actor>
+    <name>Salvatore Corsitto</name>
+    <role>Amerigo Bonasera</role>
+    <thumb>https://image.tmdb.org/t/p/h632/79OfgwtdP5qsR1UX6ERkrdmRT8c.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/1195877</profile>
+    <tmdbid>1195877</tmdbid>
+  </actor>
+  <actor>
+    <name>Tony Giorgio</name>
+    <role>Bruno Tattaglia</role>
+    <thumb>https://image.tmdb.org/t/p/h632/1uhgwgjoX7WaakEOBmtBRJKtgEB.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/3414</profile>
+    <tmdbid>3414</tmdbid>
+  </actor>
+  <actor>
+    <name>Victor Rendina</name>
+    <role>Philip Tattaglia</role>
+    <thumb>https://image.tmdb.org/t/p/h632/vuNdsjDpgom80WBdB2WBTWuEIuM.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/3413</profile>
+    <tmdbid>3413</tmdbid>
+  </actor>
+  <actor>
+    <name>Simonetta Stefanelli</name>
+    <role>Apollonia Vitelli-Corleone</role>
+    <thumb>https://image.tmdb.org/t/p/h632/sVDrhgxuE6SHnj7q07OG6ywPUYR.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/3145</profile>
+    <tmdbid>3145</tmdbid>
+  </actor>
+  <actor>
+    <name>Saro Urzì</name>
+    <role>Mr. Vitelli</role>
+    <thumb>https://image.tmdb.org/t/p/h632/8K2D288jKEcPitUgox69KDnzNUr.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/119431</profile>
+    <tmdbid>119431</tmdbid>
+  </actor>
+  <actor>
+    <name>Sofia Coppola</name>
+    <role>Michael Francis Rizzi</role>
+    <thumb>https://image.tmdb.org/t/p/h632/dzHC2LxmarkBxWLhjp2DRa5oCev.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/1769</profile>
+    <tmdbid>1769</tmdbid>
+  </actor>
+  <actor>
+    <name>Louis Guss</name>
+    <role>Don Zaluchi</role>
+    <thumb>https://image.tmdb.org/t/p/h632/hz5Akuh4QcqitlifYwDiZ9ut6Tr.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/20973</profile>
+    <tmdbid>20973</tmdbid>
+  </actor>
+  <actor>
+    <name>Gabriele Torrei</name>
+    <role>Enzo the Baker (uncredited)</role>
+    <thumb>https://image.tmdb.org/t/p/h632/x3KeYWTWX5SqZ3NuQGiWiadO4DI.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/138211</profile>
+    <tmdbid>138211</tmdbid>
+  </actor>
+  <actor>
+    <name>Tony King</name>
+    <role>Tony the Stablehand (uncredited)</role>
+    <thumb>https://image.tmdb.org/t/p/h632/hOVVHEyc6euuuRhCLo6Q5YE4lLz.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/55672</profile>
+    <tmdbid>55672</tmdbid>
+  </actor>
+  <actor>
+    <name>Richard Bright</name>
+    <role>Neri</role>
+    <thumb>https://image.tmdb.org/t/p/h632/potMaJ2u5PRjXZb7qF9lSW1ldNZ.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/3174</profile>
+    <tmdbid>3174</tmdbid>
+  </actor>
+  <actor>
+    <name>Vito Scotti</name>
+    <role>Nazorine</role>
+    <thumb>https://image.tmdb.org/t/p/h632/zDGtXkASxpo3DzMNz6OI3NOp9v0.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/82779</profile>
+    <tmdbid>82779</tmdbid>
+  </actor>
+  <actor>
+    <name>Tere Livrano</name>
+    <role>Theresa Hagen</role>
+    <thumb>https://image.tmdb.org/t/p/h632/eBoC3425jmwRlsT2W8qUDsNwVXB.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/982089</profile>
+    <tmdbid>982089</tmdbid>
+  </actor>
+  <actor>
+    <name>Julie Gregg</name>
+    <role>Sandrinella "Sandra" Corleone</role>
+    <thumb>https://image.tmdb.org/t/p/h632/8Kx71BnZNtpzb86jH7fcArWhJBh.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/160728</profile>
+    <tmdbid>160728</tmdbid>
+  </actor>
+  <actor>
+    <name>Angelo Infanti</name>
+    <role>Fabrizio</role>
+    <thumb>https://image.tmdb.org/t/p/h632/dkRVpiDj9YyiuM15XZKT11zZBIR.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/27647</profile>
+    <tmdbid>27647</tmdbid>
+  </actor>
+  <actor>
+    <name>Corrado Gaipa</name>
+    <role>Don Tommasino</role>
+    <thumb>https://image.tmdb.org/t/p/h632/7vR2BOdVw9FwJKjgpcisjKEytnL.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/24604</profile>
+    <tmdbid>24604</tmdbid>
+  </actor>
+  <actor>
+    <name>Franco Citti</name>
+    <role>Calò</role>
+    <thumb>https://image.tmdb.org/t/p/h632/mttQPjOHaql4RKsfYriUA7HuROE.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/44860</profile>
+    <tmdbid>44860</tmdbid>
+  </actor>
+  <actor>
+    <name>Max Brandt</name>
+    <role>Extra in Furniture-Moving Scene (uncredited)</role>
+    <thumb/>
+    <profile>https://www.themoviedb.org/person/178006</profile>
+    <tmdbid>178006</tmdbid>
+  </actor>
+  <actor>
+    <name>Carmine Coppola</name>
+    <role>Piano Player in Montage (uncredited)</role>
+    <thumb/>
+    <profile>https://www.themoviedb.org/person/2872</profile>
+    <tmdbid>2872</tmdbid>
+  </actor>
+  <actor>
+    <name>Roman Coppola</name>
+    <role>Boy on Street Who Attended Funeral (uncredited)</role>
+    <thumb>https://image.tmdb.org/t/p/h632/rKamKkx78qjZTfvqi2OWCo5p6x5.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/38803</profile>
+    <tmdbid>38803</tmdbid>
+  </actor>
+  <actor>
+    <name>Don Costello</name>
+    <role>Don Victor Stracci (uncredited)</role>
+    <thumb/>
+    <profile>https://www.themoviedb.org/person/1209294</profile>
+    <tmdbid>1209294</tmdbid>
+  </actor>
+  <actor>
+    <name>Robert Dahdah</name>
+    <role>Crowd (uncredited)</role>
+    <thumb/>
+    <profile>https://www.themoviedb.org/person/1394703</profile>
+    <tmdbid>1394703</tmdbid>
+  </actor>
+  <actor>
+    <name>Gray Frederickson</name>
+    <role>Cowboy on the Set at Woltz's Studio (uncredited)</role>
+    <thumb/>
+    <profile>https://www.themoviedb.org/person/2870</profile>
+    <tmdbid>2870</tmdbid>
+  </actor>
+  <actor>
+    <name>Ron Gilbert</name>
+    <role>Usher in Bridal Party (uncredited)</role>
+    <thumb>https://image.tmdb.org/t/p/h632/2GWwdXdEi0lKiyfj3yiW9jXR6Sr.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/1235937</profile>
+    <tmdbid>1235937</tmdbid>
+  </actor>
+  <actor>
+    <name>Sonny Grosso</name>
+    <role>Cop Outside Hospital (uncredited)</role>
+    <thumb/>
+    <profile>https://www.themoviedb.org/person/1233541</profile>
+    <tmdbid>1233541</tmdbid>
+  </actor>
+  <actor>
+    <name>Joe Lo Grippo</name>
+    <role>Sonny's Bodyguard (uncredited)</role>
+    <thumb/>
+    <profile>https://www.themoviedb.org/person/1503036</profile>
+    <tmdbid>1503036</tmdbid>
+  </actor>
+  <actor>
+    <name>Randy Jurgensen</name>
+    <role>Sonny's Killer #1 (uncredited)</role>
+    <thumb>https://image.tmdb.org/t/p/h632/xRoN79wRLndTMCJoaBSsdjQVIzI.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/1068099</profile>
+    <tmdbid>1068099</tmdbid>
+  </actor>
+  <actor>
+    <name>Tony Lip</name>
+    <role>Wedding Guest (uncredited)</role>
+    <thumb>https://image.tmdb.org/t/p/h632/6xz6XmjgiCCOm067OzWYziD4Mxa.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/61241</profile>
+    <tmdbid>61241</tmdbid>
+  </actor>
+  <actor>
+    <name>Lou Martini Jr.</name>
+    <role>Boy at Wedding (uncredited)</role>
+    <thumb/>
+    <profile>https://www.themoviedb.org/person/106187</profile>
+    <tmdbid>106187</tmdbid>
+  </actor>
+  <actor>
+    <name>Raymond Martino</name>
+    <role>Corleone Family Member (uncredited)</role>
+    <thumb/>
+    <profile>https://www.themoviedb.org/person/100503</profile>
+    <tmdbid>100503</tmdbid>
+  </actor>
+  <actor>
+    <name>Joseph Medaglia</name>
+    <role>Priest at Baptism (uncredited)</role>
+    <thumb/>
+    <profile>https://www.themoviedb.org/person/1503035</profile>
+    <tmdbid>1503035</tmdbid>
+  </actor>
+  <actor>
+    <name>Rick Petrucelli</name>
+    <role>Man in Passenger Seat (uncredited)</role>
+    <thumb>https://image.tmdb.org/t/p/h632/lVwc8s9MRyGSEaKP6dxLxY0VlZA.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/1290895</profile>
+    <tmdbid>1290895</tmdbid>
+  </actor>
+  <actor>
+    <name>Sal Richards</name>
+    <role>Drunk (uncredited)</role>
+    <thumb>https://image.tmdb.org/t/p/h632/gZSiZOtBVv1U4hqjlKkPr2p5rCP.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/1237372</profile>
+    <tmdbid>1237372</tmdbid>
+  </actor>
+  <actor>
+    <name>Tom Rosqui</name>
+    <role>Rocco Lampone (uncredited)</role>
+    <thumb/>
+    <profile>https://www.themoviedb.org/person/1213795</profile>
+    <tmdbid>1213795</tmdbid>
+  </actor>
+  <actor>
+    <name>Frank Sivero</name>
+    <role>Street Extra (uncredited)</role>
+    <thumb>https://image.tmdb.org/t/p/h632/eqvhj0iNtcsN6EJhd21Goqi1DSq.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/11480</profile>
+    <tmdbid>11480</tmdbid>
+  </actor>
+  <actor>
+    <name>Filomena Spagnuolo</name>
+    <role>Extra in Wedding Scene (uncredited)</role>
+    <thumb/>
+    <profile>https://www.themoviedb.org/person/1209678</profile>
+    <tmdbid>1209678</tmdbid>
+  </actor>
+  <actor>
+    <name>Nick Vallelonga</name>
+    <role>Wedding Party Guest (uncredited)</role>
+    <thumb>https://image.tmdb.org/t/p/h632/h0GwAHN1J5lDysqgWxMIg66LNBW.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/78336</profile>
+    <tmdbid>78336</tmdbid>
+  </actor>
+  <actor>
+    <name>Joe Spinell</name>
+    <role>William "Willie" Cicci (uncredited)</role>
+    <thumb>https://image.tmdb.org/t/p/h632/aTDs8125mhLKlQSbUlFJC2LJ8tU.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/16525</profile>
+    <tmdbid>16525</tmdbid>
+  </actor>
+  <actor>
+    <name>Conrad Yama</name>
+    <role>Fruit Vendor (uncredited)</role>
+    <thumb/>
+    <profile>https://www.themoviedb.org/person/1234848</profile>
+    <tmdbid>1234848</tmdbid>
+  </actor>
+  <producer>
+    <name>Gray Frederickson</name>
+    <role>Associate Producer</role>
+    <thumb/>
+  </producer>
+  <producer>
+    <name>Fred Roos</name>
+    <role>Casting</role>
+    <thumb>https://image.tmdb.org/t/p/h632/qfXLY5E589l0TQnoayWmUrBDsgo.jpg</thumb>
+  </producer>
+  <producer>
+    <name>Albert S. Ruddy</name>
+    <role>Producer</role>
+    <thumb/>
+  </producer>
+  <producer>
+    <name>Louis DiGiaimo</name>
+    <role>Casting</role>
+    <thumb/>
+  </producer>
+  <producer>
+    <name>Andrea Eastman</name>
+    <role>Casting</role>
+    <thumb/>
+  </producer>
+  <producer>
+    <name>Valerio De Paolis</name>
+    <role>Production Manager</role>
+    <thumb>https://image.tmdb.org/t/p/h632/rbsYkbJPgQAMuFY71RYrYatdXWT.jpg</thumb>
+  </producer>
+  <producer>
+    <name>Fred C. Caruso</name>
+    <role>Unit Production Manager</role>
+    <thumb/>
+  </producer>
+  <producer>
+    <name>Robert Evans</name>
+    <role>Executive Producer</role>
+    <thumb>https://image.tmdb.org/t/p/h632/rCiTT2VrBKeHWdnHAyfGtMXs9go.jpg</thumb>
+  </producer>
+  <producer>
+    <name>Riccardo Bertoni</name>
+    <role>Casting</role>
+    <thumb/>
+  </producer>
+  <producer>
+    <name>Ned Kopp</name>
+    <role>Production Manager</role>
+    <thumb/>
+  </producer>
+  <trailer>plugin://plugin.video.hdtrailers_net/video/hd-trailers.net/http%3A%2F%2Fvideos.hd-trailers.net%2FGodfather_CineMark_Trailer_h264_720-HDTN.mov</trailer>
+  <languages>English, Italian, Latin</languages>
+  <dateadded>2021-03-12 16:18:06</dateadded>
+  <fileinfo>
+    <streamdetails>
+      <video>
+        <codec>h264</codec>
+        <aspect>1.78</aspect>
+        <width>1918</width>
+        <height>1080</height>
+        <durationinseconds>10629</durationinseconds>
+        <stereomode/>
+      </video>
+      <audio>
+        <codec>FLAC</codec>
+        <language>eng</language>
+        <channels>6</channels>
+      </audio>
+      <audio>
+        <codec>AAC</codec>
+        <language>eng</language>
+        <channels>2</channels>
+      </audio>
+      <subtitle>
+        <language>eng</language>
+      </subtitle>
+      <subtitle>
+        <language>eng</language>
+      </subtitle>
+      <subtitle>
+        <language>eng</language>
+      </subtitle>
+      <subtitle>
+        <language>eng</language>
+      </subtitle>
+      <subtitle>
+        <language>eng</language>
+      </subtitle>
+      <subtitle>
+        <language>eng</language>
+      </subtitle>
+      <subtitle>
+        <language>fra</language>
+      </subtitle>
+      <subtitle>
+        <language>spa</language>
+      </subtitle>
+      <subtitle>
+        <language>por</language>
+      </subtitle>
+    </streamdetails>
+  </fileinfo>
+  <!--tinyMediaManager meta data-->
+  <source>BLURAY</source>
+  <edition>NONE</edition>
+  <original_filename>The Godfather.mkv</original_filename>
+  <user_note/>
+</movie>

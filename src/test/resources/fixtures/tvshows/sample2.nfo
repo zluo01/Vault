@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--created on 2022-02-02 13:27:49 - tinyMediaManager 4.2.5.1-->
+<tvshow>
+  <title>The Expanse</title>
+  <originaltitle>The Expanse</originaltitle>
+  <showtitle>The Expanse</showtitle>
+  <sorttitle/>
+  <year>2015</year>
+  <rating>8.5</rating>
+  <userrating>0.0</userrating>
+  <votes>0</votes>
+  <outline/>
+  <plot>Two hundred years in the future, in a fully colonized solar system, police detective Josephus Miller is given the assignment to find a missing young woman, Julie Mao. Joining his task is James Holden, former first officer of an ice freighter who is involved in an incident caused by the tense relationship between Earth, Mars and the Belt. Far from their struggles in space, United Nations executive Chrisjen Avasarala works to prevent war between Earth and Mars. Soon the three find out that the missing woman is connected to a vast conspiracy that threatens all humanity.</plot>
+  <tagline/>
+  <runtime>46</runtime>
+  <thumb aspect="poster">https://assets.fanart.tv/fanart/tv/280619/tvposter/the-expanse-5d34ade5abdfd.jpg</thumb>
+  <thumb aspect="banner">https://assets.fanart.tv/fanart/tv/280619/tvbanner/the-expanse-5630a1cbecfe7.jpg</thumb>
+  <thumb aspect="clearart">https://assets.fanart.tv/fanart/tv/280619/hdclearart/the-expanse-5661a309ef51c.png</thumb>
+  <thumb aspect="clearlogo">https://assets.fanart.tv/fanart/tv/280619/hdtvlogo/the-expanse-5656dbc03e423.png</thumb>
+  <thumb aspect="landscape">https://assets.fanart.tv/fanart/tv/280619/tvthumb/the-expanse-5aa10436b7f04.jpg</thumb>
+  <thumb aspect="keyart">https://assets.fanart.tv/fanart/tv/280619/tvposter/the-expanse-5661a2de722b4.jpg</thumb>
+  <thumb aspect="logo">https://assets.fanart.tv/fanart/tv/280619/hdtvlogo/the-expanse-5656dbc03e423.png</thumb>
+  <thumb aspect="characterart">https://assets.fanart.tv/fanart/tv/280619/characterart/the-expanse-588db6c207bac.png</thumb>
+  <namedseason number="0">Specials</namedseason>
+  <thumb aspect="poster" season="0" type="season">https://assets.fanart.tv/fanart/tv/280619/seasonposter/the-expanse-5df3553f6edaa.jpg</thumb>
+  <thumb aspect="poster" season="1" type="season">https://assets.fanart.tv/fanart/tv/280619/seasonposter/the-expanse-588ba11446bf9.jpg</thumb>
+  <thumb aspect="poster" season="2" type="season">https://assets.fanart.tv/fanart/tv/280619/seasonposter/the-expanse-588ba1226834f.jpg</thumb>
+  <thumb aspect="poster" season="3" type="season">https://assets.fanart.tv/fanart/tv/280619/seasonposter/the-expanse-5b5cabcadfd16.jpg</thumb>
+  <thumb aspect="poster" season="4" type="season">https://assets.fanart.tv/fanart/tv/280619/seasonposter/the-expanse-5d38cbd3db2df.jpg</thumb>
+  <thumb aspect="poster" season="5" type="season">https://assets.fanart.tv/fanart/tv/280619/seasonposter/the-expanse-5fda0142b1aa7.jpg</thumb>
+  <thumb aspect="poster" season="6" type="season">https://image.tmdb.org/t/p/original/t1cDbVYjNHvDCgx2WuzlWGGuaZR.jpg</thumb>
+  <thumb aspect="banner" season="1" type="season">https://assets.fanart.tv/fanart/tv/280619/seasonbanner/the-expanse-588270485677d.jpg</thumb>
+  <thumb aspect="banner" season="2" type="season">https://assets.fanart.tv/fanart/tv/280619/seasonbanner/the-expanse-5882706705298.jpg</thumb>
+  <thumb aspect="banner" season="3" type="season">https://assets.fanart.tv/fanart/tv/280619/seasonbanner/the-expanse-5e3e00fae0ab5.jpg</thumb>
+  <thumb aspect="banner" season="4" type="season">https://assets.fanart.tv/fanart/tv/280619/seasonbanner/the-expanse-5e3f0710539c4.jpg</thumb>
+  <thumb aspect="banner" season="5" type="season">https://assets.fanart.tv/fanart/tv/280619/seasonbanner/the-expanse-601896a9ce950.jpg</thumb>
+  <thumb aspect="banner" season="6" type="season">https://assets.fanart.tv/fanart/tv/280619/seasonbanner/the-expanse-61c24ac333cd2.jpg</thumb>
+  <thumb aspect="thumb" season="1" type="season">https://assets.fanart.tv/fanart/tv/280619/seasonthumb/the-expanse-5d4c28904963b.jpg</thumb>
+  <thumb aspect="thumb" season="2" type="season">https://assets.fanart.tv/fanart/tv/280619/seasonthumb/the-expanse-5d4c289e487a7.jpg</thumb>
+  <thumb aspect="thumb" season="3" type="season">https://assets.fanart.tv/fanart/tv/280619/seasonthumb/the-expanse-5d4c28abb3f61.jpg</thumb>
+  <thumb aspect="thumb" season="4" type="season">https://assets.fanart.tv/fanart/tv/280619/seasonthumb/the-expanse-5d4c28bb27c6b.jpg</thumb>
+  <thumb aspect="thumb" season="5" type="season">https://assets.fanart.tv/fanart/tv/280619/seasonthumb/the-expanse-6018935614d39.jpg</thumb>
+  <thumb aspect="thumb" season="6" type="season">https://assets.fanart.tv/fanart/tv/280619/seasonthumb/the-expanse-61c24b2fd27d0.jpg</thumb>
+  <fanart>
+    <thumb>https://assets.fanart.tv/fanart/tv/280619/showbackground/the-expanse-5aa104586604b.jpg</thumb>
+  </fanart>
+  <mpaa>US:TV-14</mpaa>
+  <certification>US:TV-14</certification>
+  <episodeguide>
+    <url cache="auth.json" post="yes">https://api.thetvdb.com/login?{"apikey":"439DFEBA9D3059C6","id":280619}|Content-Type=application/json</url>
+  </episodeguide>
+  <id>280619</id>
+  <imdbid>tt3230854</imdbid>
+  <tmdbid>63639</tmdbid>
+  <uniqueid default="false" type="tmdb">63639</uniqueid>
+  <uniqueid default="false" type="tvrage">41967</uniqueid>
+  <uniqueid default="false" type="imdb">tt3230854</uniqueid>
+  <uniqueid default="false" type="zap2it">SH02250408</uniqueid>
+  <uniqueid default="true" type="tvdb">280619</uniqueid>
+  <premiered>2015-12-14</premiered>
+  <status>Ended</status>
+  <watched>false</watched>
+  <playcount/>
+  <genre>Science Fiction</genre>
+  <genre>Drama</genre>
+  <genre>Suspense</genre>
+  <genre>Thriller</genre>
+  <genre>Mystery</genre>
+  <studio>SYFY</studio>
+  <studio>Amazon Prime Video</studio>
+  <studio>YouTube</studio>
+  <country/>
+  <actor>
+    <name>Florence Faivre</name>
+    <role>Julie Mao</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/472774/5f10a0d3d7f47.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Thomas Jane</name>
+    <role>Josephus Miller</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/334058/5f21af38f338a.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Steven Strait</name>
+    <role>James Holden</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/355178/5f109e9da1002.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Cas Anvar</name>
+    <role>Alex Kamal</role>
+    <thumb>https://image.tmdb.org/t/p/h632/odiDezwWC5p3GyZsmQHV5MHjDIM.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/59214</profile>
+    <tmdbid>59214</tmdbid>
+  </actor>
+  <actor>
+    <name>Wes Chatham</name>
+    <role>Amos Burton</role>
+    <thumb>https://image.tmdb.org/t/p/h632/xquMa027hn2KRbuAbTMX94Sod4M.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/51682</profile>
+    <tmdbid>51682</tmdbid>
+  </actor>
+  <actor>
+    <name>Shohreh Aghdashloo</name>
+    <role>Chrisjen Avasarala</role>
+    <thumb>https://image.tmdb.org/t/p/h632/vuE7zU05kmnalORwIzVTi8uIMRA.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/21041</profile>
+    <tmdbid>21041</tmdbid>
+  </actor>
+  <actor>
+    <name>Dominique Tipper</name>
+    <role>Naomi Nagata</role>
+    <thumb>https://image.tmdb.org/t/p/h632/6unDi0MVvOkFnUmUFizqBb3ZeSe.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/1361876</profile>
+    <tmdbid>1361876</tmdbid>
+  </actor>
+  <actor>
+    <name>Chad Coleman</name>
+    <role>Fred Johnson</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/7932824/5f109f21d0236.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Jared Harris</name>
+    <role>Anderson Dawes</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/360332/5f10a07cce4a4.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Shawn Doyle</name>
+    <role>Sadavir Errinwright</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/317935/5f109fad3d8c7.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Frankie Adams</name>
+    <role>Roberta 'Bobbie' W. Draper</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/371677/5f21a7a16fd4e.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Nick E. Tarabay</name>
+    <role>Cotyar</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/297315/5f21adb7d134f.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Terry Chen</name>
+    <role>Praxidike Meng</role>
+    <thumb>https://artworks.thetvdb.com/banners/actors/449092.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Cara Gee</name>
+    <role>Camina Drummer</role>
+    <thumb>https://image.tmdb.org/t/p/h632/psX7bnX9xsQYK8fT39mwvmLE35d.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/1197122</profile>
+    <tmdbid>1197122</tmdbid>
+  </actor>
+  <actor>
+    <name>Andrew Rotilio</name>
+    <role>Diogo Harari</role>
+    <thumb>https://artworks.thetvdb.com/banners/actors/468447.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>David Strathairn</name>
+    <role>Klaes Ashford</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/325122/5f21a6f8b1231.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Elizabeth Mitchell</name>
+    <role>Anna Volovodov</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/327227/5f21ac96b981d.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Martin Roach</name>
+    <role>Souther</role>
+    <thumb>https://artworks.thetvdb.com/banners/actors/483156.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Nadine Nicole</name>
+    <role>Clarissa Mao</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/7893424/5fda484573ac8.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Burn Gorman</name>
+    <role>Adolphus Murtry</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/307183/5f109ff0f07a0.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>François Chau</name>
+    <role>Jules-Pierre Mao</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/7868313/5f21ad8f54336.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Keon Alexander</name>
+    <role>Marco Inaros</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/7881381/5fda47a466135.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Jasai Chase Owens</name>
+    <role>Felip</role>
+    <thumb>https://artworks.thetvdb.com/banners/person/8189865/5fda481aa8305.jpg</thumb>
+    <profile/>
+  </actor>
+  <actor>
+    <name>Lyndie Greenwood</name>
+    <role>Elvi Okoye</role>
+    <thumb>https://artworks.thetvdb.com/banners/v4/actor/493855/photo/61e47fbb2f770.jpg</thumb>
+    <profile/>
+  </actor>
+  <trailer>plugin://plugin.video.youtube/?action=play_video&amp;videoid=M0QwBp_da28&amp;hd=1</trailer>
+  <dateadded>2021-03-12 16:40:28</dateadded>
+  <!--tinyMediaManager meta data-->
+  <user_note/>
+</tvshow>

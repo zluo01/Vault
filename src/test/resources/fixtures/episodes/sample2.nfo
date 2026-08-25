@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--created on 2022-02-02 13:27:50 - tinyMediaManager 4.2.5.1-->
+<episodedetails>
+  <title>Dulcinea</title>
+  <originaltitle/>
+  <showtitle>The Expanse</showtitle>
+  <season>1</season>
+  <episode>1</episode>
+  <displayseason>-1</displayseason>
+  <displayepisode>-1</displayepisode>
+  <id>4856662</id>
+  <uniqueid default="false" type="tmdb">1098634</uniqueid>
+  <uniqueid default="false" type="tvrage">1065742153</uniqueid>
+  <uniqueid default="true" type="imdb">tt3982200</uniqueid>
+  <uniqueid default="false" type="tvdb">4856662</uniqueid>
+  <rating>7.7</rating>
+  <userrating>0.0</userrating>
+  <votes>0</votes>
+  <plot>In the outer solar system near Saturn, James Holden and the crew of the ice freighter Canterbury investigate a distress call from a mysterious derelict ship, the Scopuli. On Ceres Station, Detective Miller begins an off-the-books investigation of a missing heiress, Julie Mao.</plot>
+  <runtime>46</runtime>
+  <thumb>https://artworks.thetvdb.com/banners/series/280619/episodes/5fe0fe5523894.jpg</thumb>
+  <mpaa/>
+  <premiered>2015-12-14</premiered>
+  <aired>2015-12-14</aired>
+  <watched>false</watched>
+  <playcount>0</playcount>
+  <studio>Syfy</studio>
+  <studio>Legendary Television</studio>
+  <studio>Alcon Entertainment</studio>
+  <studio>Sean Daniel Company</studio>
+  <credits>Mark Fergus</credits>
+  <credits>Hawk Ostby</credits>
+  <director>Terry McDonough</director>
+  <trailer/>
+  <dateadded>2021-03-12 16:40:28</dateadded>
+  <epbookmark/>
+  <code/>
+  <fileinfo>
+    <streamdetails>
+      <video>
+        <codec>HEVC</codec>
+        <aspect>1.78</aspect>
+        <width>3840</width>
+        <height>2160</height>
+        <durationinseconds>2721</durationinseconds>
+        <stereomode/>
+      </video>
+      <audio>
+        <codec>DTSHD_MA</codec>
+        <language>eng</language>
+        <channels>6</channels>
+      </audio>
+      <subtitle>
+        <language>eng</language>
+      </subtitle>
+      <subtitle>
+        <language>eng</language>
+      </subtitle>
+      <subtitle>
+        <language>fra</language>
+      </subtitle>
+      <subtitle>
+        <language/>
+      </subtitle>
+    </streamdetails>
+  </fileinfo>
+  <!--tinyMediaManager meta data-->
+  <source>UNKNOWN</source>
+  <original_filename>The Expanse - S01E01 - Dulcinea.mkv</original_filename>
+  <user_note/>
+</episodedetails>

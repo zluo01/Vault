@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--created on 2022-01-13 17:36:37 - tinyMediaManager 4.2.5.1-->
+<movie>
+  <title>Blade Runner</title>
+  <originaltitle>Blade Runner</originaltitle>
+  <sorttitle/>
+  <epbookmark/>
+  <year>1982</year>
+  <ratings>
+    <rating default="false" max="10" name="themoviedb">
+      <value>7.9</value>
+      <votes>11070</votes>
+    </rating>
+    <rating default="true" max="10" name="imdb">
+      <value>8.1</value>
+      <votes>735886</votes>
+    </rating>
+  </ratings>
+  <userrating>0.0</userrating>
+  <top250>0</top250>
+  <set>
+    <name>Blade Runner Collection</name>
+    <overview/>
+  </set>
+  <plot>In the smog-choked dystopian Los Angeles of 2019, blade runner Rick Deckard is called out of retirement to terminate a quartet of replicants who have escaped to Earth seeking their creator for a way to extend their short life spans.</plot>
+  <outline>In the smog-choked dystopian Los Angeles of 2019, blade runner Rick Deckard is called out of retirement to terminate a quartet of replicants who have escaped to Earth seeking their creator for a way to extend their short life spans.</outline>
+  <tagline>Man has made his match... now it's his problem.</tagline>
+  <runtime>118</runtime>
+  <thumb aspect="poster">https://image.tmdb.org/t/p/original/63N9uy8nd9j7Eog2axPQ8lbr3Wj.jpg</thumb>
+  <thumb aspect="banner">https://assets.fanart.tv/fanart/movies/78/moviebanner/blade-runner-52085ac1ee44a.jpg</thumb>
+  <thumb aspect="clearart">https://assets.fanart.tv/fanart/movies/78/hdmovieclearart/blade-runner-520858fa41396.png</thumb>
+  <thumb aspect="clearlogo">https://assets.fanart.tv/fanart/movies/78/hdmovielogo/blade-runner-520a90a497794.png</thumb>
+  <thumb aspect="discart">https://assets.fanart.tv/fanart/movies/78/moviedisc/blade-runner-5593e49f25807.png</thumb>
+  <thumb aspect="landscape">https://assets.fanart.tv/fanart/movies/78/moviethumb/blade-runner-52085b415b2d5.jpg</thumb>
+  <thumb aspect="keyart">https://assets.fanart.tv/fanart/movies/78/movieposter/blade-runner-540ee73561759.jpg</thumb>
+  <thumb aspect="logo">https://assets.fanart.tv/fanart/movies/78/hdmovielogo/blade-runner-520a90a497794.png</thumb>
+  <fanart>
+    <thumb>https://image.tmdb.org/t/p/original/eIi3klFf7mp3oL5EEF4mLIDs26r.jpg</thumb>
+  </fanart>
+  <mpaa>US:R / US:Rated R</mpaa>
+  <certification>US:R / US:Rated R</certification>
+  <id>tt0083658</id>
+  <tmdbid>78</tmdbid>
+  <tmdbCollectionId>422837</tmdbCollectionId>
+  <uniqueid default="false" type="tmdb">78</uniqueid>
+  <uniqueid default="false" type="tmdbSet">422837</uniqueid>
+  <uniqueid default="true" type="imdb">tt0083658</uniqueid>
+  <country>United States</country>
+  <country>Hong Kong SAR China</country>
+  <country>United Kingdom</country>
+  <status/>
+  <code/>
+  <premiered>1982-06-25</premiered>
+  <watched>false</watched>
+  <playcount>0</playcount>
+  <lastplayed/>
+  <genre>Science Fiction</genre>
+  <genre>Drama</genre>
+  <genre>Thriller</genre>
+  <studio>Shaw Brothers</studio>
+  <studio>The Ladd Company</studio>
+  <studio>Warner Bros. Pictures</studio>
+  <credits>Philip K. Dick</credits>
+  <credits>Hampton Fancher</credits>
+  <credits>David Webb Peoples</credits>
+  <director>Ridley Scott</director>
+  <tag>artificial intelligence</tag>
+  <tag>flying car</tag>
+  <tag>bounty hunter</tag>
+  <tag>android</tag>
+  <tag>based on novel or book</tag>
+  <tag>dystopia</tag>
+  <tag>genetics</tag>
+  <tag>futuristic</tag>
+  <tag>fugitive</tag>
+  <tag>cyberpunk</tag>
+  <tag>los angeles, california</tag>
+  <tag>cult film</tag>
+  <tag>tech noir</tag>
+  <tag>neo-noir</tag>
+  <actor>
+    <name>Harrison Ford</name>
+    <role>Rick Deckard</role>
+    <thumb>https://image.tmdb.org/t/p/h632/6MQgrJvdTPFvyErIgn0B2lTLVhr.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/3</profile>
+    <tmdbid>3</tmdbid>
+  </actor>
+  <actor>
+    <name>Rutger Hauer</name>
+    <role>Roy Batty</role>
+    <thumb>https://image.tmdb.org/t/p/h632/aNvyDYD0YscuwMfgy15wb5gRKph.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/585</profile>
+    <tmdbid>585</tmdbid>
+  </actor>
+  <actor>
+    <name>Sean Young</name>
+    <role>Rachael</role>
+    <thumb>https://image.tmdb.org/t/p/h632/Ap2c6qruZtr2JJ1lbXwBG8HSqId.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/586</profile>
+    <tmdbid>586</tmdbid>
+  </actor>
+  <actor>
+    <name>Edward James Olmos</name>
+    <role>Gaff</role>
+    <thumb>https://image.tmdb.org/t/p/h632/mXnilUrQBIMLHSQkPjQk99mX70x.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/587</profile>
+    <tmdbid>587</tmdbid>
+  </actor>
+  <actor>
+    <name>M. Emmet Walsh</name>
+    <role>Bryant</role>
+    <thumb>https://image.tmdb.org/t/p/h632/5vPeWEixelZfQsDAr9tbm26JPtW.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/588</profile>
+    <tmdbid>588</tmdbid>
+  </actor>
+  <actor>
+    <name>Daryl Hannah</name>
+    <role>Pris</role>
+    <thumb>https://image.tmdb.org/t/p/h632/4Wn3bsHa7Js7mYX0iehYN7BuHOi.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/589</profile>
+    <tmdbid>589</tmdbid>
+  </actor>
+  <actor>
+    <name>William Sanderson</name>
+    <role>J.F. Sebastian</role>
+    <thumb>https://image.tmdb.org/t/p/h632/i3JfaavAFq9ayeJ4doUaOGjHMMW.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/590</profile>
+    <tmdbid>590</tmdbid>
+  </actor>
+  <actor>
+    <name>Brion James</name>
+    <role>Leon Kowalski</role>
+    <thumb>https://image.tmdb.org/t/p/h632/xVsM99MWIXWELP3dZeOgaL9qcJk.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/591</profile>
+    <tmdbid>591</tmdbid>
+  </actor>
+  <actor>
+    <name>Joe Turkel</name>
+    <role>Dr. Eldon Tyrell</role>
+    <thumb>https://image.tmdb.org/t/p/h632/ynR33HONTyXdhgRMu9OsG6PWyJY.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/592</profile>
+    <tmdbid>592</tmdbid>
+  </actor>
+  <actor>
+    <name>Joanna Cassidy</name>
+    <role>Zhora</role>
+    <thumb>https://image.tmdb.org/t/p/h632/cgyR6QLZdC6apR8eHnhgqDQmqyr.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/593</profile>
+    <tmdbid>593</tmdbid>
+  </actor>
+  <actor>
+    <name>James Hong</name>
+    <role>Hannibal Chew</role>
+    <thumb>https://image.tmdb.org/t/p/h632/v3lfw5aHOy0paOCx6WHiSnwzbH0.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/20904</profile>
+    <tmdbid>20904</tmdbid>
+  </actor>
+  <actor>
+    <name>Kevin Thompson</name>
+    <role>Bear</role>
+    <thumb>https://image.tmdb.org/t/p/h632/hhJNd4If3wWmhlKV1MLkDpWA6E5.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/53760</profile>
+    <tmdbid>53760</tmdbid>
+  </actor>
+  <actor>
+    <name>Hy Pyke</name>
+    <role>Taffey Lewis</role>
+    <thumb>https://image.tmdb.org/t/p/h632/uuSQqL8n4VkFXdWDq1XkEHDOvou.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/107074</profile>
+    <tmdbid>107074</tmdbid>
+  </actor>
+  <actor>
+    <name>Kimiko Hiroshige</name>
+    <role>Cambodian Lady</role>
+    <thumb/>
+    <profile>https://www.themoviedb.org/person/951333</profile>
+    <tmdbid>951333</tmdbid>
+  </actor>
+  <actor>
+    <name>Ben Astar</name>
+    <role>Abdul Ben Hassan (uncredited)</role>
+    <thumb>https://image.tmdb.org/t/p/h632/a5Galfx4joFSg14io8OkZEB5wPc.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/112965</profile>
+    <tmdbid>112965</tmdbid>
+  </actor>
+  <actor>
+    <name>Dawna Lee Heising</name>
+    <role>Showgirl (uncredited)</role>
+    <thumb>https://image.tmdb.org/t/p/h632/l4sFz8UGZSexBGuZpr9RdWPiOfb.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/1198993</profile>
+    <tmdbid>1198993</tmdbid>
+  </actor>
+  <actor>
+    <name>Alexis Rhee</name>
+    <role>Geisha #1 (uncredited)</role>
+    <thumb>https://image.tmdb.org/t/p/h632/ibTzWLoGOCwAwhMAWgrLjLcUlXp.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/58930</profile>
+    <tmdbid>58930</tmdbid>
+  </actor>
+  <actor>
+    <name>Bob Okazaki</name>
+    <role>Howie Lee</role>
+    <thumb/>
+    <profile>https://www.themoviedb.org/person/1221198</profile>
+    <tmdbid>1221198</tmdbid>
+  </actor>
+  <actor>
+    <name>Morgan Paull</name>
+    <role>Holden</role>
+    <thumb>https://image.tmdb.org/t/p/h632/y8hQzCz4WEqgD8biDdoBVw8zmNp.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/58495</profile>
+    <tmdbid>58495</tmdbid>
+  </actor>
+  <actor>
+    <name>John Edward Allen</name>
+    <role>Kaiser</role>
+    <thumb>https://image.tmdb.org/t/p/h632/fO2oPFzFPRmPkoP0XDT8k4IehgV.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/943481</profile>
+    <tmdbid>943481</tmdbid>
+  </actor>
+  <actor>
+    <name>Carolyn DeMirjian</name>
+    <role>Saleslady</role>
+    <thumb>https://image.tmdb.org/t/p/h632/ifRke3Ct4urlagX33ekt8MJMP2o.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/949610</profile>
+    <tmdbid>949610</tmdbid>
+  </actor>
+  <actor>
+    <name>Judith Burnett</name>
+    <role>Ming-Fa (uncredited)</role>
+    <thumb>https://image.tmdb.org/t/p/h632/cSkw5OEUXzRCHgniWA4ARIrE77e.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/324200</profile>
+    <tmdbid>324200</tmdbid>
+  </actor>
+  <actor>
+    <name>Leo Gorcey Jr.</name>
+    <role>Louie - Bartender (uncredited)</role>
+    <thumb>https://image.tmdb.org/t/p/h632/uCPaZ6sWC4sqkcKAFdaIyxbnbNi.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/1713945</profile>
+    <tmdbid>1713945</tmdbid>
+  </actor>
+  <actor>
+    <name>Sharon Hesky</name>
+    <role>Bar Patron (uncredited)</role>
+    <thumb/>
+    <profile>https://www.themoviedb.org/person/1894794</profile>
+    <tmdbid>1894794</tmdbid>
+  </actor>
+  <actor>
+    <name>Kelly Hine</name>
+    <role>Showgirl (uncredited)</role>
+    <thumb/>
+    <profile>https://www.themoviedb.org/person/1894795</profile>
+    <tmdbid>1894795</tmdbid>
+  </actor>
+  <actor>
+    <name>Tom Hutchinson</name>
+    <role>Bartender (uncredited)</role>
+    <thumb/>
+    <profile>https://www.themoviedb.org/person/1510856</profile>
+    <tmdbid>1510856</tmdbid>
+  </actor>
+  <actor>
+    <name>Charles Knapp</name>
+    <role>Bartender (uncredited)</role>
+    <thumb>https://image.tmdb.org/t/p/h632/pySATu1neWqZ3INnmdcLbGEhBbm.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/943879</profile>
+    <tmdbid>943879</tmdbid>
+  </actor>
+  <actor>
+    <name>Rose Mascari</name>
+    <role>Bar Patron (uncredited)</role>
+    <thumb/>
+    <profile>https://www.themoviedb.org/person/1894796</profile>
+    <tmdbid>1894796</tmdbid>
+  </actor>
+  <actor>
+    <name>Jirô Okazaki</name>
+    <role>Policeman (uncredited)</role>
+    <thumb>https://image.tmdb.org/t/p/h632/7B8WWT9WK7lmLXeI2lqc6gDcEwb.jpg</thumb>
+    <profile>https://www.themoviedb.org/person/239493</profile>
+    <tmdbid>239493</tmdbid>
+  </actor>
+  <actor>
+    <name>Steve Pope</name>
+    <role>Policeman (uncredited)</role>
+    <thumb/>
+    <profile>https://www.themoviedb.org/person/1701394</profile>
+    <tmdbid>1701394</tmdbid>
+  </actor>
+  <actor>
+    <name>Robert Reiter</name>
+    <role>Policeman (uncredited)</role>
+    <thumb/>
+    <profile>https://www.themoviedb.org/person/1894797</profile>
+    <tmdbid>1894797</tmdbid>
+  </actor>
+  <producer>
+    <name>Michael Deeley</name>
+    <role>Producer</role>
+    <thumb/>
+  </producer>
+  <producer>
+    <name>Jane Feinberg</name>
+    <role>Casting</role>
+    <thumb/>
+  </producer>
+  <producer>
+    <name>Mike Fenton</name>
+    <role>Casting</role>
+    <thumb/>
+  </producer>
+  <producer>
+    <name>Alan Collis</name>
+    <role>Production Manager</role>
+    <thumb/>
+  </producer>
+  <producer>
+    <name>Saul Kahan</name>
+    <role>Publicist</role>
+    <thumb/>
+  </producer>
+  <producer>
+    <name>John W. Rogers</name>
+    <role>Unit Production Manager</role>
+    <thumb/>
+  </producer>
+  <producer>
+    <name>Linda Hess</name>
+    <role>Production Assistant</role>
+    <thumb/>
+  </producer>
+  <producer>
+    <name>Katherine Haber</name>
+    <role>Production Executive</role>
+    <thumb/>
+  </producer>
+  <producer>
+    <name>Alan B. Rosin</name>
+    <role>Production Assistant</role>
+    <thumb/>
+  </producer>
+  <producer>
+    <name>Vickie Alper</name>
+    <role>Production Coordinator</role>
+    <thumb/>
+  </producer>
+  <trailer>plugin://plugin.video.youtube/?action=play_video&amp;videoid=eogpIG53Cis</trailer>
+  <languages>English, German, 广州话, 廣州話, Japanese, Hungarian</languages>
+  <dateadded>2021-03-12 16:18:06</dateadded>
+  <fileinfo>
+    <streamdetails>
+      <video>
+        <codec>HEVC</codec>
+        <aspect>2.4</aspect>
+        <width>3840</width>
+        <height>1600</height>
+        <durationinseconds>7051</durationinseconds>
+        <stereomode/>
+      </video>
+      <audio>
+        <codec>TrueHD/Atmos</codec>
+        <language>eng</language>
+        <channels>8</channels>
+      </audio>
+      <audio>
+        <codec>AC3</codec>
+        <language>eng</language>
+        <channels>6</channels>
+      </audio>
+      <audio>
+        <codec>AAC</codec>
+        <language>eng</language>
+        <channels>2</channels>
+      </audio>
+      <audio>
+        <codec>AAC</codec>
+        <language>eng</language>
+        <channels>2</channels>
+      </audio>
+      <audio>
+        <codec>AAC</codec>
+        <language>eng</language>
+        <channels>2</channels>
+      </audio>
+      <subtitle>
+        <language>eng</language>
+      </subtitle>
+      <subtitle>
+        <language>fra</language>
+      </subtitle>
+      <subtitle>
+        <language>deu</language>
+      </subtitle>
+      <subtitle>
+        <language>ita</language>
+      </subtitle>
+      <subtitle>
+        <language>spa</language>
+      </subtitle>
+      <subtitle>
+        <language>nld</language>
+      </subtitle>
+      <subtitle>
+        <language>zho</language>
+      </subtitle>
+      <subtitle>
+        <language>zho</language>
+      </subtitle>
+      <subtitle>
+        <language>zho</language>
+      </subtitle>
+      <subtitle>
+        <language>kor</language>
+      </subtitle>
+      <subtitle>
+        <language>spa</language>
+      </subtitle>
+      <subtitle>
+        <language>por</language>
+      </subtitle>
+      <subtitle>
+        <language>ara</language>
+      </subtitle>
+      <subtitle>
+        <language>ces</language>
+      </subtitle>
+      <subtitle>
+        <language>dan</language>
+      </subtitle>
+      <subtitle>
+        <language>fin</language>
+      </subtitle>
+      <subtitle>
+        <language>heb</language>
+      </subtitle>
+      <subtitle>
+        <language>nor</language>
+      </subtitle>
+      <subtitle>
+        <language>pol</language>
+      </subtitle>
+      <subtitle>
+        <language>por</language>
+      </subtitle>
+      <subtitle>
+        <language>rus</language>
+      </subtitle>
+      <subtitle>
+        <language>swe</language>
+      </subtitle>
+      <subtitle>
+        <language>tur</language>
+      </subtitle>
+      <subtitle>
+        <language>jpn</language>
+      </subtitle>
+      <subtitle>
+        <language>jpn</language>
+      </subtitle>
+      <subtitle>
+        <language>jpn</language>
+      </subtitle>
+      <subtitle>
+        <language>jpn</language>
+      </subtitle>
+    </streamdetails>
+  </fileinfo>
+  <!--tinyMediaManager meta data-->
+  <source>UNKNOWN</source>
+  <edition>NONE</edition>
+  <original_filename>Blade Runner.mkv</original_filename>
+  <user_note/>
+</movie>

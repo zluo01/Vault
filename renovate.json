@@ -8,36 +8,34 @@
       "automerge": true
     },
     {
-      "groupName": "tauri",
-      "matchPackageNames": ["@tauri-apps/*", "tauri*"]
+      "groupName": "javafx",
+      "matchPackageNames": ["org.openjfx:*", "org.controlsfx:*"]
     },
     {
-      "groupName": "tanstack",
-      "matchPackageNames": ["@tanstack/*"]
+      "groupName": "libraries",
+      "matchPackageNames": ["com.fasterxml.jackson*", "org.apache.logging.log4j:*"]
     },
     {
-      "groupName": "solidjs",
-      "matchPackageNames": ["solid-js", "@solid-primitives/*", "vite-plugin-solid"]
+      "groupName": "storage",
+      "matchPackageNames": ["org.xerial:*", "com.github.ben-manes.caffeine:*"]
     },
     {
-      "groupName": "styling",
+      "groupName": "testing",
+      "matchPackageNames": ["org.junit*", "org.mockito:*"]
+    },
+    {
+      "groupName": "maven-plugins",
       "matchPackageNames": [
-        "@tailwindcss/*",
-        "tailwindcss",
-        "tailwindcss-animate",
-        "tailwind-merge",
-        "daisyui",
-        "clsx"
+        "org.apache.maven.plugins:*",
+        "org.codehaus.mojo:*",
+        "org.panteleyev:*",
+        "com.diffplug.spotless:*",
+        "com.puppycrawl.tools:*"
       ]
     },
     {
-      "groupName": "tooling",
-      "matchPackageNames": ["vite", "vitest", "typescript", "@biomejs/*", "husky", "@types/*"]
-    },
-    {
-      "groupName": "utilities",
-      "matchPackageNames": ["immutable", "zod"]
+      "groupName": "github-actions",
+      "matchManagers": ["github-actions"]
     }
-  ],
-  "postUpdateOptions": ["pnpmDedupe"]
+  ]
 }
