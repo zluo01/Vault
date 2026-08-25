@@ -117,6 +117,7 @@ final class TagFilterBar {
     // ---- popup panel with sticky search + scrollable options ----
     Popup popup = new Popup();
     popup.setAutoHide(true);
+    popup.setConsumeAutoHidingEvents(false);
     themes.watch(popup);
 
     VBox panel = new VBox();

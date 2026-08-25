@@ -351,6 +351,7 @@ public final class ContentView {
 
     ContextMenu menu = new ContextMenu();
     menu.getStyleClass().add("sort-pop");
+    menu.setConsumeAutoHidingEvents(false);
     themes.watch(menu);
 
     AtomicLong hiddenAt = new AtomicLong();
