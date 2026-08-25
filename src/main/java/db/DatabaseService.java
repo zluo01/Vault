@@ -2,6 +2,7 @@ package db;
 
 import enums.FolderStatus;
 import enums.SortType;
+import enums.ThemeMode;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,8 @@ public interface DatabaseService extends AutoCloseable {
   void updateHideSidePanel(int hide);
 
   void updateSkipFolders(List<String> skipFolders);
+
+  void updateTheme(ThemeMode theme);
 
   int insertFolderData(String name, Path path);
 

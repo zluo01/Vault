@@ -15,6 +15,7 @@ import static org.mockito.Mockito.when;
 import enums.FilterType;
 import enums.FolderStatus;
 import enums.SortType;
+import enums.ThemeMode;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -229,28 +230,30 @@ class LibraryViewModelTest {
 
   @Test
   void addSkipFolderAppendsToExisting() {
-    viewModel.settingProperty().set(new Setting(true, List.of("extras")));
+    viewModel.settingProperty().set(new Setting(true, List.of("extras"), ThemeMode.SYSTEM));
     viewModel.addSkipFolder("bonus");
     verify(service).updateSkipFolders(List.of("extras", "bonus"));
   }
 
   @Test
   void addSkipFolderIgnoresDuplicate() {
-    viewModel.settingProperty().set(new Setting(true, List.of("extras")));
+    viewModel.settingProperty().set(new Setting(true, List.of("extras"), ThemeMode.SYSTEM));
     viewModel.addSkipFolder("extras");
     verify(service, never()).updateSkipFolders(any());
   }
 
   @Test
   void removeSkipFolderDropsOnlyThatName() {
-    viewModel.settingProperty().set(new Setting(true, List.of("extras", "bonus")));
+    viewModel
+        .settingProperty()
+        .set(new Setting(true, List.of("extras", "bonus"), ThemeMode.SYSTEM));
     viewModel.removeSkipFolder("bonus");
     verify(service).updateSkipFolders(List.of("extras"));
   }
 
   @Test
   void settingsMutationPublishesRefreshedSettings() throws Exception {
-    Setting refreshed = new Setting(false, List.of());
+    Setting refreshed = new Setting(false, List.of(), ThemeMode.SYSTEM);
     when(service.setShowSidePanel(false)).thenReturn(CompletableFuture.completedFuture(null));
     when(service.settings()).thenReturn(CompletableFuture.completedFuture(refreshed));
 
@@ -262,7 +265,7 @@ class LibraryViewModelTest {
 
   @Test
   void settingsMutationErrorIsNotified() {
-    viewModel.settingProperty().set(new Setting(true, List.of()));
+    viewModel.settingProperty().set(new Setting(true, List.of(), ThemeMode.SYSTEM));
     when(service.updateSkipFolders(any()))
         .thenReturn(CompletableFuture.failedFuture(new RuntimeException("boom")));
 

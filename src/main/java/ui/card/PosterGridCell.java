@@ -27,7 +27,6 @@ import model.Media;
 import model.Movie;
 import model.TvShow;
 import org.controlsfx.control.GridCell;
-import ui.Theme;
 import ui.helper.AsyncImageLoader;
 import ui.helper.CoverHelper;
 import ui.helper.TimeUtils;
@@ -129,7 +128,7 @@ public final class PosterGridCell extends GridCell<Media> {
     card = new VBox(14, art, footer);
 
     lift = new TranslateTransition(Duration.millis(220), art);
-    lift.setInterpolator(Theme.EASE_OUT);
+    lift.setInterpolator(Ui.EASE_OUT);
     art.setOnMouseEntered(
         e -> {
           hovered = true;
@@ -194,7 +193,8 @@ public final class PosterGridCell extends GridCell<Media> {
   }
 
   private void applyTone() {
-    art.setStyle("-fx-background-color: " + Theme.tone(Math.max(getIndex(), 0)) + ";");
+    art.getStyleClass().removeIf(c -> c.startsWith("tone-"));
+    art.getStyleClass().add("tone-" + Math.floorMod(Math.max(getIndex(), 0), 4));
   }
 
   private void loadPoster(String poster) {

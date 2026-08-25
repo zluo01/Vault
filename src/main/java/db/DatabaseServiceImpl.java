@@ -5,6 +5,7 @@ import enums.FolderStatus;
 import enums.MediaType;
 import enums.SortType;
 import enums.TagCategory;
+import enums.ThemeMode;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -56,7 +57,9 @@ final class DatabaseServiceImpl implements DatabaseService {
   public Setting getSettings() {
     return queryOne(
         DatabaseAction.GET_SETTINGS.query(),
-        rs -> Setting.of(rs.getInt("hide_panel") == 0, rs.getString("skip_folders")));
+        rs ->
+            Setting.of(
+                rs.getInt("hide_panel") == 0, rs.getString("skip_folders"), rs.getString("theme")));
   }
 
   @Override
@@ -67,6 +70,11 @@ final class DatabaseServiceImpl implements DatabaseService {
   @Override
   public void updateSkipFolders(final List<String> skipFolders) {
     update(DatabaseAction.UPDATE_SKIP_FOLDERS.query(), Strings.join(skipFolders, ','));
+  }
+
+  @Override
+  public void updateTheme(final ThemeMode theme) {
+    update(DatabaseAction.UPDATE_THEME.query(), theme.name());
   }
 
   @Override

@@ -2,7 +2,8 @@ CREATE TABLE IF NOT EXISTS settings
 (
     id           INTEGER PRIMARY KEY CHECK (id = 0),
     hide_panel   INTEGER NOT NULL DEFAULT 0 CHECK (hide_panel IN (0, 1)),
-    skip_folders TEXT    NOT NULL DEFAULT ''
+    skip_folders TEXT    NOT NULL DEFAULT '',
+    theme        TEXT    NOT NULL DEFAULT 'SYSTEM' CHECK (theme IN ('SYSTEM', 'LIGHT', 'DARK'))
 ) STRICT;
 INSERT OR IGNORE INTO settings (id)
 VALUES (0);

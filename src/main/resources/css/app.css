@@ -4,25 +4,54 @@
    ============================================================ */
 
 .root {
-    /* palette tokens (looked-up colors): the single source of truth, mirrored
-       by ui.Theme for the few paints that must be set from code */
-    -vault-bg: #060607;
-    -vault-surface: #0c0d0f;
-    -vault-text: #f2f2f0;
-    -vault-bright: #f7f7f5;
-    -vault-mid: #cfd0d2;
-    -vault-dim: #9a9da3;
-    -vault-dim2: #6f7176;
-    -vault-dim3: #5e6166;
-    -vault-faint: #46484e;
-    -vault-soft: #a9abb0;
-    -vault-muted: #7a7d84;
-    -vault-line: rgba(255, 255, 255, 0.14);
-    -vault-divider: rgba(255, 255, 255, 0.07);
+    /* palette tokens (looked-up colors): the single source of truth. Light
+       "paper & ink" is the base; the dark "void & bone" values live in the
+       prefers-color-scheme media query at the end of this file, driven by
+       Scene.Preferences.colorScheme (null = follow the OS). */
+    -vault-bg: #f2f1ed;
+    -vault-surface: #ffffff;
+    -vault-text: #121315;
+    -vault-bright: #0d0e10;
+    -vault-mid: #3a3c42;
+    /* dim2/dim3/faint/muted are floored at WCAG 4.5:1 against the page
+       background — they style 9-11px labels; hierarchy is kept by small
+       lightness steps above the floor */
+    -vault-dim: #5c5e64;
+    -vault-dim2: #65676c;
+    -vault-dim3: #6a6b70;
+    -vault-faint: #6d6e72;
+    -vault-soft: #4a4c52;
+    -vault-muted: #65676c;
+    -vault-line: rgba(13, 14, 16, 0.16);
+    -vault-line-strong: rgba(13, 14, 16, 0.34);
+    -vault-line-hover: rgba(13, 14, 16, 0.45);
+    -vault-line-focus: rgba(13, 14, 16, 0.55);
+    -vault-divider: rgba(13, 14, 16, 0.10);
+    -vault-hover-fill: rgba(13, 14, 16, 0.05);
+    -vault-frame-hover: rgba(13, 14, 16, 0.55);
+    -vault-frame-active: rgba(13, 14, 16, 0.85);
     -vault-accent: -vault-text;
+    /* popup-visible paints MUST be tokens: popups inherit looked-up colors
+       from the owner scene (correct theme), but media-query rules inside a
+       popup follow the OS scheme and ignore the scene's forced preference */
+    -vault-check-ring: rgba(13, 14, 16, 0.30);
+    -vault-input-fill: rgba(13, 14, 16, 0.035);
+    -vault-bg-side: #edece7;
+    -vault-danger-fill: rgba(196, 52, 52, 0.16);
+    -vault-backdrop: rgba(160, 158, 150, 0.42);
+    -vault-shadow: rgba(13, 14, 16, 0.20);
+    -vault-shadow-strong: rgba(13, 14, 16, 0.24);
+    -vault-focus-glow: rgba(13, 14, 16, 0.55);
+    -vault-tone-0: linear-gradient(from 0% 0% to 100% 100%, #e9e8e2, #dedcd6);
+    -vault-tone-1: linear-gradient(from 0% 0% to 100% 100%, #e5e4de, #dad8d2);
+    -vault-tone-2: linear-gradient(from 0% 0% to 100% 100%, #edece6, #e2e0da);
+    -vault-tone-3: linear-gradient(from 0% 0% to 100% 100%, #e2e1db, #d6d5cf);
 
     -fx-background-color: -vault-bg;
     -fx-font-family: "Sora", "Segoe UI", "Helvetica Neue", sans-serif;
+    -fx-focus-color: rgba(13, 14, 16, 0.45);
+    -fx-faint-focus-color: transparent;
+    -fx-accent: #dedcd6;
 }
 
 /* ---------- Title bar ---------- */
@@ -75,12 +104,12 @@
 }
 
 .win-btn-close:hover {
-    -fx-background-color: rgba(255, 90, 90, 0.18);
+    -fx-background-color: -vault-danger-fill;
 }
 
 /* ---------- Sidebar ---------- */
 .sidebar {
-    -fx-background-color: -vault-bg;
+    -fx-background-color: -vault-bg-side;
     -fx-border-color: transparent -vault-divider transparent transparent;
     -fx-border-width: 0 1 0 0;
 }
@@ -102,7 +131,7 @@
     -fx-cursor: hand;
     -fx-opacity: 0.62;
     -fx-background-color: transparent;
-    -fx-border-color: transparent transparent rgba(255, 255, 255, 0.045) transparent;
+    -fx-border-color: transparent transparent -vault-divider transparent;
     -fx-border-width: 0 0 1 0;
 }
 
@@ -111,7 +140,7 @@
 }
 
 .side-item:active {
-    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-background-color: -vault-hover-fill;
     -fx-opacity: 1;
 }
 
@@ -150,7 +179,7 @@
 }
 
 .import-btn:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.04);
+    -fx-background-color: -vault-hover-fill;
 }
 
 .import-label {
@@ -201,11 +230,11 @@
 }
 
 .kicker-tick {
-    -fx-background-color: rgba(255, 255, 255, 0.35);
+    -fx-background-color: -vault-line-strong;
 }
 
 .header-divider {
-    -fx-background-color: rgba(255, 255, 255, 0.08);
+    -fx-background-color: -vault-divider;
 }
 
 /* search (underline style) */
@@ -254,7 +283,7 @@
 }
 
 .facet:hover {
-    -fx-border-color: rgba(255, 255, 255, 0.30);
+    -fx-border-color: -vault-line-hover;
 }
 
 .facet > .label {
@@ -304,14 +333,15 @@
 
 /* active filter chips */
 .chip {
-    -fx-background-color: rgba(255, 255, 255, 0.05);
-    -fx-border-color: rgba(255, 255, 255, 0.10);
+    /* filled tag, no resting border per the reference sheet; hover adds one */
+    -fx-background-color: -vault-hover-fill;
+    -fx-border-color: transparent;
     -fx-border-width: 1;
     -fx-cursor: hand;
 }
 
 .chip:hover {
-    -fx-border-color: rgba(255, 255, 255, 0.28);
+    -fx-border-color: -vault-line-strong;
 }
 
 .chip-facet {
@@ -358,16 +388,16 @@
 
 /* the hairline frame is an overlay child so it stays visible above cover art */
 .poster-frame {
-    -fx-border-color: rgba(255, 255, 255, 0.10);
+    -fx-border-color: -vault-line;
     -fx-border-width: 1;
 }
 
 .poster:hover > .poster-frame {
-    -fx-border-color: rgba(255, 255, 255, 0.50);
+    -fx-border-color: -vault-frame-hover;
 }
 
 .poster:selected > .poster-frame {
-    -fx-border-color: rgba(255, 255, 255, 0.85);
+    -fx-border-color: -vault-frame-active;
 }
 
 .poster-scrim {
@@ -389,7 +419,8 @@
 }
 
 .poster-title {
-    -fx-text-fill: -vault-bright;
+    /* drawn over the poster scrim (always dark artwork backing) — not themed */
+    -fx-text-fill: #f7f7f5;
     -fx-font-size: 17px;
     -fx-font-weight: bold;
 }
@@ -435,7 +466,7 @@
 }
 
 .keyart, .keyart-frame {
-    -fx-border-color: rgba(255, 255, 255, 0.12);
+    -fx-border-color: -vault-line;
     -fx-border-width: 1;
 }
 
@@ -482,7 +513,7 @@
 }
 
 .season-tab:hover {
-    -fx-border-color: rgba(255, 255, 255, 0.30);
+    -fx-border-color: -vault-line-hover;
 }
 
 .season-tab:selected {
@@ -498,7 +529,7 @@
 }
 
 .ep-row:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.035);
+    -fx-background-color: -vault-hover-fill;
 }
 
 .ep-num {
@@ -508,7 +539,7 @@
 }
 
 .ep-thumb {
-    -fx-border-color: rgba(255, 255, 255, 0.10);
+    -fx-border-color: -vault-line;
     -fx-border-width: 1;
 }
 
@@ -528,7 +559,7 @@
     -fx-background-color: -vault-surface;
     -fx-border-color: -vault-line;
     -fx-border-width: 1;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 44, 0.2, 0, 16);
+    -fx-effect: dropshadow(gaussian, -vault-shadow, 44, 0.18, 0, 16);
 }
 
 .toast-label {
@@ -544,14 +575,14 @@
 
 /* ---------- Import dialog ---------- */
 .dialog-backdrop {
-    -fx-background-color: rgba(4, 5, 7, 0.66);
+    -fx-background-color: -vault-backdrop;
 }
 
 .dialog {
     -fx-background-color: -vault-surface;
     -fx-border-color: -vault-line;
     -fx-border-width: 1;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 60, 0.25, 0, 24);
+    -fx-effect: dropshadow(gaussian, -vault-shadow-strong, 58, 0.20, 0, 22);
 }
 
 .dialog-title {
@@ -583,22 +614,23 @@
 }
 
 .dialog-input:focused {
-    -fx-border-color: rgba(255, 255, 255, 0.45);
+    -fx-border-color: -vault-line-focus;
     -fx-background-color: transparent;
 }
 
 .browse-btn {
+    -fx-background-color: transparent;
     -fx-text-fill: -vault-mid;
     -fx-font-size: 11px;
     -fx-font-weight: 500;
-    -fx-border-color: rgba(255, 255, 255, 0.18);
+    -fx-border-color: -vault-line;
     -fx-border-width: 1;
     -fx-padding: 11 16 11 16;
     -fx-cursor: hand;
 }
 
 .browse-btn:hover {
-    -fx-border-color: rgba(255, 255, 255, 0.4);
+    -fx-border-color: -vault-line-hover;
     -fx-text-fill: -vault-text;
 }
 
@@ -667,7 +699,7 @@
 }
 
 .scroll-bar .thumb:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.30);
+    -fx-background-color: -vault-line-strong;
 }
 
 .scroll-bar .track {
@@ -697,6 +729,17 @@
     -fx-border-width: 1;
 }
 
+.facet-search-wrap {
+    -fx-padding: 14 14 10 14;
+}
+
+.facet-search-box {
+    -fx-background-color: -vault-input-fill;
+    -fx-border-color: -vault-line;
+    -fx-border-width: 1;
+    -fx-padding: 6 11 6 11;
+}
+
 .facet-search {
     -fx-background-color: transparent;
     -fx-text-fill: -vault-text;
@@ -704,9 +747,7 @@
     -fx-font-size: 12px;
     -fx-background-insets: 0;
     -fx-background-radius: 0;
-    -fx-border-color: transparent transparent rgba(255, 255, 255, 0.10) transparent;
-    -fx-border-width: 0 0 1 0;
-    -fx-padding: 10 12 10 12;
+    -fx-padding: 0;
 }
 
 .facet-search:focused {
@@ -716,18 +757,14 @@
 .facet-scroll {
     -fx-background-color: transparent;
     -fx-background: transparent;
-    -fx-padding: 6;
+    -fx-padding: 6 0 12 0;
 }
 
 .facet-scroll > .viewport {
     -fx-background-color: transparent;
 }
 
-.facet-row {
-    -fx-cursor: hand;
-}
-
-.facet-row:hover {
+.facet-check-box:hover {
     -fx-background-color: -vault-divider;
 }
 
@@ -766,34 +803,37 @@
     -fx-text-fill: -vault-soft;
     -fx-font-size: 12px;
     -fx-cursor: hand;
-    -fx-label-padding: 0 0 0 11;
+    -fx-label-padding: 0 0 0 9;
 }
 
+/* box ≈ 11px against the 12px label — the reference sheet's square-to-text
+   ratio. The outline is layered backgrounds (outer ring + surface inset),
+   colored by tokens: popups inherit tokens correctly, but media-query rules
+   in a popup follow the OS scheme and would leak the wrong theme here. */
 .facet-check-box > .box {
-    -fx-background-color: transparent;
-    -fx-background-insets: 0;
+    -fx-background-color: -vault-check-ring, -vault-surface;
+    -fx-background-insets: 0, 1.5;
     -fx-background-radius: 0;
-    -fx-border-color: rgba(255, 255, 255, 0.25);
-    -fx-border-width: 1;
-    -fx-padding: 2;
+    -fx-padding: 1;
 }
 
 .facet-check-box:selected > .box {
     -fx-background-color: -vault-text;
-    -fx-border-color: -vault-text;
+    -fx-background-insets: 0;
 }
 
 .facet-check-box > .box > .mark {
     -fx-background-color: transparent;
-    -fx-padding: 4.5 5 4.5 5;
+    -fx-padding: 4 4 4 4;
 }
 
 .facet-check-box:selected > .box > .mark {
-    -fx-background-color: -vault-bg;
+    /* checked = solid ink/bone square, per the reference sheet — no check glyph */
+    -fx-background-color: transparent;
 }
 
 .facet-check-box:focus-visible > .box {
-    -fx-border-color: rgba(255, 255, 255, 0.60);
+    -fx-border-color: -vault-line-focus;
 }
 
 .sort-tag {
@@ -824,7 +864,7 @@
     -fx-background-radius: 0;
 }
 
-.ghost-btn, .browse-btn, .clear-all, .title-btn, .refresh-btn,
+.ghost-btn, .clear-all, .title-btn, .refresh-btn,
 .back, .import-btn, .settings-row, .ep-row {
     -fx-background-color: transparent;
 }
@@ -834,14 +874,14 @@
    glow so focusing never shifts layout. */
 .browse-btn:focus-visible, .import-btn:focus-visible,
 .refresh-btn:focus-visible, .chip:focus-visible, .facet:focus-visible {
-    -fx-border-color: rgba(255, 255, 255, 0.60);
+    -fx-border-color: -vault-line-focus;
 }
 
 .ghost-btn:focus-visible, .primary-btn:focus-visible, .clear-all:focus-visible,
 .title-btn:focus-visible, .win-btn:focus-visible, .win-btn-close:focus-visible,
 .back:focus-visible, .settings-row:focus-visible,
 .side-item:focus-visible, .ep-row:focus-visible, .season-tab:focus-visible {
-    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.65), 8, 0.45, 0, 0);
+    -fx-effect: dropshadow(gaussian, -vault-focus-glow, 8, 0.45, 0, 0);
 }
 
 /* toolbar refresh button */
@@ -852,9 +892,72 @@
 }
 
 .refresh-btn:hover {
-    -fx-border-color: rgba(255, 255, 255, 0.30);
+    -fx-border-color: -vault-line-hover;
 }
 
 .refresh-btn:active {
-    -fx-border-color: rgba(255, 255, 255, 0.45);
+    -fx-border-color: -vault-accent;
+}
+
+/* ============================================================
+   Icon strokes and small fills, routed through the palette
+   tokens so both themes restyle them for free.
+   ============================================================ */
+.ico        { -fx-stroke: -vault-dim2; }
+.ico-mid    { -fx-stroke: -vault-mid; }
+.ico-faint  { -fx-stroke: -vault-faint; }
+.ico-square { -fx-stroke: -vault-bg; }
+.ico-active { -fx-stroke: -vault-accent; }
+
+.sort-dot-on         { -fx-background-color: -vault-accent; }
+.result-count-active { -fx-text-fill: -vault-accent; }
+
+/* monochrome poster tones shown while covers load or are missing */
+.tone-0 { -fx-background-color: -vault-tone-0; }
+.tone-1 { -fx-background-color: -vault-tone-1; }
+.tone-2 { -fx-background-color: -vault-tone-2; }
+.tone-3 { -fx-background-color: -vault-tone-3; }
+
+/* ============================================================
+   Dark theme ("void & bone"): everything the color-scheme flips.
+   Selected natively by the prefers-color-scheme media query,
+   which follows Scene.Preferences.colorScheme (null = OS).
+   ============================================================ */
+@media (prefers-color-scheme: dark) {
+    .root {
+        -vault-bg: #060607;
+        -vault-surface: #0c0d0f;
+        -vault-text: #f2f2f0;
+        -vault-bright: #f7f7f5;
+        -vault-mid: #cfd0d2;
+        -vault-dim: #9a9da3;
+        -vault-dim2: #7d7f83;
+        -vault-dim3: #787a7e;
+        -vault-faint: #75777b;
+        -vault-soft: #a9abb0;
+        -vault-muted: #7c7f85;
+        -vault-line: rgba(255, 255, 255, 0.14);
+        -vault-line-strong: rgba(255, 255, 255, 0.30);
+        -vault-line-hover: rgba(255, 255, 255, 0.30);
+        -vault-line-focus: rgba(255, 255, 255, 0.60);
+        -vault-divider: rgba(255, 255, 255, 0.07);
+        -vault-hover-fill: rgba(255, 255, 255, 0.05);
+        -vault-frame-hover: rgba(255, 255, 255, 0.50);
+        -vault-frame-active: rgba(255, 255, 255, 0.85);
+        -vault-check-ring: rgba(255, 255, 255, 0.35);
+        -vault-input-fill: rgba(255, 255, 255, 0.04);
+        -vault-bg-side: #060607;
+        -vault-danger-fill: rgba(255, 90, 90, 0.18);
+        -vault-backdrop: rgba(4, 5, 7, 0.66);
+        -vault-shadow: rgba(0, 0, 0, 0.60);
+        -vault-shadow-strong: rgba(0, 0, 0, 0.70);
+        -vault-focus-glow: rgba(255, 255, 255, 0.65);
+        -vault-tone-0: linear-gradient(from 0% 0% to 100% 100%, #1c1d1f, #0a0a0b);
+        -vault-tone-1: linear-gradient(from 0% 0% to 100% 100%, #161719, #08080a);
+        -vault-tone-2: linear-gradient(from 0% 0% to 100% 100%, #202123, #0c0c0e);
+        -vault-tone-3: linear-gradient(from 0% 0% to 100% 100%, #141517, #070708);
+        -fx-focus-color: rgba(242, 242, 240, 0.45);
+        -fx-accent: #26282d;
+    }
+
 }

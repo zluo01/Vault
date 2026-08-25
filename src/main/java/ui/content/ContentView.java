@@ -34,7 +34,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import javafx.util.Duration;
 import model.FolderData;
@@ -42,7 +41,7 @@ import model.Media;
 import model.TvShow;
 import org.controlsfx.control.GridView;
 import ui.MainView;
-import ui.Theme;
+import ui.ThemeManager;
 import ui.Toast;
 import ui.card.CardActions;
 import ui.card.PosterGridCell;
@@ -65,6 +64,7 @@ public final class ContentView {
   private final LibraryViewModel viewModel;
   private final MainView host;
   private final Toast toast;
+  private final ThemeManager themes;
 
   private final VBox root = new VBox();
   private final Label headerKicker = Ui.label("01", "kicker");
@@ -88,13 +88,14 @@ public final class ContentView {
   private final RotateTransition spin;
   private boolean scanning;
 
-  public ContentView(LibraryViewModel viewModel, MainView host, Toast toast) {
+  public ContentView(LibraryViewModel viewModel, MainView host, Toast toast, ThemeManager themes) {
     this.viewModel = viewModel;
     this.host = host;
     this.toast = toast;
-    this.tagFilters = new TagFilterBar(viewModel);
+    this.themes = themes;
+    this.tagFilters = new TagFilterBar(viewModel, themes);
 
-    refreshIcon = Ui.ico("M21 12 A9 9 0 1 1 18.36 5.64 M21 3 L21 9 L15 9", 1.7, Theme.MID);
+    refreshIcon = Ui.ico("M21 12 A9 9 0 1 1 18.36 5.64 M21 3 L21 9 L15 9", 1.7, "ico-mid");
     refreshIcon.setScaleX(0.62);
     refreshIcon.setScaleY(0.62);
     refreshBtn = Ui.button(refreshIcon, "refresh-btn");
@@ -302,18 +303,18 @@ public final class ContentView {
     scanning = loading;
     refreshBtn.pseudoClassStateChanged(ACTIVE, loading);
     if (loading) {
-      refreshIcon.setStroke(Color.web(Theme.ACCENT));
+      refreshIcon.getStyleClass().setAll("ico-active");
       spin.play();
       gridHost.setOpacity(0.45);
       gridHost.setDisable(true);
       viewModel.setStatus("SCANNING…");
-      resultCount.setStyle("-fx-text-fill:" + Theme.ACCENT + ";");
+      resultCount.getStyleClass().add("result-count-active");
     } else {
       spin.stop();
       refreshIcon.setRotate(0);
-      refreshIcon.setStroke(Color.web(Theme.MID));
+      refreshIcon.getStyleClass().setAll("ico-mid");
       gridHost.setDisable(false);
-      resultCount.setStyle(null);
+      resultCount.getStyleClass().remove("result-count-active");
       FadeTransition back = new FadeTransition(Duration.millis(260), gridHost);
       back.setFromValue(0.45);
       back.setToValue(1.0);
@@ -339,7 +340,7 @@ public final class ContentView {
   // =====================================================================
   private Region sortDropdown() {
     Label tag = Ui.label("Sort", "sort-tag");
-    SVGPath chev = Ui.ico(Ui.CHEVRON, 1.3, Theme.DIM2);
+    SVGPath chev = Ui.ico(Ui.CHEVRON, 1.3);
     HBox content = new HBox(9, tag, sortValue, chev);
     content.setAlignment(Pos.CENTER_LEFT);
     Button btn = Ui.button(content, "facet");
@@ -350,6 +351,7 @@ public final class ContentView {
 
     ContextMenu menu = new ContextMenu();
     menu.getStyleClass().add("sort-pop");
+    themes.watch(menu);
 
     AtomicLong hiddenAt = new AtomicLong();
     btn.setOnAction(
@@ -379,7 +381,9 @@ public final class ContentView {
     Label dot = new Label();
     dot.setMinSize(5, 5);
     dot.setMaxSize(5, 5);
-    dot.setStyle("-fx-background-color:" + (on ? Theme.ACCENT : "transparent") + ";");
+    if (on) {
+      dot.getStyleClass().add("sort-dot-on");
+    }
     Label lbl = Ui.label(sort.label(), on ? "facet-opt-on" : "facet-opt");
     HBox.setHgrow(lbl, Priority.ALWAYS);
     lbl.setMaxWidth(Double.MAX_VALUE);
@@ -430,8 +434,7 @@ public final class ContentView {
     e.setPadding(new Insets(100, 0, 0, 0));
     e.setMaxHeight(Region.USE_PREF_SIZE);
     e.setMouseTransparent(true);
-    SVGPath mag = Ui.ico("M11 4 A7 7 0 1 0 11.001 4 M16 16 L21 21", 1.2);
-    mag.setStroke(Color.web(Theme.FAINT));
+    SVGPath mag = Ui.ico("M11 4 A7 7 0 1 0 11.001 4 M16 16 L21 21", 1.2, "ico-faint");
     Label t = new Label("Nothing here yet.");
     t.getStyleClass().add("empty-title");
     Label s = Ui.label("IMPORT A FOLDER OR ADJUST YOUR FILTERS", "empty-sub");
@@ -446,8 +449,7 @@ public final class ContentView {
     e.setPadding(new Insets(100, 0, 0, 0));
     e.setMaxHeight(Region.USE_PREF_SIZE);
     e.setMouseTransparent(true);
-    SVGPath warn = Ui.ico("M12 3 L22 21 L2 21 Z M12 10 L12 15 M12 18 L12 18.01", 1.2);
-    warn.setStroke(Color.web(Theme.FAINT));
+    SVGPath warn = Ui.ico("M12 3 L22 21 L2 21 Z M12 10 L12 15 M12 18 L12 18.01", 1.2, "ico-faint");
     Label t = new Label("Directory build failed.");
     t.getStyleClass().add("empty-title");
     Label s = Ui.label("REFRESH TO RETRY", "empty-sub");

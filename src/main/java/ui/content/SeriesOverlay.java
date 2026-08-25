@@ -30,7 +30,6 @@ import model.FilterOption;
 import model.FolderData;
 import model.TvShow;
 import ui.MainView;
-import ui.Theme;
 import ui.Toast;
 import ui.helper.AsyncImageLoader;
 import ui.helper.CoverHelper;
@@ -217,7 +216,7 @@ public final class SeriesOverlay {
     keyArt.getStyleClass().add("keyart");
     keyArt.setMinSize(288, 432);
     keyArt.setMaxSize(288, 432);
-    keyArt.setStyle("-fx-background-color:" + Theme.tone(toneIndex) + ";");
+    keyArt.getStyleClass().add("tone-" + Math.floorMod(toneIndex, 4));
     keyArtCover.setSmooth(true);
     keyArtCover.setPreserveRatio(false);
     Region kscrim = new Region();
@@ -259,7 +258,7 @@ public final class SeriesOverlay {
       thumb.getStyleClass().add("ep-thumb");
       thumb.setMinSize(132, 74);
       thumb.setMaxSize(132, 74);
-      thumb.setStyle("-fx-background-color:" + Theme.tone(i) + ";");
+      thumb.getStyleClass().add("tone-" + Math.floorMod(i, 4));
       if (episode.preview() != null) {
         ImageView thumbView = new ImageView();
         thumb.getChildren().add(thumbView);

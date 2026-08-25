@@ -3,6 +3,7 @@ package service;
 import db.DatabaseService;
 import enums.FolderStatus;
 import enums.SortType;
+import enums.ThemeMode;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
@@ -109,6 +110,14 @@ public final class LibraryService implements AutoCloseable {
 
   public CompletableFuture<Void> setShowSidePanel(boolean show) {
     return run(() -> database.updateHideSidePanel(show ? 0 : 1));
+  }
+
+  public Setting currentSettings() {
+    return database.getSettings();
+  }
+
+  public void setTheme(ThemeMode theme) {
+    run(() -> database.updateTheme(theme));
   }
 
   public CompletableFuture<Void> deleteFolder(String name) {

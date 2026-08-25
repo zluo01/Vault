@@ -27,7 +27,7 @@ import javafx.stage.Popup;
 import javafx.stage.Screen;
 import model.FilterOption;
 import model.GroupedOption;
-import ui.Theme;
+import ui.ThemeManager;
 import ui.helper.Ui;
 import viewmodel.LibraryViewModel;
 
@@ -37,11 +37,13 @@ final class TagFilterBar {
   private final HBox facetsBox = new HBox(10);
   private final HBox chipBar = new HBox(8);
 
+  private final ThemeManager themes;
   private ObservableList<FilterOption> observedTags;
   private final ListChangeListener<FilterOption> tagsListener = change -> rebuildChips();
 
-  TagFilterBar(LibraryViewModel viewModel) {
+  TagFilterBar(LibraryViewModel viewModel, ThemeManager themes) {
     this.viewModel = viewModel;
+    this.themes = themes;
 
     facetsBox.setAlignment(Pos.CENTER_LEFT);
     chipBar.setAlignment(Pos.CENTER_LEFT);
@@ -91,7 +93,7 @@ final class TagFilterBar {
     // ---- trigger button ----
     Label name = Ui.label(facetName, "facet-text");
     Label badge = Ui.label("", "facet-badge");
-    SVGPath chev = Ui.ico(Ui.CHEVRON, 1.3, Theme.DIM2);
+    SVGPath chev = Ui.ico(Ui.CHEVRON, 1.3);
     HBox content = new HBox(9, name, badge, chev);
     content.setAlignment(Pos.CENTER_LEFT);
     Button btn = Ui.button(content, "facet");
@@ -115,6 +117,7 @@ final class TagFilterBar {
     // ---- popup panel with sticky search + scrollable options ----
     Popup popup = new Popup();
     popup.setAutoHide(true);
+    themes.watch(popup);
 
     VBox panel = new VBox();
     panel.getStyleClass().add("facet-pop");
@@ -123,9 +126,20 @@ final class TagFilterBar {
 
     TextField search = new TextField();
     search.setPromptText("Search " + facetName.toLowerCase(Locale.ROOT));
-    search.getStyleClass().add("facet-search"); // sticky: sits above the scroll
+    search.getStyleClass().add("facet-search");
+    HBox.setHgrow(search, Priority.ALWAYS);
+    // inset search box with magnifier, sticky above the scrolling option list
+    HBox searchBox =
+        new HBox(9, Ui.ico("M6 2.5 A4 4 0 1 0 6.001 2.5 M9.2 9.7 L12.5 13", 1.3), search);
+    searchBox.getStyleClass().add("facet-search-box");
+    searchBox.setAlignment(Pos.CENTER_LEFT);
+    VBox searchWrap = new VBox(searchBox);
+    searchWrap.getStyleClass().add("facet-search-wrap");
 
     VBox rows = new VBox();
+    // side insets match the search box, so hover bands align with its borders
+    // while the scrollbar stays at the panel edge
+    rows.setPadding(new Insets(0, 14, 0, 14));
     ScrollPane sp = new ScrollPane(rows);
     sp.setFitToWidth(true);
     sp.getStyleClass().add("facet-scroll");
@@ -152,7 +166,7 @@ final class TagFilterBar {
     rebuild.run();
     search.textProperty().addListener((o, a, b) -> rebuild.run());
 
-    panel.getChildren().addAll(search, sp);
+    panel.getChildren().addAll(searchWrap, sp);
     popup.getContent().add(panel);
 
     // Auto-hide fires on the press before the trigger's action runs, so a click meant to close
@@ -204,10 +218,10 @@ final class TagFilterBar {
 
   private Node facetOption(int folderId, FilterOption option) {
     CheckBox check = new CheckBox(option.label());
-    check.getStyleClass().addAll("facet-row", "facet-check-box");
+    check.getStyleClass().add("facet-check-box");
     check.setSelected(viewModel.hasTag(folderId, option));
     check.setMaxWidth(Double.MAX_VALUE);
-    check.setPadding(new Insets(9, 10, 9, 10));
+    check.setPadding(new Insets(6, 12, 6, 12));
     check.setOnAction(e -> viewModel.modifyTag(folderId, option));
     return check;
   }

@@ -26,7 +26,6 @@ import javafx.util.Duration;
 import model.FolderData;
 import model.FolderStats;
 import model.Setting;
-import ui.Theme;
 import ui.helper.Ui;
 import viewmodel.LibraryViewModel;
 
@@ -138,16 +137,16 @@ public final class Sidebar {
         new Timeline(
             new KeyFrame(
                 Duration.millis(300),
-                new KeyValue(fresh.minWidthProperty(), to, Theme.EASE_IN_OUT),
-                new KeyValue(fresh.prefWidthProperty(), to, Theme.EASE_IN_OUT),
-                new KeyValue(fresh.maxWidthProperty(), to, Theme.EASE_IN_OUT),
-                new KeyValue(clip.widthProperty(), to, Theme.EASE_IN_OUT)));
+                new KeyValue(fresh.minWidthProperty(), to, Ui.EASE_IN_OUT),
+                new KeyValue(fresh.prefWidthProperty(), to, Ui.EASE_IN_OUT),
+                new KeyValue(fresh.maxWidthProperty(), to, Ui.EASE_IN_OUT),
+                new KeyValue(clip.widthProperty(), to, Ui.EASE_IN_OUT)));
     tl.setOnFinished(e -> fresh.setClip(null));
     tl.play();
     FadeTransition fade = new FadeTransition(Duration.millis(260), fresh);
     fade.setFromValue(0.35);
     fade.setToValue(1);
-    fade.setInterpolator(Theme.EASE_OUT);
+    fade.setInterpolator(Ui.EASE_OUT);
     fade.play();
   }
 
@@ -189,7 +188,7 @@ public final class Sidebar {
       il.setMaxWidth(Double.MAX_VALUE);
       importContent.getChildren().add(il);
     }
-    StackPane sq = new StackPane(Ui.ico("M7 2.5 L7 11.5 M2.5 7 L11.5 7", 1.6, Theme.BG));
+    StackPane sq = new StackPane(Ui.ico("M7 2.5 L7 11.5 M2.5 7 L11.5 7", 1.6, "ico-square"));
     sq.getStyleClass().add("import-square");
     sq.setMinSize(32, 32);
     importContent.getChildren().add(sq);

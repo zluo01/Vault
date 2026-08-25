@@ -31,7 +31,8 @@ enum DatabaseAction {
   UPDATE_FOLDER_STATUS,
   UPDATE_HIDE_PANEL,
   UPDATE_SKIP_FOLDERS,
-  UPDATE_SORT_TYPE;
+  UPDATE_SORT_TYPE,
+  UPDATE_THEME;
 
   private static final Map<DatabaseAction, String> QUERY_MAP;
 

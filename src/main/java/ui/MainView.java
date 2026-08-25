@@ -17,6 +17,7 @@ import model.TvShow;
 import ui.content.ContentView;
 import ui.content.SeriesOverlay;
 import ui.dialog.ImportDialog;
+import ui.helper.Ui;
 import ui.settings.SettingsOverlay;
 import ui.shell.Sidebar;
 import ui.shell.TitleBar;
@@ -34,16 +35,16 @@ public final class MainView {
   private Region settingsOverlay;
   private Runnable settingsDispose;
 
-  public MainView(LibraryViewModel viewModel, Stage stage, Toast toast) {
+  public MainView(LibraryViewModel viewModel, Stage stage, Toast toast, ThemeManager themes) {
     this.viewModel = viewModel;
     this.toast = toast;
 
-    final ContentView content = new ContentView(viewModel, this, toast);
+    final ContentView content = new ContentView(viewModel, this, toast, themes);
     centerStack = new StackPane(content.getNode());
 
     final Sidebar sidebar =
         new Sidebar(viewModel, this::showImportDialog, this::showSettings, this::closeOverlays);
-    TitleBar titleBar = new TitleBar(stage, sidebar::toggle);
+    TitleBar titleBar = new TitleBar(stage, sidebar::toggle, themes);
 
     BorderPane base = new BorderPane();
     base.setTop(titleBar.getNode());
@@ -141,11 +142,11 @@ public final class MainView {
     FadeTransition fade = new FadeTransition(Duration.millis(260), overlay);
     fade.setFromValue(0);
     fade.setToValue(1);
-    fade.setInterpolator(Theme.EASE_OUT);
+    fade.setInterpolator(Ui.EASE_OUT);
     TranslateTransition slide = new TranslateTransition(Duration.millis(340), overlay);
     slide.setFromY(22);
     slide.setToY(0);
-    slide.setInterpolator(Theme.EASE_OUT);
+    slide.setInterpolator(Ui.EASE_OUT);
     new ParallelTransition(fade, slide).play();
   }
 
@@ -154,11 +155,11 @@ public final class MainView {
     FadeTransition fade = new FadeTransition(Duration.millis(200), overlay);
     fade.setFromValue(1);
     fade.setToValue(0);
-    fade.setInterpolator(Theme.EASE_OUT);
+    fade.setInterpolator(Ui.EASE_OUT);
     TranslateTransition slide = new TranslateTransition(Duration.millis(240), overlay);
     slide.setFromY(0);
     slide.setToY(16);
-    slide.setInterpolator(Theme.EASE_OUT);
+    slide.setInterpolator(Ui.EASE_OUT);
     ParallelTransition pt = new ParallelTransition(fade, slide);
     pt.setOnFinished(e -> centerStack.getChildren().remove(overlay));
     pt.play();

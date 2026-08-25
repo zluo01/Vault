@@ -1,5 +1,6 @@
 package ui.helper;
 
+import javafx.animation.Interpolator;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -11,13 +12,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
-import ui.Theme;
 
 /** Small factory helpers shared by every Vault view: styled labels and stroked SVG icons. */
 public final class Ui {
 
   /** The small downward chevron drawn on dropdown triggers. */
   public static final String CHEVRON = "M2.5 4.5 L6 8 L9.5 4.5";
+
+  /** ease-out: fast start, gentle settle — for entrances and hover motion. */
+  public static final Interpolator EASE_OUT = Interpolator.SPLINE(0.16, 1, 0.3, 1);
+
+  /** ease-in-out: for reversible motion like the sidebar collapse. */
+  public static final Interpolator EASE_IN_OUT = Interpolator.SPLINE(0.65, 0, 0.35, 1);
 
   private Ui() {}
 
@@ -60,13 +66,13 @@ public final class Ui {
   }
 
   public static SVGPath ico(String d, double width) {
-    return ico(d, width, Theme.DIM2);
+    return ico(d, width, "ico");
   }
 
-  public static SVGPath ico(String d, double width, String stroke) {
+  public static SVGPath ico(String d, double width, String styleClass) {
     SVGPath path = new SVGPath();
     path.setContent(d);
-    path.setStroke(Color.web(stroke));
+    path.getStyleClass().add(styleClass);
     path.setFill(Color.TRANSPARENT);
     path.setStrokeWidth(width);
     path.setStrokeLineCap(StrokeLineCap.ROUND);

@@ -6,7 +6,7 @@ import javafx.stage.StageStyle;
 import service.AppConfig;
 import service.LibraryService;
 import ui.MainView;
-import ui.Theme;
+import ui.ThemeManager;
 import ui.Toast;
 import ui.shell.WindowResizer;
 import viewmodel.LibraryViewModel;
@@ -17,16 +17,18 @@ public class VaultApplication extends Application {
 
   @Override
   public void start(Stage stage) {
-    service = new LibraryService(AppConfig.resolveDefault());
+    AppConfig config = AppConfig.resolveDefault();
+    service = new LibraryService(config);
 
     Toast toast = new Toast();
     LibraryViewModel viewModel = new LibraryViewModel(service, toast, getHostServices());
-    MainView mainView = new MainView(viewModel, stage, toast);
+    ThemeManager themes = new ThemeManager(service);
+    MainView mainView = new MainView(viewModel, stage, toast, themes);
     toast.attachTo(mainView.getRoot());
 
     Scene scene = new Scene(mainView.getRoot(), 1180, 760);
-    scene.setFill(Theme.BACKGROUND);
-    scene.getStylesheets().add(getClass().getResource(Theme.STYLESHEET).toExternalForm());
+    scene.getStylesheets().add(getClass().getResource("/css/app.css").toExternalForm());
+    themes.attach(scene);
 
     stage.initStyle(StageStyle.UNDECORATED);
     stage.setMinWidth(900);
