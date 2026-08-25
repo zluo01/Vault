@@ -52,6 +52,7 @@ public class VaultApplication extends Application {
 
   @Override
   public void stop() {
+    SingleInstance.release();
     if (service != null) {
       service.close();
     }

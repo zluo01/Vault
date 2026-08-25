@@ -11,9 +11,9 @@ import java.nio.file.StandardOpenOption;
 
 final class SingleInstance {
 
-  // Held for the whole process lifetime; the OS releases it on any exit, including crashes.
-  @SuppressWarnings("unused")
+  private static FileChannel channel;
   private static FileLock lock;
+  private static ServerSocketChannel server;
 
   private static volatile Runnable onActivate;
 
@@ -23,7 +23,7 @@ final class SingleInstance {
   static boolean acquire(final Path dataDir) {
     try {
       Files.createDirectories(dataDir);
-      final FileChannel channel =
+      channel =
           FileChannel.open(
               dataDir.resolve("vault.lock"), StandardOpenOption.CREATE, StandardOpenOption.WRITE);
       lock = channel.tryLock();
@@ -61,10 +61,27 @@ final class SingleInstance {
     onActivate = action;
   }
 
+  /** Proactively released everything on quit. */
+  static void release() {
+    try {
+      if (server != null) {
+        server.close();
+      }
+      if (lock != null) {
+        lock.release();
+      }
+      if (channel != null) {
+        channel.close();
+      }
+    } catch (IOException e) {
+      System.err.println("Single-instance release failed: " + e.getMessage());
+    }
+  }
+
   private static void listen(final Path dataDir) throws IOException {
     final Path socket = dataDir.resolve("vault.sock");
     Files.deleteIfExists(socket); // stale from a crash; the file lock proves it is ours
-    final ServerSocketChannel server = ServerSocketChannel.open(StandardProtocolFamily.UNIX);
+    server = ServerSocketChannel.open(StandardProtocolFamily.UNIX);
     server.bind(UnixDomainSocketAddress.of(socket));
     Thread.ofPlatform()
         .name("vault-single-instance")
