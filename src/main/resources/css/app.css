@@ -754,14 +754,26 @@
     -fx-background-color: transparent;
 }
 
-.facet-scroll {
+/* virtualized option list; side insets match the search box so hover bands
+   align with its borders */
+.facet-list {
     -fx-background-color: transparent;
-    -fx-background: transparent;
-    -fx-padding: 6 0 12 0;
+    -fx-background-insets: 0;
+    -fx-padding: 6 14 12 14;
 }
 
-.facet-scroll > .viewport {
+.facet-list:focused {
     -fx-background-color: transparent;
+}
+
+/* kill Modena's cell chrome (striping, selection bar): rows are styled
+   entirely by the facet-check-box they contain */
+.facet-list .list-cell,
+.facet-list .list-cell:odd,
+.facet-list .list-cell:filled:selected,
+.facet-list .list-cell:filled:selected:hover {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
 }
 
 .facet-check-box:hover {

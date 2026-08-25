@@ -6,8 +6,10 @@ import java.util.Locale;
 import java.util.concurrent.atomic.AtomicLong;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.IntegerBinding;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,7 +18,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -32,6 +35,8 @@ import ui.helper.Ui;
 import viewmodel.LibraryViewModel;
 
 final class TagFilterBar {
+
+  private static final double ROW_HEIGHT = 30;
 
   private final LibraryViewModel viewModel;
   private final HBox facetsBox = new HBox(10);
@@ -137,37 +142,29 @@ final class TagFilterBar {
     VBox searchWrap = new VBox(searchBox);
     searchWrap.getStyleClass().add("facet-search-wrap");
 
-    VBox rows = new VBox();
-    // side insets match the search box, so hover bands align with its borders
-    // while the scrollbar stays at the panel edge
-    rows.setPadding(new Insets(0, 14, 0, 14));
-    ScrollPane sp = new ScrollPane(rows);
-    sp.setFitToWidth(true);
-    sp.getStyleClass().add("facet-scroll");
-    sp.setMaxHeight(258);
-    VBox.setVgrow(sp, Priority.ALWAYS);
+    // virtualized option list
+    FilteredList<FilterOption> filtered = new FilteredList<>(FXCollections.observableList(all));
+    ListView<FilterOption> list = new ListView<>(filtered);
+    list.getStyleClass().add("facet-list");
+    list.setCellFactory(v -> new FacetOptionCell(folderId));
+    list.setFixedCellSize(ROW_HEIGHT);
+    list.setPlaceholder(Ui.label("No matches", "facet-empty"));
+    list.setFocusTraversable(false);
+    list.prefHeightProperty()
+        .bind(
+            Bindings.createDoubleBinding(
+                () -> Math.clamp(filtered.size() * ROW_HEIGHT + 18, 48, 258), filtered));
 
-    Runnable rebuild =
-        () -> {
-          String q =
-              search.getText() == null ? "" : search.getText().trim().toLowerCase(Locale.ROOT);
-          rows.getChildren().clear();
-          for (FilterOption option : all) {
-            if (!q.isEmpty() && !option.label().toLowerCase(Locale.ROOT).contains(q)) {
-              continue;
-            }
-            rows.getChildren().add(facetOption(folderId, option));
-          }
-          if (rows.getChildren().isEmpty()) {
-            Label none = Ui.label("No matches", "facet-empty");
-            none.setPadding(new Insets(14, 12, 14, 12));
-            rows.getChildren().add(none);
-          }
-        };
-    rebuild.run();
-    search.textProperty().addListener((o, a, b) -> rebuild.run());
+    search
+        .textProperty()
+        .addListener(
+            (o, a, text) -> {
+              String q = text == null ? "" : text.trim().toLowerCase(Locale.ROOT);
+              filtered.setPredicate(
+                  q.isEmpty() ? null : opt -> opt.label().toLowerCase(Locale.ROOT).contains(q));
+            });
 
-    panel.getChildren().addAll(searchWrap, sp);
+    panel.getChildren().addAll(searchWrap, list);
     popup.getContent().add(panel);
 
     // Auto-hide fires on the press before the trigger's action runs, so a click meant to close
@@ -180,9 +177,9 @@ final class TagFilterBar {
             return;
           }
           chev.setRotate(180);
-          // rebuild before showing so the checks always reflect the current selection
+          // refresh before showing so the checks always reflect the current selection
           search.clear();
-          rebuild.run();
+          list.refresh();
           Bounds b = btn.localToScreen(btn.getBoundsInLocal());
           popup.show(btn, b.getMinX(), b.getMaxY() + 6);
           clampToScreen(popup, b);
@@ -217,14 +214,36 @@ final class TagFilterBar {
     popup.setY(y);
   }
 
-  private Node facetOption(int folderId, FilterOption option) {
-    CheckBox check = new CheckBox(option.label());
-    check.getStyleClass().add("facet-check-box");
-    check.setSelected(viewModel.hasTag(folderId, option));
-    check.setMaxWidth(Double.MAX_VALUE);
-    check.setPadding(new Insets(6, 12, 6, 12));
-    check.setOnAction(e -> viewModel.modifyTag(folderId, option));
-    return check;
+  private final class FacetOptionCell extends ListCell<FilterOption> {
+
+    private final CheckBox check = new CheckBox();
+    private final int folderId;
+
+    FacetOptionCell(int folderId) {
+      this.folderId = folderId;
+      check.getStyleClass().add("facet-check-box");
+      check.setMaxWidth(Double.MAX_VALUE);
+      check.setPadding(new Insets(6, 12, 6, 12));
+      check.setOnAction(
+          e -> {
+            FilterOption option = getItem();
+            if (option != null) {
+              viewModel.modifyTag(folderId, option);
+            }
+          });
+    }
+
+    @Override
+    protected void updateItem(FilterOption option, boolean empty) {
+      super.updateItem(option, empty);
+      if (empty || option == null) {
+        setGraphic(null);
+        return;
+      }
+      check.setText(option.label());
+      check.setSelected(viewModel.hasTag(folderId, option));
+      setGraphic(check);
+    }
   }
 
   // =====================================================================
