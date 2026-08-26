@@ -120,3 +120,7 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# native image-conversion library build state and output
+/native/work/
+/native/out/

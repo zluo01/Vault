@@ -54,6 +54,14 @@
     </properties>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/native/out/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -130,7 +138,7 @@
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <!-- https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3 -->
-                    <argLine>-javaagent:${org.mockito:mockito-core:jar}</argLine>
+                    <argLine>-javaagent:${org.mockito:mockito-core:jar} --enable-native-access=ALL-UNNAMED</argLine>
                 </configuration>
             </plugin>
             <plugin>
@@ -221,6 +229,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit-jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>${mockito.version}</version>
@@ -233,7 +247,10 @@
         <profile>
             <id>natives-linux-x86_64</id>
             <activation>
-                <os><name>Linux</name><arch>amd64</arch></os>
+                <os>
+                    <name>Linux</name>
+                    <arch>amd64</arch>
+                </os>
             </activation>
             <properties>
                 <sqlite.native.keep>Linux/x86_64</sqlite.native.keep>
@@ -242,7 +259,10 @@
         <profile>
             <id>natives-linux-aarch64</id>
             <activation>
-                <os><name>Linux</name><arch>aarch64</arch></os>
+                <os>
+                    <name>Linux</name>
+                    <arch>aarch64</arch>
+                </os>
             </activation>
             <properties>
                 <sqlite.native.keep>Linux/aarch64</sqlite.native.keep>
@@ -251,7 +271,10 @@
         <profile>
             <id>natives-mac-aarch64</id>
             <activation>
-                <os><family>mac</family><arch>aarch64</arch></os>
+                <os>
+                    <family>mac</family>
+                    <arch>aarch64</arch>
+                </os>
             </activation>
             <properties>
                 <sqlite.native.keep>Mac/aarch64</sqlite.native.keep>
@@ -262,7 +285,10 @@
         <profile>
             <id>natives-mac-x86_64</id>
             <activation>
-                <os><family>mac</family><arch>x86_64</arch></os>
+                <os>
+                    <family>mac</family>
+                    <arch>x86_64</arch>
+                </os>
             </activation>
             <properties>
                 <sqlite.native.keep>Mac/x86_64</sqlite.native.keep>
@@ -273,7 +299,10 @@
         <profile>
             <id>natives-windows-x86_64</id>
             <activation>
-                <os><family>windows</family><arch>amd64</arch></os>
+                <os>
+                    <family>windows</family>
+                    <arch>amd64</arch>
+                </os>
             </activation>
             <properties>
                 <sqlite.native.keep>Windows/x86_64</sqlite.native.keep>
@@ -302,6 +331,7 @@
                                             <mainClass>${main.class}</mainClass>
                                             <manifestEntries>
                                                 <Implementation-Version>${project.version}</Implementation-Version>
+                                                <Enable-Native-Access>ALL-UNNAMED</Enable-Native-Access>
                                             </manifestEntries>
                                         </transformer>
                                         <transformer
@@ -372,10 +402,12 @@
                                 <configuration>
                                     <target>
                                         <zip destfile="${project.build.directory}/mods/sqlite-jdbc-stripped.jar">
-                                            <zipfileset src="${project.build.directory}/mods/sqlite-jdbc-${sqlite.version}.jar"
-                                                        excludes="org/sqlite/native/**"/>
-                                            <zipfileset src="${project.build.directory}/mods/sqlite-jdbc-${sqlite.version}.jar"
-                                                        includes="org/sqlite/native/${sqlite.native.keep}/**"/>
+                                            <zipfileset
+                                                    src="${project.build.directory}/mods/sqlite-jdbc-${sqlite.version}.jar"
+                                                    excludes="org/sqlite/native/**"/>
+                                            <zipfileset
+                                                    src="${project.build.directory}/mods/sqlite-jdbc-${sqlite.version}.jar"
+                                                    includes="org/sqlite/native/${sqlite.native.keep}/**"/>
                                         </zip>
                                         <move file="${project.build.directory}/mods/sqlite-jdbc-stripped.jar"
                                               tofile="${project.build.directory}/mods/sqlite-jdbc-${sqlite.version}.jar"/>
