@@ -23,14 +23,56 @@ jobs:
           java-version: '25'
           cache: maven
 
+      - name: Restore native library
+        id: native-cache
+        uses: actions/cache@v4
+        with:
+          path: native/out
+          key: native-linux-${{ hashFiles('native/**') }}
+
+      - name: Build native library
+        if: steps.native-cache.outputs.cache-hit != 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ninja-build
+          ./native/build-linux.sh
+
       # verify = checkstyle + spotless + compile + unit tests + jar.
       # xvfb provides the display JavaFX-touching tests need on a headless runner.
       - name: Build & run tests
         run: xvfb-run -a mvn -B verify
 
+  native-windows:
+    name: Native library — Windows (cross)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Restore native library
+        id: native-cache
+        uses: actions/cache@v4
+        with:
+          path: native/out
+          key: native-windows-${{ hashFiles('native/**') }}
+
+      - name: Build native library
+        if: steps.native-cache.outputs.cache-hit != 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ninja-build gcc-mingw-w64-x86-64
+          ./native/build-windows.sh
+
+      - name: Upload native library
+        uses: actions/upload-artifact@v4
+        with:
+          name: libimage-windows
+          path: native/out/resources/libimage
+          if-no-files-found: error
+          retention-days: 1
+
   package:
     name: Package — ${{ matrix.name }}
-    needs: [ check ]
+    needs: [ check, native-windows ]
     strategy:
       fail-fast: false
       matrix:
@@ -38,10 +80,12 @@ jobs:
           - name: macOS arm64 (dmg)
             os: macos-latest
             type: DMG
+            native-script: build-mac.sh
             artifact: target/dist/*.dmg
           - name: Linux x86_64 (AppImage)
             os: ubuntu-latest
             type: APP_IMAGE
+            native-script: build-linux.sh
             artifact: target/appimage/*.AppImage
           - name: Windows x86_64 (msi)
             os: windows-latest
@@ -58,6 +102,30 @@ jobs:
           distribution: corretto
           java-version: '25'
           cache: maven
+
+      - name: Restore native library
+        if: matrix.native-script
+        id: native-cache
+        uses: actions/cache@v4
+        with:
+          path: native/out
+          key: native-${{ runner.os == 'Linux' && 'linux' || 'mac' }}-${{ hashFiles('native/**') }}
+
+      - name: Build native library
+        if: matrix.native-script && steps.native-cache.outputs.cache-hit != 'true'
+        run: |
+          if [ "$RUNNER_OS" = "Linux" ]; then
+            sudo apt-get update
+            sudo apt-get install -y --no-install-recommends ninja-build
+          fi
+          ./native/${{ matrix.native-script }}
+
+      - name: Download native library (Windows)
+        if: matrix.type == 'MSI'
+        uses: actions/download-artifact@v5
+        with:
+          name: libimage-windows
+          path: native/out/resources
 
       # tests already ran in the check job
       - name: Build application image
@@ -108,6 +176,7 @@ jobs:
         uses: actions/download-artifact@v5
         with:
           path: dist
+          pattern: Vault-*
           merge-multiple: true
 
       - name: Create draft release
