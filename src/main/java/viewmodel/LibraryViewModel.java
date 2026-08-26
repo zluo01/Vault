@@ -2,7 +2,6 @@ package viewmodel;
 
 import enums.FolderStatus;
 import enums.SortType;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -431,18 +430,12 @@ public final class LibraryViewModel {
 
   private void shellOpen(final Path target, final String... command) {
     try {
-      final Process process =
-          new ProcessBuilder(command)
-              .redirectOutput(ProcessBuilder.Redirect.DISCARD)
-              .redirectError(ProcessBuilder.Redirect.DISCARD)
-              .start();
-      if (process.waitFor() != 0) {
-        notifier.show("Open Error: " + target);
-      }
-    } catch (IOException e) {
+      new ProcessBuilder(command)
+          .redirectOutput(ProcessBuilder.Redirect.DISCARD)
+          .redirectError(ProcessBuilder.Redirect.DISCARD)
+          .start();
+    } catch (Exception e) {
       notifier.show("Open Error: " + rootMessage(e));
-    } catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
     }
   }
 
