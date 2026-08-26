@@ -18,6 +18,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
+import model.Comic;
 import model.Episode;
 import model.FilterOption;
 import model.FolderData;
@@ -30,6 +31,7 @@ import model.Setting;
 import model.TvShow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import parser.ComicParser;
 import parser.CoverImageConverter;
 import parser.LibraryScanner;
 import util.PathUtils;
@@ -180,11 +182,25 @@ public final class LibraryService implements AutoCloseable {
     final Path folderCovers = config.coversDir().resolve(folderName);
     try (var pool = Executors.newVirtualThreadPerTaskExecutor()) {
       for (ParsedMedia item : items) {
+        if (item.media() instanceof Comic comic) {
+          pool.execute(() -> convertComicCover(folderCovers, comic));
+          continue;
+        }
         final Path itemPath = item.media().path();
         for (String value : posterValues(item.media())) {
           pool.execute(() -> convertCover(folderCovers, root, itemPath, value));
         }
       }
+    }
+  }
+
+  private static void convertComicCover(final Path folderCovers, final Comic comic) {
+    try {
+      final Path dest = PathUtils.resolveRelative(folderCovers, comic.poster());
+      Files.createDirectories(dest.getParent());
+      CoverImageConverter.convert(ComicParser.extractCover(comic.path()), dest);
+    } catch (IOException e) {
+      LOGGER.warn("Failed to extract cover for {}: {}", comic.path(), e.getMessage());
     }
   }
 
@@ -207,6 +223,7 @@ public final class LibraryService implements AutoCloseable {
       case Movie movie -> movie.poster() == null ? List.of() : List.of(movie.poster());
       case TvShow show -> List.copyOf(show.posters().values());
       case Episode episode -> episode.preview() == null ? List.of() : List.of(episode.preview());
+      case Comic _ -> throw new IllegalStateException("Unexpected handling on comic media type.");
     };
   }
 

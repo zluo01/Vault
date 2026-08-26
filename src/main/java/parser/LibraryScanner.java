@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.Executors;
+import java.util.stream.Stream;
 import model.ParsedMedia;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,7 @@ public final class LibraryScanner {
       Set.of("m4v", "avi", "mpg", "mp4", "mkv", "f4v", "wmv", "rmvb", "iso");
   private static final Set<String> IMAGE_EXTENSIONS =
       Set.of("jpg", "jpeg", "png", "bmp", "gif", "webp", "avif");
+  private static final Set<String> COMIC_EXTENSIONS = Set.of("cbz");
 
   private static final int SCAN_PARALLELISM =
       Math.clamp(Runtime.getRuntime().availableProcessors(), 2, 4);
@@ -47,13 +49,18 @@ public final class LibraryScanner {
                                   pool.submit(() -> NfoParser.parse(nfo, m.images, m.mediaFiles))))
               .toList();
 
-      return futures.stream()
+      final var comicFutures =
+          visitor.comicFiles().stream()
+              .map(comic -> pool.submit(() -> Optional.of(ComicParser.parse(root, comic))))
+              .toList();
+
+      return Stream.concat(futures.stream(), comicFutures.stream())
           .map(
               f -> {
                 try {
                   return f.get();
                 } catch (Exception e) {
-                  LOGGER.warn("Fail to parse nfo file.", e);
+                  LOGGER.warn("Fail to parse media file.", e);
                   return Optional.<ParsedMedia>empty();
                 }
               })
@@ -66,15 +73,21 @@ public final class LibraryScanner {
     private final Path root;
     private final Set<String> skipFolders;
     private final List<MediaFiles> mediaFiles;
+    private final List<Path> comicFiles;
 
     MediaFileVisitor(final Path root, final Set<String> skipFolders) {
       this.root = root;
       this.skipFolders = skipFolders;
       this.mediaFiles = new ArrayList<>();
+      this.comicFiles = new ArrayList<>();
     }
 
     public List<MediaFiles> mediaFiles() {
       return mediaFiles;
+    }
+
+    public List<Path> comicFiles() {
+      return comicFiles;
     }
 
     @Override
@@ -103,6 +116,8 @@ public final class LibraryScanner {
             nfoFiles.add(p);
           } else if (VIDEO_EXTENSIONS.contains(ext)) {
             media.add(root.relativize(p));
+          } else if (COMIC_EXTENSIONS.contains(ext)) {
+            comicFiles.add(root.relativize(p));
           } else if (IMAGE_EXTENSIONS.contains(ext)
               && (fileName.contains("poster") || fileName.contains("thumb"))) {
             images.add(root.relativize(p));

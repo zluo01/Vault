@@ -27,10 +27,12 @@ public final class CoverImageConverter {
   }
 
   public static void convert(final Path source, final Path dest) throws IOException {
-    final byte[] data = Files.readAllBytes(source);
+    convert(Files.readAllBytes(source), dest);
+  }
 
+  public static void convert(final byte[] data, final Path dest) throws IOException {
     if (isGif(data)) {
-      Files.copy(source, dest, StandardCopyOption.REPLACE_EXISTING);
+      Files.write(dest, data);
       return;
     }
 
@@ -38,7 +40,7 @@ public final class CoverImageConverter {
     try {
       jpeg = Codec.CODEC.toJpeg(data, MAX_WIDTH, MAX_HEIGHT, JPEG_QUALITY);
     } catch (IllegalStateException e) {
-      throw new IOException("Unsupported image format: " + source, e);
+      throw new IOException("Unsupported image format for " + dest.getFileName(), e);
     }
 
     final Path tmp = dest.resolveSibling(dest.getFileName() + ".jpg");

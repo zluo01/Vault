@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import model.Comic;
 import model.Episode;
 import model.FilterOption;
 import model.FolderData;
@@ -304,6 +305,18 @@ final class DatabaseServiceImpl implements DatabaseService {
             ps.setString(8, folderName);
             ps.addBatch();
           }
+          case Comic comic -> {
+            ps.setString(1, MediaType.COMIC.name());
+            ps.setString(2, comic.path().toString());
+            ps.setString(3, comic.title());
+            ps.setString(
+                4, Json.write(comic.poster() == null ? Map.of() : Map.of("main", comic.poster())));
+            ps.setString(5, null);
+            ps.setString(6, String.valueOf(comic.pages()));
+            ps.setString(7, comic.file());
+            ps.setString(8, folderName);
+            ps.addBatch();
+          }
           case Episode ignored -> {}
         }
       }
@@ -380,6 +393,7 @@ final class DatabaseServiceImpl implements DatabaseService {
     return switch (type) {
       case MOVIE -> mapMovie(rs, folderPath, posters);
       case TV_SHOW -> mapTvShow(rs, folderPath, posters);
+      case COMIC -> mapComic(rs, folderPath, posters);
       default -> null;
     };
   }
@@ -395,6 +409,19 @@ final class DatabaseServiceImpl implements DatabaseService {
         .runtime(rs.getString("runtime"))
         .file(rs.getString("file"))
         .build();
+  }
+
+  private static Comic mapComic(
+      final ResultSet rs, final Path comicPath, final Map<String, String> posters)
+      throws SQLException {
+    int pages;
+    try {
+      pages = Integer.parseInt(rs.getString("runtime"));
+    } catch (NumberFormatException e) {
+      pages = 0;
+    }
+    return new Comic(
+        rs.getString("title"), comicPath, rs.getString("file"), posters.get("main"), pages);
   }
 
   private static TvShow mapTvShow(

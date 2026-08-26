@@ -23,6 +23,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.SVGPath;
 import javafx.util.Duration;
+import model.Comic;
 import model.Media;
 import model.Movie;
 import model.TvShow;
@@ -230,6 +231,7 @@ public final class PosterGridCell extends GridCell<Media> {
     return switch (media) {
       case Movie movie -> TimeUtils.runtimeText(movie.runtime());
       case TvShow _ -> "SERIES";
+      case Comic comic -> comic.pages() + " PAGES";
       default -> "—";
     };
   }

@@ -28,6 +28,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.collections.transformation.FilteredList;
+import model.Comic;
 import model.Episode;
 import model.FilterOption;
 import model.FolderData;
@@ -389,8 +390,10 @@ public final class LibraryViewModel {
 
   public void openMedia(final Media media) {
     // TV shows are opened via the season/episode menu, handled by the UI.
-    if (Objects.requireNonNull(media) instanceof Movie movie) {
-      open(movie.path().resolve(movie.file()));
+    switch (Objects.requireNonNull(media)) {
+      case Movie movie -> open(movie.path().resolve(movie.file()));
+      case Comic comic -> open(comic.path());
+      default -> {}
     }
   }
 
@@ -399,7 +402,8 @@ public final class LibraryViewModel {
   }
 
   public void openContainingFolder(final Media media) {
-    open(media.path());
+    // a comic's path is the archive itself, open its directory instead
+    open(media instanceof Comic comic ? comic.path().getParent() : media.path());
   }
 
   private void open(final Path target) {

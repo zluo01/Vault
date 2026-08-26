@@ -9,6 +9,8 @@ public final class PathUtils {
     ".jpg", ".png", ".jpeg", ".bmp", ".gif", ".webp", ".avif"
   };
 
+  private static final String[] COMIC_EXTENSIONS = {".cbz"};
+
   private PathUtils() {}
 
   public static String stripImageExtensions(String path) {
@@ -17,6 +19,10 @@ public final class PathUtils {
 
   public static String stripImageExtensions(Path path) {
     return stripImageExtensions(path.toString());
+  }
+
+  public static String stripComicExtensions(Path path) {
+    return stripExtensions(path.toString(), COMIC_EXTENSIONS);
   }
 
   private static String stripExtensions(String path, String[] extensions) {
