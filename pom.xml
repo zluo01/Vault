@@ -6,7 +6,7 @@
 
     <groupId>com.github.zluo01</groupId>
     <artifactId>vault</artifactId>
-    <version>0.6.0</version>
+    <version>0.7.0</version>
     <packaging>jar</packaging>
     <name>Vault</name>
     <description>Manager for movies, TV shows and comics</description>
