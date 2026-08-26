@@ -2,10 +2,25 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended", ":disableDependencyDashboard"],
   "schedule": ["every weekend"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Version pins for the bundled libimage build",
+      "managerFilePatterns": ["/^native/versions\\.sh$/"],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>[a-z-]+) depName=(?<depName>\\S+)(?: registryUrl=(?<registryUrl>\\S+))?(?: versioning=(?<versioning>\\S+))?(?: extractVersion=(?<extractVersion>\\S+))?\\s*\\n[A-Z0-9_]+(?:_VERSION|_TAG)=(?<currentValue>\\S+)"
+      ]
+    }
+  ],
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
       "automerge": true
+    },
+    {
+      "groupName": "native-libimage",
+      "matchFileNames": ["native/versions.sh"],
+      "automerge": false
     },
     {
       "groupName": "javafx",
@@ -13,7 +28,7 @@
     },
     {
       "groupName": "libraries",
-      "matchPackageNames": ["com.fasterxml.jackson*", "org.apache.logging.log4j:*"]
+      "matchPackageNames": ["tools.jackson*", "ch.qos.logback:*", "org.slf4j:*"]
     },
     {
       "groupName": "storage",
