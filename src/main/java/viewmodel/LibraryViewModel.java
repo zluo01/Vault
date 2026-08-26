@@ -2,6 +2,7 @@ package viewmodel;
 
 import enums.FolderStatus;
 import enums.SortType;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +41,8 @@ import model.Setting;
 import model.TvShow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import service.AppConfig;
+import service.AppConfig.Os;
 import service.LibraryService;
 
 public final class LibraryViewModel {
@@ -50,6 +53,7 @@ public final class LibraryViewModel {
   private final LibraryService service;
   private final Notifier notifier;
   private final HostServices hostServices;
+  private final Os os;
 
   private final ObservableList<FolderData> folders = FXCollections.observableArrayList();
   private final ObservableMap<String, FolderStats> folderStats = FXCollections.observableHashMap();
@@ -67,9 +71,18 @@ public final class LibraryViewModel {
 
   public LibraryViewModel(
       final LibraryService service, final Notifier notifier, final HostServices hostServices) {
+    this(service, notifier, hostServices, AppConfig.OS);
+  }
+
+  public LibraryViewModel(
+      final LibraryService service,
+      final Notifier notifier,
+      final HostServices hostServices,
+      final Os os) {
     this.service = service;
     this.notifier = notifier;
     this.hostServices = hostServices;
+    this.os = os;
 
     visibleMedia
         .predicateProperty()
@@ -407,7 +420,21 @@ public final class LibraryViewModel {
   }
 
   private void open(final Path target) {
-    hostServices.showDocument(target.toUri().toString());
+    // macOS does not follow 'file://' uri when handling open files, required to explicitly call
+    // open
+    if (os == Os.MAC) {
+      try (Process process = new ProcessBuilder("open", target.toString()).start()) {
+        if (process.waitFor() != 0) {
+          notifier.show("Open Error: " + target);
+        }
+      } catch (IOException e) {
+        notifier.show("Open Error: " + rootMessage(e));
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+      }
+    } else {
+      hostServices.showDocument(target.toUri().toString());
+    }
   }
 
   private Predicate<? super Media> searchPredicate() {

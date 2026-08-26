@@ -37,6 +37,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import service.AppConfig.Os;
 import service.LibraryService;
 import viewmodel.LibraryViewModel;
 
@@ -68,7 +69,7 @@ class LibraryViewModelTest {
                     : Mockito.RETURNS_DEFAULTS.answer(invocation));
     hostServices = mock(HostServices.class);
     notifications = new ArrayList<>();
-    viewModel = new LibraryViewModel(service, notifications::add, hostServices);
+    viewModel = new LibraryViewModel(service, notifications::add, hostServices, Os.LINUX);
   }
 
   /** Wait until all Platform.runLater work queued so far (and by it) has run. */

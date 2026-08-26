@@ -38,10 +38,7 @@ public final class Launcher {
 
   private static void applyUiScale() {
     // only apply scaling on linux.
-    if (!System.getProperty("os.name", "").toLowerCase().contains("linux")) {
-      return;
-    }
-    if (System.getProperty(SCALE_FLAG) != null) {
+    if (AppConfig.OS != AppConfig.Os.LINUX || System.getProperty(SCALE_FLAG) != null) {
       return;
     }
     kdeXwaylandScale()
