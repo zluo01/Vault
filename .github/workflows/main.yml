@@ -183,7 +183,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.version.outputs.version }}
-          name: MediaDB v${{ steps.version.outputs.version }}
+          name: Vault v${{ steps.version.outputs.version }}
           body: See the assets to download this version and install.
           draft: true
           files: dist/**
