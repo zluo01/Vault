@@ -28,15 +28,15 @@ import model.Movie;
 import model.ParsedMedia;
 import model.Setting;
 import model.TvShow;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import parser.CoverImageConverter;
 import parser.LibraryScanner;
 import util.PathUtils;
 
 public final class LibraryService implements AutoCloseable {
 
-  private static final Logger LOGGER = LogManager.getLogger(LibraryService.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(LibraryService.class);
 
   private static final int WORKER_THREADS = 3;
 

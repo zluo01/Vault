@@ -37,13 +37,13 @@ import model.Media;
 import model.Movie;
 import model.Setting;
 import model.TvShow;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import service.LibraryService;
 
 public final class LibraryViewModel {
 
-  private static final Logger LOGGER = LogManager.getLogger(LibraryViewModel.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(LibraryViewModel.class);
   private static final Executor FX = Platform::runLater;
 
   private final LibraryService service;

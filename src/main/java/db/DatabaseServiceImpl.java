@@ -27,7 +27,6 @@ import model.Movie;
 import model.ParsedMedia;
 import model.Setting;
 import model.TvShow;
-import org.apache.logging.log4j.util.Strings;
 import org.sqlite.SQLiteDataSource;
 import util.Json;
 import util.PathUtils;
@@ -69,7 +68,7 @@ final class DatabaseServiceImpl implements DatabaseService {
 
   @Override
   public void updateSkipFolders(final List<String> skipFolders) {
-    update(DatabaseAction.UPDATE_SKIP_FOLDERS.query(), Strings.join(skipFolders, ','));
+    update(DatabaseAction.UPDATE_SKIP_FOLDERS.query(), String.join(",", skipFolders));
   }
 
   @Override

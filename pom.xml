@@ -37,7 +37,8 @@
         <controlsfx.version>11.2.3</controlsfx.version>
         <sqlite.version>3.53.2.0</sqlite.version>
         <caffeine.version>3.1.8</caffeine.version>
-        <log4j.version>2.26.0</log4j.version>
+        <slf4j.version>2.0.18</slf4j.version>
+        <logback.version>1.6.3</logback.version>
         <jackson.version>3.2.2</jackson.version>
 
         <junit-jupiter.version>6.1.0</junit-jupiter.version>
@@ -163,18 +164,6 @@
         </plugins>
     </build>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-bom</artifactId>
-                <version>${log4j.version}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -205,16 +194,14 @@
             <version>${jackson.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-jul</artifactId>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -433,10 +420,9 @@
                             <destination>${project.build.directory}/dist</destination>
                             <removeDestination>true</removeDestination>
                             <!-- Minimal runtime: jdeps + dynamic usage (java.logging for the JUL bridge, java.xml for
-                                 NFO/log4j config parsing, jdk.charsets for NFO files in non-default encodings). -->
+                                 NFO/logback config parsing, jdk.charsets for NFO files in non-default encodings). -->
                             <addModules>
                                 <module>java.base</module>
-                                <module>java.desktop</module>
                                 <module>java.sql</module>
                                 <module>java.logging</module>
                                 <module>java.xml</module>

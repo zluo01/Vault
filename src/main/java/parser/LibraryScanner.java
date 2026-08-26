@@ -15,12 +15,12 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.Executors;
 import model.ParsedMedia;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class LibraryScanner {
 
-  private static final Logger LOGGER = LogManager.getLogger(LibraryScanner.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(LibraryScanner.class);
 
   private static final Set<String> VIDEO_EXTENSIONS =
       Set.of("m4v", "avi", "mpg", "mp4", "mkv", "f4v", "wmv", "rmvb", "iso");

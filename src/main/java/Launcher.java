@@ -3,6 +3,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
 import javafx.application.Application;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 import service.AppConfig;
 
 /** Plain entry point for the shaded fat jar. */
@@ -10,8 +11,6 @@ public final class Launcher {
 
   private static final String SCALE_FLAG = "glass.gtk.uiScale";
   private static final String LOG_DIR_FLAG = "vault.log.dir";
-  private static final String JUL_MANAGER_FLAG = "java.util.logging.manager";
-  private static final String LOG4J_JUL_MANAGER = "org.apache.logging.log4j.jul.LogManager";
 
   private Launcher() {}
 
@@ -28,23 +27,13 @@ public final class Launcher {
   }
 
   private static void applyLogging() {
-    if (System.getProperty(JUL_MANAGER_FLAG) == null) {
-      System.setProperty(JUL_MANAGER_FLAG, LOG4J_JUL_MANAGER);
+    if (System.getProperty(LOG_DIR_FLAG) == null) {
+      System.setProperty(
+          LOG_DIR_FLAG, AppConfig.resolveDefault().dataDir().resolve("logs").toString());
     }
-    applyLogDir();
-  }
-
-  private static void applyLogDir() {
-    if (System.getProperty(LOG_DIR_FLAG) != null) {
-      return;
-    }
-    try {
-      Path logsDir = AppConfig.resolveDefault().dataDir().resolve("logs");
-      Files.createDirectories(logsDir);
-      System.setProperty(LOG_DIR_FLAG, logsDir.toString());
-    } catch (IOException e) {
-      System.err.println("Failed to create log directory: " + e.getMessage());
-    }
+    // route java.util.logging (JavaFX, sqlite) into slf4j/logback
+    SLF4JBridgeHandler.removeHandlersForRootLogger();
+    SLF4JBridgeHandler.install();
   }
 
   private static void applyUiScale() {
