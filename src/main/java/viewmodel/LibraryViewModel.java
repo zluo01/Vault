@@ -430,7 +430,12 @@ public final class LibraryViewModel {
   }
 
   private void shellOpen(final Path target, final String... command) {
-    try (Process process = new ProcessBuilder(command).start()) {
+    try {
+      final Process process =
+          new ProcessBuilder(command)
+              .redirectOutput(ProcessBuilder.Redirect.DISCARD)
+              .redirectError(ProcessBuilder.Redirect.DISCARD)
+              .start();
       if (process.waitFor() != 0) {
         notifier.show("Open Error: " + target);
       }
