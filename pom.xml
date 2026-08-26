@@ -38,7 +38,7 @@
         <sqlite.version>3.53.2.0</sqlite.version>
         <caffeine.version>3.1.8</caffeine.version>
         <log4j.version>2.26.0</log4j.version>
-        <jackson.version>2.22.0</jackson.version>
+        <jackson.version>3.2.2</jackson.version>
 
         <junit-jupiter.version>6.1.0</junit-jupiter.version>
         <mockito.version>5.18.0</mockito.version>
@@ -172,13 +172,6 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson</groupId>
-                <artifactId>jackson-bom</artifactId>
-                <version>${jackson.version}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -207,8 +200,9 @@
             <version>${caffeine.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
+            <groupId>tools.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
