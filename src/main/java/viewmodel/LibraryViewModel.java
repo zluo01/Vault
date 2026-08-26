@@ -420,20 +420,24 @@ public final class LibraryViewModel {
   }
 
   private void open(final Path target) {
-    // macOS does not follow 'file://' uri when handling open files, required to explicitly call
-    // open
-    if (os == Os.MAC) {
-      try (Process process = new ProcessBuilder("open", target.toString()).start()) {
-        if (process.waitFor() != 0) {
-          notifier.show("Open Error: " + target);
-        }
-      } catch (IOException e) {
-        notifier.show("Open Error: " + rootMessage(e));
-      } catch (InterruptedException e) {
-        Thread.currentThread().interrupt();
+    // macOS does not follow 'file://' uri when handling open files, and windows hands them
+    // to the default browser, so both go through the shell opener instead
+    switch (os) {
+      case MAC -> shellOpen(target, "open", target.toString());
+      case WINDOWS -> shellOpen(target, "cmd", "/c", "start", "", target.toString());
+      default -> hostServices.showDocument(target.toUri().toString());
+    }
+  }
+
+  private void shellOpen(final Path target, final String... command) {
+    try (Process process = new ProcessBuilder(command).start()) {
+      if (process.waitFor() != 0) {
+        notifier.show("Open Error: " + target);
       }
-    } else {
-      hostServices.showDocument(target.toUri().toString());
+    } catch (IOException e) {
+      notifier.show("Open Error: " + rootMessage(e));
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
     }
   }
 
