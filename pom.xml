@@ -20,12 +20,12 @@
         <maven-shade-plugin.version>3.6.2</maven-shade-plugin.version>
         <maven-surefire-plugin.version>3.5.6</maven-surefire-plugin.version>
         <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
-        <spotless-maven-plugin.version>3.6.0</spotless-maven-plugin.version>
+        <spotless-maven-plugin.version>3.10.1</spotless-maven-plugin.version>
         <maven-jar-plugin.version>3.5.1</maven-jar-plugin.version>
-        <maven-dependency-plugin.version>3.8.1</maven-dependency-plugin.version>
+        <maven-dependency-plugin.version>3.11.0</maven-dependency-plugin.version>
         <jpackage-maven-plugin.version>1.8.0</jpackage-maven-plugin.version>
         <exec-maven-plugin.version>3.5.0</exec-maven-plugin.version>
-        <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
+        <maven-antrun-plugin.version>3.2.0</maven-antrun-plugin.version>
 
         <!-- sqlite-jdbc native dir to keep when packaging; overridden per platform
              by the natives-* profiles. Default ** keeps everything, so an
