@@ -14,10 +14,10 @@ jobs:
     name: Build & test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Set up JDK 25
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           distribution: corretto
           java-version: '25'
@@ -25,7 +25,7 @@ jobs:
 
       - name: Restore native library
         id: native-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: native/out
           key: native-linux-${{ hashFiles('native/**') }}
@@ -46,11 +46,11 @@ jobs:
     name: Native library — Windows (cross)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Restore native library
         id: native-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: native/out
           key: native-windows-${{ hashFiles('native/**') }}
@@ -63,7 +63,7 @@ jobs:
           ./native/build-windows.sh
 
       - name: Upload native library
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: libimage-windows
           path: native/out/resources/libimage
@@ -94,10 +94,10 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Set up JDK 25
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           distribution: corretto
           java-version: '25'
@@ -106,7 +106,7 @@ jobs:
       - name: Restore native library
         if: matrix.native-script
         id: native-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: native/out
           key: native-${{ runner.os == 'Linux' && 'linux' || 'mac' }}-${{ hashFiles('native/**') }}
@@ -122,7 +122,7 @@ jobs:
 
       - name: Download native library (Windows)
         if: matrix.type == 'MSI'
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: libimage-windows
           path: native/out/resources
@@ -145,7 +145,7 @@ jobs:
         run: bash scripts/package-appimage.sh
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Vault-${{ matrix.type }}
           path: ${{ matrix.artifact }}
@@ -160,10 +160,10 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Set up JDK 25
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           distribution: corretto
           java-version: '25'
@@ -173,14 +173,14 @@ jobs:
         run: echo "version=$(mvn -q help:evaluate -Dexpression=project.version -DforceStdout)" >> "$GITHUB_OUTPUT"
 
       - name: Download artifacts
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           path: dist
           pattern: Vault-*
           merge-multiple: true
 
       - name: Create draft release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: v${{ steps.version.outputs.version }}
           name: Vault v${{ steps.version.outputs.version }}
