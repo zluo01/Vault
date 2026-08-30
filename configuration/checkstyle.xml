@@ -39,7 +39,7 @@
     <module name="TreeWalker">
         <!-- Javadoc: require well-formed doc where it exists; don't demand it everywhere. -->
         <module name="InvalidJavadocPosition"/>
-        <module name="JavadocStyle">
+        <module name="SummaryJavadoc">
             <property name="severity" value="warning"/>
         </module>
 
