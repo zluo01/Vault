@@ -139,12 +139,6 @@ public final class SeriesOverlay {
       Label catalogVal,
       Map<String, List<Episode>> seasons) {
     List<String> seasonKeys = List.copyOf(seasons.keySet());
-    int totalEps = seasons.values().stream().mapToInt(List::size).sum();
-    catalogVal.setText(
-        seasonKeys.size()
-            + (seasonKeys.size() > 1 ? " Seasons · " : " Season · ")
-            + totalEps
-            + " Episodes");
 
     // Season strip: compact pills ("SP 01 02 …") so many seasons fit one row; hidden for
     // single-season shows.
@@ -170,7 +164,9 @@ public final class SeriesOverlay {
                 return;
               }
               updateKeyArt(show, key);
-              fillEpisodes(episodes, show, key, seasons.getOrDefault(key, List.of()));
+              List<Episode> season = seasons.getOrDefault(key, List.of());
+              updateCatalog(catalogVal, key, season.size());
+              fillEpisodes(episodes, show, key, season);
             });
         tabs.getChildren().add(tab);
       }
@@ -181,8 +177,17 @@ public final class SeriesOverlay {
     }
     String firstKey = seasonKeys.getFirst();
     List<Episode> firstSeason = seasons.get(firstKey);
+    updateCatalog(catalogVal, firstKey, firstSeason.size());
     fillEpisodes(episodes, show, firstKey, firstSeason);
     updateKeyArt(show, firstKey);
+  }
+
+  /** Show the active season in the catalog meta row, e.g. "Season 3 · 13 Episodes". */
+  private static void updateCatalog(Label catalogVal, String seasonKey, int episodeCount) {
+    String season =
+        "00".equals(seasonKey) ? "Specials" : "Season " + seasonKey.replaceFirst("^0+(?=.)", "");
+    catalogVal.setText(
+        season + " · " + episodeCount + (episodeCount == 1 ? " Episode" : " Episodes"));
   }
 
   /** Load the active season's poster into the key art, falling back to the main poster. */
