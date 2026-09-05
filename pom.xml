@@ -33,7 +33,7 @@
         <sqlite.native.keep>**</sqlite.native.keep>
 
         <javafx.version>25.0.4</javafx.version>
-        <controlsfx.version>11.2.4</controlsfx.version>
+        <controlsfx.version>11.2.5</controlsfx.version>
         <sqlite.version>3.53.4.0</sqlite.version>
         <caffeine.version>3.2.4</caffeine.version>
         <slf4j.version>2.0.18</slf4j.version>
