@@ -35,7 +35,7 @@
         <javafx.version>25.0.4</javafx.version>
         <controlsfx.version>11.2.5</controlsfx.version>
         <sqlite.version>3.53.4.0</sqlite.version>
-        <caffeine.version>3.2.4</caffeine.version>
+        <caffeine.version>3.3.0</caffeine.version>
         <slf4j.version>2.0.20</slf4j.version>
         <logback.version>1.6.4</logback.version>
         <jackson.version>3.2.3</jackson.version>
