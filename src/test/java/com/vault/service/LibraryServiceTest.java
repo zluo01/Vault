@@ -1,5 +1,6 @@
 package com.vault.service;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTimeout;
@@ -13,8 +14,11 @@ import java.nio.file.Path;
 import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import javax.imageio.ImageIO;
 import model.Media;
+import model.ParsedMedia;
 import model.Setting;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -63,6 +67,38 @@ class LibraryServiceTest {
       service.build("Broken", tempDir.resolve("missing").toString(), position).join();
       assertEquals(FolderStatus.NONE, service.folderData(position).join().status());
     }
+  }
+
+  // ---- builds and queries ---------------------------------------------------
+
+  @Test
+  void queriesAreAnsweredWhileBuildsAreRunning() {
+    CountDownLatch release = new CountDownLatch(1);
+    AppConfig config = new AppConfig(tempDir.resolve("data"));
+    // every build parks inside its scan until the test lets it go
+    try (LibraryService service = new LibraryService(config, (root, skip) -> park(release))) {
+      try {
+        for (int i = 0; i < 8; i++) {
+          service.build("Library " + i, tempDir.toString(), i);
+        }
+
+        CompletableFuture<Setting> query = service.settings();
+
+        assertDoesNotThrow(
+            () -> query.get(2, TimeUnit.SECONDS), "a settings query waited behind the builds");
+      } finally {
+        release.countDown();
+      }
+    }
+  }
+
+  private static List<ParsedMedia> park(CountDownLatch release) {
+    try {
+      release.await();
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+    return List.of();
   }
 
   // ---- shutdown -----------------------------------------------------------

@@ -8,10 +8,12 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -40,14 +42,33 @@ public final class LibraryService implements AutoCloseable {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(LibraryService.class);
 
-  private static final int WORKER_THREADS = 3;
+  private static final int QUERY_THREADS = 3;
+  private static final Duration SHUTDOWN_GRACE = Duration.ofSeconds(5);
+
+  /** Finds and parses the media under a library root. */
+  @FunctionalInterface
+  public interface MediaScanner {
+    List<ParsedMedia> scan(Path root, Set<String> skipFolders) throws IOException;
+  }
 
   private final DatabaseService database;
   private final AppConfig config;
-  private final ExecutorService executor;
+  private final MediaScanner scanner;
+
+  private final ExecutorService queries;
+
+  // Builds run for as long as a scan takes, so a query from the UI must never queue behind one.
+  // Each build gets a virtual thread of its own and starts at once.
+  private final ExecutorService builds;
 
   public LibraryService(final AppConfig config) {
+    this(config, LibraryScanner::scan);
+  }
+
+  /** As above, with the directory scan replaced; lets tests control how a build behaves. */
+  public LibraryService(final AppConfig config, final MediaScanner scanner) {
     this.config = config;
+    this.scanner = scanner;
     try {
       config.ensureCreated();
     } catch (IOException e) {
@@ -56,9 +77,11 @@ public final class LibraryService implements AutoCloseable {
     this.database = DatabaseService.create(config.databaseFile());
     this.database.initialization();
 
-    this.executor =
+    this.queries =
         Executors.newFixedThreadPool(
-            WORKER_THREADS, Thread.ofPlatform().name("vault-worker-", 1).daemon().factory());
+            QUERY_THREADS, Thread.ofPlatform().name("vault-worker-", 1).daemon().factory());
+    this.builds =
+        Executors.newThreadPerTaskExecutor(Thread.ofVirtual().name("vault-build-", 1).factory());
 
     database.recover();
   }
@@ -133,31 +156,33 @@ public final class LibraryService implements AutoCloseable {
   }
 
   public CompletableFuture<Void> build(String name, String path, int position) {
-    return run(() -> buildBlocking(name, Path.of(path), position));
+    return CompletableFuture.runAsync(() -> buildBlocking(name, Path.of(path), position), builds);
   }
 
   public CompletableFuture<Void> changePathAndBuild(
       final String name, final String path, final int position) {
-    return run(() -> {
-      final Path folderPath = Path.of(path);
-      database.updateFolderPath(position, folderPath);
-      buildBlocking(name, folderPath, position);
-    });
+    return CompletableFuture.runAsync(
+        () -> {
+          final Path folderPath = Path.of(path);
+          database.updateFolderPath(position, folderPath);
+          buildBlocking(name, folderPath, position);
+        },
+        builds);
   }
 
   private <T> CompletableFuture<T> supply(final Supplier<T> task) {
-    return CompletableFuture.supplyAsync(task, executor);
+    return CompletableFuture.supplyAsync(task, queries);
   }
 
   private CompletableFuture<Void> run(final Runnable task) {
-    return CompletableFuture.runAsync(task, executor);
+    return CompletableFuture.runAsync(task, queries);
   }
 
   private void buildBlocking(final String name, final Path path, final int position) {
     database.updateFolderStatus(FolderStatus.LOADING, position);
     try {
       final var skipFolders = new HashSet<>(database.getSettings().skipFolders());
-      final var parsedMedia = LibraryScanner.scan(path, skipFolders);
+      final var parsedMedia = scanner.scan(path, skipFolders);
       final Thread covers = Thread.startVirtualThread(() -> convertCovers(name, path, parsedMedia));
       database.insertNewMedia(name, parsedMedia);
       covers.join();
@@ -227,13 +252,17 @@ public final class LibraryService implements AutoCloseable {
   @Override
   public void close() {
     // Stop taking work, give what is already running a moment to finish, then interrupt the rest.
-    executor.shutdown();
+    final List<ExecutorService> pools = List.of(queries, builds);
+    pools.forEach(ExecutorService::shutdown);
     try {
-      if (!executor.awaitTermination(5, TimeUnit.SECONDS)) {
-        executor.shutdownNow();
+      final long deadline = System.nanoTime() + SHUTDOWN_GRACE.toNanos();
+      for (ExecutorService pool : pools) {
+        if (!pool.awaitTermination(deadline - System.nanoTime(), TimeUnit.NANOSECONDS)) {
+          pool.shutdownNow();
+        }
       }
     } catch (InterruptedException e) {
-      executor.shutdownNow();
+      pools.forEach(ExecutorService::shutdownNow);
       Thread.currentThread().interrupt();
     }
     database.close();
