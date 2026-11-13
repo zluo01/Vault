@@ -47,15 +47,14 @@ public final class EditFolderDialog {
     path.getStyleClass().add("dialog-input");
     HBox.setHgrow(path, Priority.ALWAYS);
     Button browse = Ui.button("Browse", "browse-btn");
-    browse.setOnAction(
-        e -> {
-          DirectoryChooser dc = new DirectoryChooser();
-          dc.setTitle("Select library folder");
-          File dir = dc.showDialog(host.window());
-          if (dir != null) {
-            path.setText(dir.getAbsolutePath());
-          }
-        });
+    browse.setOnAction(e -> {
+      DirectoryChooser dc = new DirectoryChooser();
+      dc.setTitle("Select library folder");
+      File dir = dc.showDialog(host.window());
+      if (dir != null) {
+        path.setText(dir.getAbsolutePath());
+      }
+    });
     HBox pathRow = new HBox(10, path, browse);
     pathRow.setAlignment(Pos.CENTER_LEFT);
     VBox pathBlock = Ui.fieldBlock("Folder Path", pathRow);
@@ -66,24 +65,23 @@ public final class EditFolderDialog {
     cancel.setOnAction(e -> host.closeDialog(card));
     Button save = Ui.button("Save", "primary-btn");
     save.setDefaultButton(true);
-    save.setOnAction(
-        e -> {
-          String pth = path.getText().trim();
-          boolean usedByOther =
-              viewModel.folders().stream()
-                  .anyMatch(f -> f.position() != folder.position() && f.path().equals(pth));
-          if (pth.isEmpty() || !Files.isDirectory(Path.of(pth))) {
-            toast.show("Path is not a folder");
-            return;
-          }
-          if (usedByOther) {
-            toast.show("That folder is already imported");
-            return;
-          }
-          host.closeDialog(card);
-          viewModel.changeFolderPath(folder.name(), folder.position(), pth);
-          toast.show("Rescanning · " + folder.name());
-        });
+    save.setOnAction(e -> {
+      String pth = path.getText().trim();
+      boolean usedByOther =
+          viewModel.folders().stream()
+              .anyMatch(f -> f.position() != folder.position() && f.path().equals(pth));
+      if (pth.isEmpty() || !Files.isDirectory(Path.of(pth))) {
+        toast.show("Path is not a folder");
+        return;
+      }
+      if (usedByOther) {
+        toast.show("That folder is already imported");
+        return;
+      }
+      host.closeDialog(card);
+      viewModel.changeFolderPath(folder.name(), folder.position(), pth);
+      toast.show("Rescanning · " + folder.name());
+    });
     Region sp = new Region();
     HBox.setHgrow(sp, Priority.ALWAYS);
     HBox footer = new HBox(12, sp, cancel, save);

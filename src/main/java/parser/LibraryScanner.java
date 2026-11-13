@@ -41,12 +41,9 @@ public final class LibraryScanner {
     try (var pool = Executors.newFixedThreadPool(SCAN_PARALLELISM)) {
       final var futures =
           visitor.mediaFiles().stream()
-              .flatMap(
-                  m ->
-                      m.nfoFiles.stream()
-                          .map(
-                              nfo ->
-                                  pool.submit(() -> NfoParser.parse(nfo, m.images, m.mediaFiles))))
+              .flatMap(m ->
+                  m.nfoFiles.stream()
+                      .map(nfo -> pool.submit(() -> NfoParser.parse(nfo, m.images, m.mediaFiles))))
               .toList();
 
       final var comicFutures =
@@ -55,15 +52,14 @@ public final class LibraryScanner {
               .toList();
 
       return Stream.concat(futures.stream(), comicFutures.stream())
-          .map(
-              f -> {
-                try {
-                  return f.get();
-                } catch (Exception e) {
-                  LOGGER.warn("Fail to parse media file.", e);
-                  return Optional.<ParsedMedia>empty();
-                }
-              })
+          .map(f -> {
+            try {
+              return f.get();
+            } catch (Exception e) {
+              LOGGER.warn("Fail to parse media file.", e);
+              return Optional.<ParsedMedia>empty();
+            }
+          })
           .flatMap(Optional::stream)
           .toList();
     }

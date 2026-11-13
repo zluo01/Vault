@@ -91,11 +91,10 @@ public final class Toast implements Notifier {
     out.setFromValue(1);
     out.setToValue(0);
     SequentialTransition seq = new SequentialTransition(in, hold, out);
-    seq.setOnFinished(
-        e -> {
-          host.getChildren().remove(toast);
-          drain();
-        });
+    seq.setOnFinished(e -> {
+      host.getChildren().remove(toast);
+      drain();
+    });
     seq.play();
   }
 }

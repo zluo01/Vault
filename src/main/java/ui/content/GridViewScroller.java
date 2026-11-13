@@ -18,13 +18,12 @@ final class GridViewScroller {
   }
 
   void scrollToTop() {
-    Platform.runLater(
-        () -> {
-          VirtualFlow<?> flow = virtualFlow();
-          if (flow != null) {
-            flow.scrollTo(0);
-          }
-        });
+    Platform.runLater(() -> {
+      VirtualFlow<?> flow = virtualFlow();
+      if (flow != null) {
+        flow.scrollTo(0);
+      }
+    });
   }
 
   /** Scroll the given row into the viewport, keeping a small margin in the move direction. */

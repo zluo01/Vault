@@ -157,10 +157,9 @@ public final class NfoParser {
             .filter(m -> PathUtils.getBaseName(m).equals(nfoStem))
             .findFirst()
             .map(p -> p.getFileName().toString())
-            .orElseThrow(
-                () ->
-                    new IllegalArgumentException(
-                        "Fail to find media file matching nfo " + nfoFilePath));
+            .orElseThrow(() ->
+                new IllegalArgumentException(
+                    "Fail to find media file matching nfo " + nfoFilePath));
     builder.file(mediaFile);
 
     thumbs.stream()

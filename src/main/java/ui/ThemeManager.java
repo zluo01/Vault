@@ -17,11 +17,10 @@ public final class ThemeManager {
 
   public ThemeManager(final LibraryService service) {
     mode = new SimpleObjectProperty<>(service.currentSettings().theme());
-    mode.addListener(
-        (_, _, now) -> {
-          apply();
-          service.setTheme(now);
-        });
+    mode.addListener((_, _, now) -> {
+      apply();
+      service.setTheme(now);
+    });
   }
 
   /** Attach the scene once it exists and style it for the loaded mode. */

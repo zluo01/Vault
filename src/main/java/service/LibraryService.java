@@ -93,9 +93,8 @@ public final class LibraryService implements AutoCloseable {
 
   public CompletableFuture<Map<String, List<Episode>>> episodes(
       final Path showPath, final String folderName, final Path folderRoot) {
-    return supply(
-        () ->
-            database.getEpisodes(showPath.toString(), folderName, folderRoot, config.coversDir()));
+    return supply(() ->
+        database.getEpisodes(showPath.toString(), folderName, folderRoot, config.coversDir()));
   }
 
   public CompletableFuture<Void> updateSortType(int position, SortType sortType) {
@@ -123,11 +122,10 @@ public final class LibraryService implements AutoCloseable {
   }
 
   public CompletableFuture<Void> deleteFolder(String name) {
-    return run(
-        () -> {
-          database.deleteFolder(name);
-          deleteRecursively(config.coversDir().resolve(name));
-        });
+    return run(() -> {
+      database.deleteFolder(name);
+      deleteRecursively(config.coversDir().resolve(name));
+    });
   }
 
   public CompletableFuture<Integer> insertFolder(String name, String path) {
@@ -140,12 +138,11 @@ public final class LibraryService implements AutoCloseable {
 
   public CompletableFuture<Void> changePathAndBuild(
       final String name, final String path, final int position) {
-    return run(
-        () -> {
-          final Path folderPath = Path.of(path);
-          database.updateFolderPath(position, folderPath);
-          buildBlocking(name, folderPath, position);
-        });
+    return run(() -> {
+      final Path folderPath = Path.of(path);
+      database.updateFolderPath(position, folderPath);
+      buildBlocking(name, folderPath, position);
+    });
   }
 
   private <T> CompletableFuture<T> supply(final Supplier<T> task) {
@@ -245,14 +242,13 @@ public final class LibraryService implements AutoCloseable {
     }
     try (Stream<Path> walk = Files.walk(root)) {
       walk.sorted(Comparator.reverseOrder())
-          .forEach(
-              p -> {
-                try {
-                  Files.delete(p);
-                } catch (IOException e) {
-                  LOGGER.warn("Failed to delete {}: {}", p, e.getMessage());
-                }
-              });
+          .forEach(p -> {
+            try {
+              Files.delete(p);
+            } catch (IOException e) {
+              LOGGER.warn("Failed to delete {}: {}", p, e.getMessage());
+            }
+          });
     } catch (IOException e) {
       LOGGER.warn("Failed to delete cover directory {}: {}", root, e.getMessage());
     }

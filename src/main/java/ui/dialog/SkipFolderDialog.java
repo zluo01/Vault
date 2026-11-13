@@ -44,22 +44,21 @@ public final class SkipFolderDialog {
     cancel.setOnAction(e -> host.closeDialog(card));
     Button add = Ui.button("Add", "primary-btn");
     add.setDefaultButton(true);
-    add.setOnAction(
-        e -> {
-          String nm = name.getText().trim();
-          Setting setting = viewModel.settingProperty().get();
-          List<String> skipFolders = setting == null ? List.of() : setting.skipFolders();
-          if (nm.isEmpty()) {
-            toast.show("Enter a folder name");
-            return;
-          }
-          if (skipFolders.contains(nm)) {
-            toast.show(nm + " is already skipped");
-            return;
-          }
-          host.closeDialog(card);
-          viewModel.addSkipFolder(nm);
-        });
+    add.setOnAction(e -> {
+      String nm = name.getText().trim();
+      Setting setting = viewModel.settingProperty().get();
+      List<String> skipFolders = setting == null ? List.of() : setting.skipFolders();
+      if (nm.isEmpty()) {
+        toast.show("Enter a folder name");
+        return;
+      }
+      if (skipFolders.contains(nm)) {
+        toast.show(nm + " is already skipped");
+        return;
+      }
+      host.closeDialog(card);
+      viewModel.addSkipFolder(nm);
+    });
     Region sp = new Region();
     HBox.setHgrow(sp, Priority.ALWAYS);
     HBox footer = new HBox(12, sp, cancel, add);

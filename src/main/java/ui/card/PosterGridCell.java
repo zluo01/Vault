@@ -107,13 +107,12 @@ public final class PosterGridCell extends GridCell<Media> {
     folderBtn.setAccessibleText("Open in Folder");
     StackPane.setAlignment(folderBtn, Pos.TOP_RIGHT);
     StackPane.setMargin(folderBtn, new Insets(10, 10, 0, 0));
-    folderBtn.setOnAction(
-        e -> {
-          Media media = getItem();
-          if (media != null) {
-            actions.openContainingFolder(media);
-          }
-        });
+    folderBtn.setOnAction(e -> {
+      Media media = getItem();
+      if (media != null) {
+        actions.openContainingFolder(media);
+      }
+    });
     // the click must not bubble into the cell's select/double-click-open handling
     folderBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, Event::consume);
 
@@ -130,28 +129,25 @@ public final class PosterGridCell extends GridCell<Media> {
 
     lift = new TranslateTransition(Duration.millis(220), art);
     lift.setInterpolator(Ui.EASE_OUT);
-    art.setOnMouseEntered(
-        e -> {
-          hovered = true;
-          updateSelect();
-        });
-    art.setOnMouseExited(
-        e -> {
-          hovered = false;
-          updateSelect();
-        });
+    art.setOnMouseEntered(e -> {
+      hovered = true;
+      updateSelect();
+    });
+    art.setOnMouseExited(e -> {
+      hovered = false;
+      updateSelect();
+    });
 
-    setOnMouseClicked(
-        e -> {
-          Media media = getItem();
-          if (media == null) {
-            return;
-          }
-          actions.select(getIndex());
-          if (e.getButton() == MouseButton.PRIMARY && e.getClickCount() == 2) {
-            actions.open(media, getIndex());
-          }
-        });
+    setOnMouseClicked(e -> {
+      Media media = getItem();
+      if (media == null) {
+        return;
+      }
+      actions.select(getIndex());
+      if (e.getButton() == MouseButton.PRIMARY && e.getClickCount() == 2) {
+        actions.open(media, getIndex());
+      }
+    });
 
     selectedIndex.addListener((obs, old, value) -> updateSelectionStyle());
   }

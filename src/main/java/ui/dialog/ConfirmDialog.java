@@ -34,11 +34,10 @@ public final class ConfirmDialog {
     cancel.setOnAction(e -> host.closeDialog(card));
     Button confirm = Ui.button(confirmLabel, "primary-btn");
     confirm.setDefaultButton(true);
-    confirm.setOnAction(
-        _ -> {
-          host.closeDialog(card);
-          onConfirm.run();
-        });
+    confirm.setOnAction(_ -> {
+      host.closeDialog(card);
+      onConfirm.run();
+    });
     Region sp = new Region();
     HBox.setHgrow(sp, Priority.ALWAYS);
     HBox footer = new HBox(12, sp, cancel, confirm);

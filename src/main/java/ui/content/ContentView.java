@@ -147,12 +147,11 @@ public final class ContentView {
     viewModel.currentFolderProperty().addListener((obs, old, data) -> onFolderData(data));
     viewModel
         .selectedFolderIdProperty()
-        .addListener(
-            (obs, old, value) -> {
-              selectedIndex.set(-1);
-              resetScrollOnItems = true;
-              scroller.scrollToTop();
-            });
+        .addListener((obs, old, value) -> {
+          selectedIndex.set(-1);
+          resetScrollOnItems = true;
+          scroller.scrollToTop();
+        });
 
     onFolderData(viewModel.currentFolderProperty().get());
     updatePlaceholders();
@@ -355,26 +354,24 @@ public final class ContentView {
     themes.watch(menu);
 
     AtomicLong hiddenAt = new AtomicLong();
-    btn.setOnAction(
-        e -> {
-          if (menu.isShowing() || System.currentTimeMillis() - hiddenAt.get() < 200) {
-            menu.hide();
-            return;
-          }
-          FolderData data = viewModel.currentFolderProperty().get();
-          SortType current = data == null ? SortType.DEFAULT : data.sort();
-          menu.getItems().clear();
-          for (SortType sort : SortType.values()) {
-            menu.getItems().add(sortItem(sort, sort == current));
-          }
-          chev.setRotate(180);
-          menu.show(btn, Side.BOTTOM, btn.getWidth() - 168, 6);
-        });
-    menu.setOnHidden(
-        e -> {
-          chev.setRotate(0);
-          hiddenAt.set(System.currentTimeMillis());
-        });
+    btn.setOnAction(e -> {
+      if (menu.isShowing() || System.currentTimeMillis() - hiddenAt.get() < 200) {
+        menu.hide();
+        return;
+      }
+      FolderData data = viewModel.currentFolderProperty().get();
+      SortType current = data == null ? SortType.DEFAULT : data.sort();
+      menu.getItems().clear();
+      for (SortType sort : SortType.values()) {
+        menu.getItems().add(sortItem(sort, sort == current));
+      }
+      chev.setRotate(180);
+      menu.show(btn, Side.BOTTOM, btn.getWidth() - 168, 6);
+    });
+    menu.setOnHidden(e -> {
+      chev.setRotate(0);
+      hiddenAt.set(System.currentTimeMillis());
+    });
     return btn;
   }
 

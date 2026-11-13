@@ -157,12 +157,11 @@ final class TagFilterBar {
 
     search
         .textProperty()
-        .addListener(
-            (o, a, text) -> {
-              String q = text == null ? "" : text.trim().toLowerCase(Locale.ROOT);
-              filtered.setPredicate(
-                  q.isEmpty() ? null : opt -> opt.label().toLowerCase(Locale.ROOT).contains(q));
-            });
+        .addListener((o, a, text) -> {
+          String q = text == null ? "" : text.trim().toLowerCase(Locale.ROOT);
+          filtered.setPredicate(
+              q.isEmpty() ? null : opt -> opt.label().toLowerCase(Locale.ROOT).contains(q));
+        });
 
     panel.getChildren().addAll(searchWrap, list);
     popup.getContent().add(panel);
@@ -170,26 +169,24 @@ final class TagFilterBar {
     // Auto-hide fires on the press before the trigger's action runs, so a click meant to close
     // the popup would otherwise instantly re-open it — the toggle MenuButton implements itself.
     AtomicLong hiddenAt = new AtomicLong();
-    btn.setOnAction(
-        e -> {
-          if (popup.isShowing() || System.currentTimeMillis() - hiddenAt.get() < 200) {
-            popup.hide();
-            return;
-          }
-          chev.setRotate(180);
-          // refresh before showing so the checks always reflect the current selection
-          search.clear();
-          list.refresh();
-          Bounds b = btn.localToScreen(btn.getBoundsInLocal());
-          popup.show(btn, b.getMinX(), b.getMaxY() + 6);
-          clampToScreen(popup, b);
-          search.requestFocus();
-        });
-    popup.setOnHidden(
-        e -> {
-          chev.setRotate(0);
-          hiddenAt.set(System.currentTimeMillis());
-        });
+    btn.setOnAction(e -> {
+      if (popup.isShowing() || System.currentTimeMillis() - hiddenAt.get() < 200) {
+        popup.hide();
+        return;
+      }
+      chev.setRotate(180);
+      // refresh before showing so the checks always reflect the current selection
+      search.clear();
+      list.refresh();
+      Bounds b = btn.localToScreen(btn.getBoundsInLocal());
+      popup.show(btn, b.getMinX(), b.getMaxY() + 6);
+      clampToScreen(popup, b);
+      search.requestFocus();
+    });
+    popup.setOnHidden(e -> {
+      chev.setRotate(0);
+      hiddenAt.set(System.currentTimeMillis());
+    });
     return btn;
   }
 
@@ -224,13 +221,12 @@ final class TagFilterBar {
       check.getStyleClass().add("facet-check-box");
       check.setMaxWidth(Double.MAX_VALUE);
       check.setPadding(new Insets(6, 12, 6, 12));
-      check.setOnAction(
-          e -> {
-            FilterOption option = getItem();
-            if (option != null) {
-              viewModel.modifyTag(folderId, option);
-            }
-          });
+      check.setOnAction(e -> {
+        FilterOption option = getItem();
+        if (option != null) {
+          viewModel.modifyTag(folderId, option);
+        }
+      });
     }
 
     @Override

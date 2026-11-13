@@ -244,11 +244,10 @@ public final class Sidebar {
     row.setPadding(new Insets(14, collapsed ? 0 : 8, 14, collapsed ? 0 : 8));
     Ui.stretchGraphic(row, rowContent);
     row.setAccessibleText(folder.name());
-    row.setOnAction(
-        e -> {
-          onSelect.run();
-          viewModel.selectFolder(folder.position());
-        });
+    row.setOnAction(e -> {
+      onSelect.run();
+      viewModel.selectFolder(folder.position());
+    });
 
     StackPane wrap = new StackPane(row);
     if (active) {

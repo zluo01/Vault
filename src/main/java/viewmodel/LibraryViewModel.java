@@ -254,11 +254,10 @@ public final class LibraryViewModel {
               }
             },
             FX)
-        .exceptionally(
-            error -> {
-              notifier.show(errorPrefix + ": " + rootMessage(error));
-              return null;
-            });
+        .exceptionally(error -> {
+          notifier.show(errorPrefix + ": " + rootMessage(error));
+          return null;
+        });
   }
 
   public boolean hasTag(final int folderId, final FilterOption tag) {
@@ -298,11 +297,10 @@ public final class LibraryViewModel {
               buildAndRefresh(name, path, position);
             },
             FX)
-        .exceptionally(
-            error -> {
-              notifier.show("Import Folder Error: " + rootMessage(error));
-              return null;
-            });
+        .exceptionally(error -> {
+          notifier.show("Import Folder Error: " + rootMessage(error));
+          return null;
+        });
   }
 
   public void refreshLibrary(final String name, final String path, final int position) {
@@ -352,12 +350,11 @@ public final class LibraryViewModel {
               removeTagFolder(folder.position());
             },
             FX)
-        .exceptionally(
-            error -> {
-              notifier.show("Update Folder Error: " + rootMessage(error));
-              refreshFolders();
-              return null;
-            });
+        .exceptionally(error -> {
+          notifier.show("Update Folder Error: " + rootMessage(error));
+          refreshFolders();
+          return null;
+        });
   }
 
   public void setShowSidePanel(final boolean show) {
@@ -388,11 +385,10 @@ public final class LibraryViewModel {
         .get()
         .thenCompose(ignored -> service.settings())
         .thenAcceptAsync(setting::set, FX)
-        .exceptionally(
-            error -> {
-              notifier.show(errorPrefix + ": " + rootMessage(error));
-              return null;
-            });
+        .exceptionally(error -> {
+          notifier.show(errorPrefix + ": " + rootMessage(error));
+          return null;
+        });
   }
 
   private List<String> currentSkipFolders() {

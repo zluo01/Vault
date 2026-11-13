@@ -156,18 +156,17 @@ public final class SeriesOverlay {
         tab.setToggleGroup(group);
         tab.setSelected(key.equals(seasonKeys.getFirst()));
         tab.setAccessibleText("00".equals(key) ? "Specials" : "Season " + key);
-        tab.setOnAction(
-            e -> {
-              if (!tab.isSelected()) {
-                // clicking the active tab must not leave the group with no selection
-                tab.setSelected(true);
-                return;
-              }
-              updateKeyArt(show, key);
-              List<Episode> season = seasons.getOrDefault(key, List.of());
-              updateCatalog(catalogVal, key, season.size());
-              fillEpisodes(episodes, show, key, season);
-            });
+        tab.setOnAction(e -> {
+          if (!tab.isSelected()) {
+            // clicking the active tab must not leave the group with no selection
+            tab.setSelected(true);
+            return;
+          }
+          updateKeyArt(show, key);
+          List<Episode> season = seasons.getOrDefault(key, List.of());
+          updateCatalog(catalogVal, key, season.size());
+          fillEpisodes(episodes, show, key, season);
+        });
         tabs.getChildren().add(tab);
       }
     }

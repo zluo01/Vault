@@ -155,13 +155,12 @@ final class DatabaseServiceImpl implements DatabaseService {
     if (items.isEmpty()) {
       return;
     }
-    inTransaction(
-        connection -> {
-          clearFolder(connection, folderName);
-          insertMedia(connection, folderName, items);
-          insertEpisodes(connection, items);
-          insertTags(connection, items);
-        });
+    inTransaction(connection -> {
+      clearFolder(connection, folderName);
+      insertMedia(connection, folderName, items);
+      insertEpisodes(connection, items);
+      insertTags(connection, items);
+    });
   }
 
   @Override

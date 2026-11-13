@@ -40,14 +40,12 @@ public class VaultApplication extends Application {
     stage.show();
 
     // a second launch asks us to come to front instead of starting again
-    SingleInstance.onActivate(
-        () ->
-            Platform.runLater(
-                () -> {
-                  stage.setIconified(false);
-                  stage.toFront();
-                  stage.requestFocus();
-                }));
+    SingleInstance.onActivate(() ->
+        Platform.runLater(() -> {
+          stage.setIconified(false);
+          stage.toFront();
+          stage.requestFocus();
+        }));
 
     viewModel.start();
   }

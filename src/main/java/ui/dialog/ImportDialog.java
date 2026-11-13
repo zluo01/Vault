@@ -46,18 +46,17 @@ public final class ImportDialog {
     path.getStyleClass().add("dialog-input");
     HBox.setHgrow(path, Priority.ALWAYS);
     Button browse = Ui.button("Browse", "browse-btn");
-    browse.setOnAction(
-        e -> {
-          DirectoryChooser dc = new DirectoryChooser();
-          dc.setTitle("Select library folder");
-          File dir = dc.showDialog(host.window());
-          if (dir != null) {
-            path.setText(dir.getAbsolutePath());
-            if (name.getText().isBlank()) {
-              name.setText(dir.getName());
-            }
-          }
-        });
+    browse.setOnAction(e -> {
+      DirectoryChooser dc = new DirectoryChooser();
+      dc.setTitle("Select library folder");
+      File dir = dc.showDialog(host.window());
+      if (dir != null) {
+        path.setText(dir.getAbsolutePath());
+        if (name.getText().isBlank()) {
+          name.setText(dir.getName());
+        }
+      }
+    });
     HBox pathRow = new HBox(10, path, browse);
     pathRow.setAlignment(Pos.CENTER_LEFT);
     VBox pathBlock = Ui.fieldBlock("Folder Path", pathRow);
@@ -68,30 +67,29 @@ public final class ImportDialog {
     cancel.setOnAction(e -> host.closeDialog(card));
     Button confirm = Ui.button("Import Library", "primary-btn");
     confirm.setDefaultButton(true);
-    confirm.setOnAction(
-        e -> {
-          String nm = name.getText().trim();
-          String pth = path.getText().trim();
-          if (nm.isEmpty() || pth.isEmpty()) {
-            toast.show("Enter a name and choose a folder");
-            return;
-          }
-          if (viewModel.folders().stream().map(FolderData::name).anyMatch(nm::equals)) {
-            toast.show("A library named " + nm + " already exists");
-            return;
-          }
-          if (viewModel.folders().stream().map(FolderData::path).anyMatch(pth::equals)) {
-            toast.show("That folder is already imported");
-            return;
-          }
-          if (!Files.isDirectory(Path.of(pth))) {
-            toast.show("Path is not a folder");
-            return;
-          }
-          host.closeDialog(card);
-          viewModel.addLibrary(nm, pth);
-          toast.show("Importing · " + nm);
-        });
+    confirm.setOnAction(e -> {
+      String nm = name.getText().trim();
+      String pth = path.getText().trim();
+      if (nm.isEmpty() || pth.isEmpty()) {
+        toast.show("Enter a name and choose a folder");
+        return;
+      }
+      if (viewModel.folders().stream().map(FolderData::name).anyMatch(nm::equals)) {
+        toast.show("A library named " + nm + " already exists");
+        return;
+      }
+      if (viewModel.folders().stream().map(FolderData::path).anyMatch(pth::equals)) {
+        toast.show("That folder is already imported");
+        return;
+      }
+      if (!Files.isDirectory(Path.of(pth))) {
+        toast.show("Path is not a folder");
+        return;
+      }
+      host.closeDialog(card);
+      viewModel.addLibrary(nm, pth);
+      toast.show("Importing · " + nm);
+    });
     Region sp = new Region();
     HBox.setHgrow(sp, Priority.ALWAYS);
     HBox footer = new HBox(12, sp, cancel, confirm);

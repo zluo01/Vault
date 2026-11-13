@@ -86,18 +86,17 @@ final class SingleInstance {
     Thread.ofPlatform()
         .name("vault-single-instance")
         .daemon()
-        .start(
-            () -> {
-              while (true) {
-                try (SocketChannel ignored = server.accept()) {
-                  final Runnable action = onActivate;
-                  if (action != null) {
-                    action.run();
-                  }
-                } catch (IOException e) {
-                  return;
-                }
+        .start(() -> {
+          while (true) {
+            try (SocketChannel ignored = server.accept()) {
+              final Runnable action = onActivate;
+              if (action != null) {
+                action.run();
               }
-            });
+            } catch (IOException e) {
+              return;
+            }
+          }
+        });
   }
 }

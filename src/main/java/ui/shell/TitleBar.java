@@ -86,12 +86,11 @@ public final class TitleBar {
     root.getChildren().addAll(left, spacer, controls);
 
     // double click to maximize the window
-    root.setOnMouseClicked(
-        e -> {
-          if (e.getButton() == MouseButton.PRIMARY && e.getClickCount() == 2) {
-            toggleMaximize();
-          }
-        });
+    root.setOnMouseClicked(e -> {
+      if (e.getButton() == MouseButton.PRIMARY && e.getClickCount() == 2) {
+        toggleMaximize();
+      }
+    });
 
     root.addEventFilter(
         MouseEvent.MOUSE_PRESSED,
@@ -101,19 +100,18 @@ public final class TitleBar {
         });
 
     // drag and move
-    root.setOnMouseDragged(
-        e -> {
-          if (stage.isMaximized()) {
-            // un-maximize and keep the window under the cursor
-            double w = restoreWidth > 0 ? restoreWidth : stage.getWidth();
-            stage.setMaximized(false);
-            stage.setWidth(w);
-            stage.setHeight(restoreHeight > 0 ? restoreHeight : stage.getHeight());
-            dragOffsetX = Math.min(dragOffsetX, w - 80);
-          }
-          stage.setX(e.getScreenX() - dragOffsetX);
-          stage.setY(e.getScreenY() - dragOffsetY);
-        });
+    root.setOnMouseDragged(e -> {
+      if (stage.isMaximized()) {
+        // un-maximize and keep the window under the cursor
+        double w = restoreWidth > 0 ? restoreWidth : stage.getWidth();
+        stage.setMaximized(false);
+        stage.setWidth(w);
+        stage.setHeight(restoreHeight > 0 ? restoreHeight : stage.getHeight());
+        dragOffsetX = Math.min(dragOffsetX, w - 80);
+      }
+      stage.setX(e.getScreenX() - dragOffsetX);
+      stage.setY(e.getScreenY() - dragOffsetY);
+    });
   }
 
   private void toggleMaximize() {
