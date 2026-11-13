@@ -43,15 +43,15 @@ final class ImageCodec {
   }
 
   /** decode and resize poster aspect-fit to the given scale, then return as jpeg encoded buffer */
-  byte[] toJpeg(final byte[] image, final int maxWidth, final int maxHeight, final int quality) {
+  byte[] toJpeg(
+      final MemorySegment image, final int maxWidth, final int maxHeight, final int quality) {
     try (Arena call = Arena.ofConfined()) {
-      final MemorySegment input = call.allocateFrom(JAVA_BYTE, image);
       final MemorySegment outPointer = call.allocate(ADDRESS);
       final MemorySegment outSize = call.allocate(JAVA_LONG);
       final int ok =
           (int)
               coverToJpeg.invokeExact(
-                  input, image.length, maxWidth, maxHeight, quality, outPointer, outSize);
+                  image, (int) image.byteSize(), maxWidth, maxHeight, quality, outPointer, outSize);
       if (ok == 0) {
         throw new IllegalStateException(
             "Image conversion failed (unsupported format or encoding error)");

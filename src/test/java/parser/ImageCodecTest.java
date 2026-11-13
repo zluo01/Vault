@@ -10,6 +10,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.foreign.Arena;
+import java.lang.foreign.ValueLayout;
 import javax.imageio.ImageIO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -38,14 +40,14 @@ class ImageCodecTest {
 
   @Test
   void verifyJpegMatchesExpected() throws IOException {
-    final byte[] out = codec.toJpeg(data("source.jpg"), MAX_WIDTH, MAX_HEIGHT, QUALITY);
+    final byte[] out = toJpeg(data("source.jpg"));
     assertArrayEquals(expected, out);
   }
 
   @ParameterizedTest
   @ValueSource(strings = {"source.png", "source.webp", "source-avif.avif", "source-mif1.avif"})
   void verifyAllFormats(final String name) throws IOException {
-    final byte[] out = codec.toJpeg(data(name), MAX_WIDTH, MAX_HEIGHT, QUALITY);
+    final byte[] out = toJpeg(data(name));
     final BufferedImage image = ImageIO.read(new ByteArrayInputStream(out));
     assertEquals(expectedImage.getWidth(), image.getWidth());
     assertEquals(expectedImage.getHeight(), image.getHeight());
@@ -59,8 +61,14 @@ class ImageCodecTest {
     for (int i = 0; i < garbage.length; i++) {
       garbage[i] = (byte) (i * 31);
     }
-    assertThrows(
-        IllegalStateException.class, () -> codec.toJpeg(garbage, MAX_WIDTH, MAX_HEIGHT, QUALITY));
+    assertThrows(IllegalStateException.class, () -> toJpeg(garbage));
+  }
+
+  private static byte[] toJpeg(final byte[] image) {
+    try (Arena arena = Arena.ofConfined()) {
+      return codec.toJpeg(
+          arena.allocateFrom(ValueLayout.JAVA_BYTE, image), MAX_WIDTH, MAX_HEIGHT, QUALITY);
+    }
   }
 
   private static byte[] data(final String name) throws IOException {
