@@ -22,6 +22,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 import util.PathUtils;
 
 public final class NfoParser {
@@ -52,6 +53,8 @@ public final class NfoParser {
     byte[] content = Files.readAllBytes(file);
     try {
       final DocumentBuilder builder = newSecureBuilder();
+      // the parser's own handler prints every error to the console
+      builder.setErrorHandler(new DefaultHandler());
       final var document = builder.parse(new ByteArrayInputStream(content));
       final Element root = document.getDocumentElement();
       if (root == null) {

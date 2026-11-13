@@ -6,9 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
 import enums.TagCategory;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -18,6 +23,7 @@ import model.Movie;
 import model.ParsedMedia;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.slf4j.LoggerFactory;
 import parser.LibraryScanner;
 
 class LibraryScannerTest {
@@ -92,6 +98,41 @@ class LibraryScannerTest {
 
     assertEquals(1, LibraryScanner.scan(library, Set.of()).size());
     assertTrue(LibraryScanner.scan(library, Set.of("_Bonus")).isEmpty());
+  }
+
+  @Test
+  void anNfoThatIsNotValidXmlIsSkippedAndNamedInTheLog() throws IOException {
+    Path good = Files.createDirectories(tempDir.resolve("Good"));
+    Files.writeString(good.resolve("movie.nfo"), "<movie><title>Good</title></movie>");
+    Files.writeString(good.resolve("Good.mkv"), "");
+    Path bad = Files.createDirectories(tempDir.resolve("Bad"));
+    Files.writeString(
+        bad.resolve("movie.nfo"),
+        "<movie><title>Bad</title><thumb>https://example.org/a.jpg?w=1&s=2</thumb></movie>");
+    Files.writeString(bad.resolve("Bad.mkv"), "");
+
+    Logger logger = (Logger) LoggerFactory.getLogger(LibraryScanner.class);
+    ListAppender<ILoggingEvent> log = new ListAppender<>();
+    log.start();
+    logger.addAppender(log);
+    PrintStream console = System.err;
+    ByteArrayOutputStream printed = new ByteArrayOutputStream();
+    System.setErr(new PrintStream(printed, true));
+    List<ParsedMedia> result;
+    try {
+      result = LibraryScanner.scan(tempDir, Set.of());
+    } finally {
+      System.setErr(console);
+      logger.detachAppender(log);
+    }
+
+    assertEquals(List.of("Good"), result.stream().map(item -> item.media().title()).toList());
+    assertEquals("", printed.toString(), "the parser wrote to the console");
+    assertEquals(1, log.list.size());
+    assertTrue(
+        log.list.get(0).getFormattedMessage().contains(bad.resolve("movie.nfo").toString()),
+        "the warning does not name the file: " + log.list.get(0).getFormattedMessage());
+    assertNull(log.list.get(0).getThrowableProxy(), "the warning carries a stack trace");
   }
 
   private static void writeJpeg(Path file) throws IOException {

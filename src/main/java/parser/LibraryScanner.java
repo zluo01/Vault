@@ -43,7 +43,7 @@ public final class LibraryScanner {
           visitor.mediaFiles().stream()
               .flatMap(m ->
                   m.nfoFiles.stream()
-                      .map(nfo -> pool.submit(() -> NfoParser.parse(nfo, m.images, m.mediaFiles))))
+                      .map(nfo -> pool.submit(() -> parse(nfo, m.images, m.mediaFiles))))
               .toList();
 
       final var comicFutures =
@@ -62,6 +62,20 @@ public final class LibraryScanner {
           })
           .flatMap(Optional::stream)
           .toList();
+    }
+  }
+
+  private static Optional<ParsedMedia> parse(
+      final Path nfo, final List<Path> images, final List<Path> mediaFiles) {
+    try {
+      return NfoParser.parse(nfo, images, mediaFiles);
+    } catch (IOException | IllegalArgumentException e) {
+      Throwable cause = e;
+      while (cause.getCause() != null) {
+        cause = cause.getCause();
+      }
+      LOGGER.warn("Skipped {}: {}", nfo, cause.getMessage());
+      return Optional.empty();
     }
   }
 
