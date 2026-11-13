@@ -12,7 +12,6 @@ import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -26,7 +25,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.SVGPath;
 import javafx.stage.Popup;
-import javafx.stage.Screen;
 import model.FilterOption;
 import model.GroupedOption;
 import ui.ThemeManager;
@@ -175,31 +173,9 @@ final class TagFilterBar {
           list.refresh();
           Bounds b = btn.localToScreen(btn.getBoundsInLocal());
           popup.show(btn, b.getMinX(), b.getMaxY() + 6);
-          clampToScreen(popup, b);
           search.requestFocus();
         });
     return btn;
-  }
-
-  /**
-   * Keep a just-shown popup on screen: clamp X, and flip above the anchor if it runs off the bottom
-   * — positioning a MenuButton would otherwise do for us.
-   */
-  private static void clampToScreen(Popup popup, Bounds anchor) {
-    var screens =
-        Screen.getScreensForRectangle(
-            anchor.getMinX(), anchor.getMinY(), anchor.getWidth(), anchor.getHeight());
-    if (screens.isEmpty()) {
-      return;
-    }
-    Rectangle2D vis = screens.getFirst().getVisualBounds();
-    double x = Math.clamp(popup.getX(), vis.getMinX(), vis.getMaxX() - popup.getWidth());
-    double y = popup.getY();
-    if (y + popup.getHeight() > vis.getMaxY()) {
-      y = Math.max(vis.getMinY(), anchor.getMinY() - popup.getHeight() - 6);
-    }
-    popup.setX(x);
-    popup.setY(y);
   }
 
   private final class FacetOptionCell extends ListCell<FilterOption> {
