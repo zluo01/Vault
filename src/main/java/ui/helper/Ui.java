@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
+import javafx.stage.PopupWindow;
 
 /** Small factory helpers shared by every Vault view: styled labels and stroked SVG icons. */
 public final class Ui {
@@ -63,6 +64,31 @@ public final class Ui {
                         - button.getPadding().getRight(),
                 button.widthProperty(),
                 button.paddingProperty()));
+  }
+
+  /**
+   * Make {@code trigger} open and close {@code popup}, flipping {@code chevron} while it is open.
+   *
+   * <p>Auto-hide fires on the press, before the trigger's action runs, so a click meant to close
+   * the popup would otherwise re-open it at once. An action that arrives right after a hide is
+   * therefore taken as that closing click.
+   *
+   * @param show populates and shows the popup
+   */
+  public static void togglePopup(Button trigger, PopupWindow popup, Node chevron, Runnable show) {
+    long[] hiddenAt = {0};
+    trigger.setOnAction(e -> {
+      if (popup.isShowing() || System.currentTimeMillis() - hiddenAt[0] < 200) {
+        popup.hide();
+        return;
+      }
+      chevron.setRotate(180);
+      show.run();
+    });
+    popup.setOnHidden(e -> {
+      chevron.setRotate(0);
+      hiddenAt[0] = System.currentTimeMillis();
+    });
   }
 
   public static SVGPath ico(String d, double width) {

@@ -4,7 +4,6 @@ import enums.FilterType;
 import enums.FolderStatus;
 import enums.SortType;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
@@ -353,25 +352,19 @@ public final class ContentView {
     menu.setConsumeAutoHidingEvents(false);
     themes.watch(menu);
 
-    AtomicLong hiddenAt = new AtomicLong();
-    btn.setOnAction(e -> {
-      if (menu.isShowing() || System.currentTimeMillis() - hiddenAt.get() < 200) {
-        menu.hide();
-        return;
-      }
-      FolderData data = viewModel.currentFolderProperty().get();
-      SortType current = data == null ? SortType.DEFAULT : data.sort();
-      menu.getItems().clear();
-      for (SortType sort : SortType.values()) {
-        menu.getItems().add(sortItem(sort, sort == current));
-      }
-      chev.setRotate(180);
-      menu.show(btn, Side.BOTTOM, btn.getWidth() - 168, 6);
-    });
-    menu.setOnHidden(e -> {
-      chev.setRotate(0);
-      hiddenAt.set(System.currentTimeMillis());
-    });
+    Ui.togglePopup(
+        btn,
+        menu,
+        chev,
+        () -> {
+          FolderData data = viewModel.currentFolderProperty().get();
+          SortType current = data == null ? SortType.DEFAULT : data.sort();
+          menu.getItems().clear();
+          for (SortType sort : SortType.values()) {
+            menu.getItems().add(sortItem(sort, sort == current));
+          }
+          menu.show(btn, Side.BOTTOM, btn.getWidth() - 168, 6);
+        });
     return btn;
   }
 

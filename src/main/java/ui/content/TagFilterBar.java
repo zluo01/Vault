@@ -3,7 +3,6 @@ package ui.content;
 import enums.TagCategory;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.atomic.AtomicLong;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.IntegerBinding;
 import javafx.collections.FXCollections;
@@ -166,27 +165,19 @@ final class TagFilterBar {
     panel.getChildren().addAll(searchWrap, list);
     popup.getContent().add(panel);
 
-    // Auto-hide fires on the press before the trigger's action runs, so a click meant to close
-    // the popup would otherwise instantly re-open it — the toggle MenuButton implements itself.
-    AtomicLong hiddenAt = new AtomicLong();
-    btn.setOnAction(e -> {
-      if (popup.isShowing() || System.currentTimeMillis() - hiddenAt.get() < 200) {
-        popup.hide();
-        return;
-      }
-      chev.setRotate(180);
-      // refresh before showing so the checks always reflect the current selection
-      search.clear();
-      list.refresh();
-      Bounds b = btn.localToScreen(btn.getBoundsInLocal());
-      popup.show(btn, b.getMinX(), b.getMaxY() + 6);
-      clampToScreen(popup, b);
-      search.requestFocus();
-    });
-    popup.setOnHidden(e -> {
-      chev.setRotate(0);
-      hiddenAt.set(System.currentTimeMillis());
-    });
+    Ui.togglePopup(
+        btn,
+        popup,
+        chev,
+        () -> {
+          // refresh before showing so the checks always reflect the current selection
+          search.clear();
+          list.refresh();
+          Bounds b = btn.localToScreen(btn.getBoundsInLocal());
+          popup.show(btn, b.getMinX(), b.getMaxY() + 6);
+          clampToScreen(popup, b);
+          search.requestFocus();
+        });
     return btn;
   }
 
