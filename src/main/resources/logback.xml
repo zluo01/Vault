@@ -6,6 +6,7 @@
     </contextListener>
 
     <property name="LOG_DIR" value="${vault.log.dir:-${user.home}/.local/share/vault/logs}"/>
+    <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n"/>
 
     <appender name="File" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_DIR}/vault.log</file>
@@ -18,7 +19,13 @@
             <maxFileSize>2MB</maxFileSize>
         </triggeringPolicy>
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n</pattern>
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${PATTERN}</pattern>
         </encoder>
     </appender>
 
@@ -26,5 +33,6 @@
 
     <root level="INFO">
         <appender-ref ref="File"/>
+        <appender-ref ref="Console"/>
     </root>
 </configuration>
