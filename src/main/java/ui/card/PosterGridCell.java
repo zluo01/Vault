@@ -4,6 +4,7 @@ import java.util.Objects;
 import javafx.animation.TranslateTransition;
 import javafx.beans.binding.DoubleExpression;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableDoubleValue;
 import javafx.css.PseudoClass;
 import javafx.event.Event;
@@ -144,7 +145,15 @@ public final class PosterGridCell extends GridCell<Media> {
       }
     });
 
-    selectedIndex.addListener((obs, old, value) -> updateSelectionStyle());
+    // listen only while attached, so a cell the grid has dropped is not kept alive by the selection
+    ChangeListener<Number> onSelection = (_, _, _) -> updateSelectionStyle();
+    sceneProperty()
+        .addListener((_, _, scene) -> {
+          selectedIndex.removeListener(onSelection);
+          if (scene != null) {
+            selectedIndex.addListener(onSelection);
+          }
+        });
   }
 
   @Override
