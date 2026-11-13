@@ -31,7 +31,7 @@ public interface DatabaseService extends AutoCloseable {
 
     SQLiteDataSource dataSource = new SQLiteDataSource(config);
     dataSource.setUrl(jdbcUrl);
-    return new DatabaseServiceImpl(dataSource);
+    return new DatabaseServiceImpl(dataSource, jdbcUrl.contains(":memory:"));
   }
 
   void initialization();

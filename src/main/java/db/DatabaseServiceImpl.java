@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import model.Comic;
 import model.Episode;
 import model.FilterOption;
@@ -34,11 +35,16 @@ import util.PathUtils;
 
 final class DatabaseServiceImpl implements DatabaseService {
 
-  private final Connection connection;
+  private final SQLiteDataSource dataSource;
+  private final Connection writer;
+  // an in-memory database lives in its one connection, so reads use the writer too
+  private final boolean inMemory;
 
-  DatabaseServiceImpl(final SQLiteDataSource dataSource) {
+  DatabaseServiceImpl(final SQLiteDataSource dataSource, final boolean inMemory) {
+    this.dataSource = dataSource;
+    this.inMemory = inMemory;
     try {
-      this.connection = dataSource.getConnection();
+      this.writer = dataSource.getConnection();
     } catch (SQLException e) {
       throw new IllegalStateException("Failed to open database connection", e);
     }
@@ -46,7 +52,7 @@ final class DatabaseServiceImpl implements DatabaseService {
 
   @Override
   public synchronized void initialization() {
-    try (Statement statement = connection.createStatement()) {
+    try (Statement statement = writer.createStatement()) {
       statement.executeUpdate(DatabaseAction.CREATE_TABLES.query());
     } catch (SQLException e) {
       throw new IllegalStateException("Failed to initialize database schema", e);
@@ -79,7 +85,7 @@ final class DatabaseServiceImpl implements DatabaseService {
 
   @Override
   public int insertFolderData(final String name, final Path path) {
-    return queryOne(
+    return writeOne(
         DatabaseAction.INSERT_NEW_FOLDER_DATA.query(), rs -> rs.getInt("position"), name, path);
   }
 
@@ -164,26 +170,27 @@ final class DatabaseServiceImpl implements DatabaseService {
   }
 
   @Override
-  public synchronized List<Media> getFolderMedia(
-      int position, List<FilterOption> tags, Path coversDir) {
+  public List<Media> getFolderMedia(int position, List<FilterOption> tags, Path coversDir) {
     String tagsJson = Json.write(tags);
-    List<Media> result = new ArrayList<>();
-    try (PreparedStatement ps =
-        connection.prepareStatement(DatabaseAction.GET_FOLDER_CONTENT.query())) {
-      ps.setString(1, tagsJson);
-      ps.setInt(2, position);
-      try (ResultSet rs = ps.executeQuery()) {
-        while (rs.next()) {
-          Media media = mapMedia(rs, coversDir);
-          if (media != null) {
-            result.add(media);
+    return read(connection -> {
+      List<Media> result = new ArrayList<>();
+      try (PreparedStatement ps =
+          connection.prepareStatement(DatabaseAction.GET_FOLDER_CONTENT.query())) {
+        ps.setString(1, tagsJson);
+        ps.setInt(2, position);
+        try (ResultSet rs = ps.executeQuery()) {
+          while (rs.next()) {
+            Media media = mapMedia(rs, coversDir);
+            if (media != null) {
+              result.add(media);
+            }
           }
         }
+      } catch (SQLException e) {
+        throw new DataAccessException("Failed to get folder media", e);
       }
-    } catch (SQLException e) {
-      throw new DataAccessException("Failed to get folder media", e);
-    }
-    return result;
+      return result;
+    });
   }
 
   @Override
@@ -242,7 +249,7 @@ final class DatabaseServiceImpl implements DatabaseService {
   @Override
   public synchronized void close() {
     try {
-      connection.close();
+      writer.close();
     } catch (SQLException e) {
       throw new DataAccessException("Failed to close database connection", e);
     }
@@ -467,8 +474,34 @@ final class DatabaseServiceImpl implements DatabaseService {
     void run(Connection connection) throws SQLException;
   }
 
-  private synchronized <T> T queryOne(
+  // a read on its own connection is not blocked by a write in progress
+  private <T> T read(final Function<Connection, T> work) {
+    if (inMemory) {
+      synchronized (this) {
+        return work.apply(writer);
+      }
+    }
+    try (Connection connection = dataSource.getConnection()) {
+      return work.apply(connection);
+    } catch (SQLException e) {
+      throw new DataAccessException("Failed to open a read connection", e);
+    }
+  }
+
+  private <T> T queryOne(final String sql, final RowMapper<T> mapper, final Object... params) {
+    return read(connection -> one(connection, sql, mapper, params));
+  }
+
+  private synchronized <T> T writeOne(
       final String sql, final RowMapper<T> mapper, final Object... params) {
+    return one(writer, sql, mapper, params);
+  }
+
+  private static <T> T one(
+      final Connection connection,
+      final String sql,
+      final RowMapper<T> mapper,
+      final Object... params) {
     try (PreparedStatement ps = connection.prepareStatement(sql)) {
       bind(ps, params);
       try (ResultSet rs = ps.executeQuery()) {
@@ -482,8 +515,16 @@ final class DatabaseServiceImpl implements DatabaseService {
     }
   }
 
-  private synchronized <T> List<T> queryList(
+  private <T> List<T> queryList(
       final String sql, final RowMapper<T> mapper, final Object... params) {
+    return read(connection -> list(connection, sql, mapper, params));
+  }
+
+  private static <T> List<T> list(
+      final Connection connection,
+      final String sql,
+      final RowMapper<T> mapper,
+      final Object... params) {
     List<T> result = new ArrayList<>();
     try (PreparedStatement ps = connection.prepareStatement(sql)) {
       bind(ps, params);
@@ -499,7 +540,7 @@ final class DatabaseServiceImpl implements DatabaseService {
   }
 
   private synchronized void update(final String sql, final Object... params) {
-    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+    try (PreparedStatement ps = writer.prepareStatement(sql)) {
       bind(ps, params);
       ps.executeUpdate();
     } catch (SQLException e) {
@@ -509,15 +550,15 @@ final class DatabaseServiceImpl implements DatabaseService {
 
   private synchronized void inTransaction(final TxWork work) {
     try {
-      connection.setAutoCommit(false);
+      writer.setAutoCommit(false);
       try {
-        work.run(connection);
-        connection.commit();
+        work.run(writer);
+        writer.commit();
       } catch (SQLException e) {
-        connection.rollback();
+        writer.rollback();
         throw e;
       } finally {
-        connection.setAutoCommit(true);
+        writer.setAutoCommit(true);
       }
     } catch (SQLException e) {
       throw new DataAccessException("Transaction failed", e);

@@ -54,9 +54,10 @@ public final class LibraryService implements AutoCloseable {
   private final AppConfig config;
   private final MediaScanner scanner;
 
-  // Database work for the UI runs on one thread. The single connection serializes it anyway, and
-  // one queue means results come back, and writes land, in the order they were asked for.
+  // Reads and writes for the UI each get one thread: results come back, and writes land, in the
+  // order they were asked for, and a write that waits for a build holds up no read.
   private final ExecutorService queries;
+  private final ExecutorService writes;
 
   // Builds run for as long as a scan takes, so a query from the UI must never queue behind one.
   // Each build gets a virtual thread of its own and starts at once.
@@ -81,6 +82,9 @@ public final class LibraryService implements AutoCloseable {
     this.queries =
         Executors.newSingleThreadExecutor(
             Thread.ofPlatform().name("vault-query").daemon().factory());
+    this.writes =
+        Executors.newSingleThreadExecutor(
+            Thread.ofPlatform().name("vault-write").daemon().factory());
     this.builds =
         Executors.newThreadPerTaskExecutor(Thread.ofVirtual().name("vault-build-", 1).factory());
 
@@ -146,14 +150,15 @@ public final class LibraryService implements AutoCloseable {
   }
 
   public CompletableFuture<Void> deleteFolder(String name) {
-    // The covers can be thousands of files; removing them must not hold up the query thread.
+    // The covers can be thousands of files; removing them must not hold up the write thread.
     return run(() -> database.deleteFolder(name))
         .thenRunAsync(
             () -> deleteRecursively(config.coversDir().resolve(name)), Thread::startVirtualThread);
   }
 
   public CompletableFuture<Integer> insertFolder(String name, String path) {
-    return supply(() -> database.insertFolderData(name, Path.of(path)));
+    return CompletableFuture.supplyAsync(
+        () -> database.insertFolderData(name, Path.of(path)), writes);
   }
 
   public CompletableFuture<Void> build(String name, String path, int position) {
@@ -176,7 +181,7 @@ public final class LibraryService implements AutoCloseable {
   }
 
   private CompletableFuture<Void> run(final Runnable task) {
-    return CompletableFuture.runAsync(task, queries);
+    return CompletableFuture.runAsync(task, writes);
   }
 
   private void buildBlocking(final String name, final Path path, final int position) {
@@ -258,7 +263,7 @@ public final class LibraryService implements AutoCloseable {
   @Override
   public void close() {
     // Stop taking work, give what is already running a moment to finish, then interrupt the rest.
-    final List<ExecutorService> pools = List.of(queries, builds);
+    final List<ExecutorService> pools = List.of(queries, writes, builds);
     pools.forEach(ExecutorService::shutdown);
     try {
       final long deadline = System.nanoTime() + SHUTDOWN_GRACE.toNanos();

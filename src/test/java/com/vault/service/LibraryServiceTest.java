@@ -13,15 +13,21 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.imageio.ImageIO;
 import model.Media;
+import model.Movie;
 import model.ParsedMedia;
 import model.Setting;
 import org.junit.jupiter.api.Test;
@@ -94,6 +100,89 @@ class LibraryServiceTest {
         release.countDown();
       }
     }
+  }
+
+  @Test
+  void queriesAreAnsweredWhileABuildWritesItsResults() throws Exception {
+    CountDownLatch writing = new CountDownLatch(1);
+    CountDownLatch release = new CountDownLatch(1);
+    AppConfig config = new AppConfig(tempDir.resolve("data"));
+    try (LibraryService service =
+        new LibraryService(config, rescanThatStallsWhileWriting(writing, release))) {
+      try {
+        int position = service.insertFolder("Movies", tempDir.toString()).join();
+        service.build("Movies", tempDir.toString(), position).join();
+        service.build("Movies", tempDir.toString(), position);
+        assertTrue(writing.await(5, TimeUnit.SECONDS), "the rescan never started writing");
+
+        List<Media> shown =
+            assertDoesNotThrow(
+                () -> service.folderMedia(position, List.of()).get(2, TimeUnit.SECONDS),
+                "a query waited for the rescan to finish writing");
+        assertEquals(1, shown.size(), "the library must keep showing its last scan meanwhile");
+      } finally {
+        release.countDown();
+      }
+    }
+  }
+
+  @Test
+  void aSettingChangedDuringABuildDoesNotHoldUpQueries() throws Exception {
+    CountDownLatch writing = new CountDownLatch(1);
+    CountDownLatch release = new CountDownLatch(1);
+    AppConfig config = new AppConfig(tempDir.resolve("data"));
+    try (LibraryService service =
+        new LibraryService(config, rescanThatStallsWhileWriting(writing, release))) {
+      CompletableFuture<Void> change;
+      try {
+        int position = service.insertFolder("Movies", tempDir.toString()).join();
+        service.build("Movies", tempDir.toString(), position).join();
+        service.build("Movies", tempDir.toString(), position);
+        assertTrue(writing.await(5, TimeUnit.SECONDS), "the rescan never started writing");
+
+        change = service.setShowSidePanel(false);
+
+        assertDoesNotThrow(
+            () -> service.folderData(position).get(2, TimeUnit.SECONDS),
+            "a query waited behind a setting change that was waiting for the rescan");
+      } finally {
+        release.countDown();
+      }
+      change.get(5, TimeUnit.SECONDS);
+      assertFalse(service.settings().join().showSidePanel());
+    }
+  }
+
+  /** The first scan finds one movie; the next one stalls inside the build's database write. */
+  private LibraryService.MediaScanner rescanThatStallsWhileWriting(
+      CountDownLatch writing, CountDownLatch release) {
+    ParsedMedia movie =
+        new ParsedMedia(
+            Movie.builder().title("Heat").path(tempDir.resolve("Heat")).file("heat.mkv").build(),
+            Map.of());
+    AtomicInteger scans = new AtomicInteger();
+    return (root, skip) -> {
+      if (scans.getAndIncrement() == 0) {
+        return List.of(movie);
+      }
+      // read by the cover thread and by the database write; the second reader is the write
+      Set<Thread> readers = ConcurrentHashMap.newKeySet();
+      return new AbstractList<>() {
+        @Override
+        public ParsedMedia get(int index) {
+          if (readers.add(Thread.currentThread()) && readers.size() == 2) {
+            writing.countDown();
+          }
+          park(release);
+          return movie;
+        }
+
+        @Override
+        public int size() {
+          return 1;
+        }
+      };
+    };
   }
 
   @Test
