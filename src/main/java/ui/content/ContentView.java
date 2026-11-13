@@ -72,6 +72,8 @@ public final class ContentView {
   private final Label resultCount = Ui.label("0 ITEMS", "result-count");
   private final Label sortValue = Ui.label(SortType.DEFAULT.label(), "facet-text");
   private final Label filterTypeValue = Ui.label(FilterType.OR.name(), "facet-text");
+  private final Region matchButton;
+  private final Region sortButton;
 
   private final GridView<Media> grid;
   private final GridViewScroller scroller;
@@ -126,6 +128,8 @@ public final class ContentView {
 
     emptyBox = emptyState();
     errorBox = errorState();
+    matchButton = filterTypeToggle();
+    sortButton = sortDropdown();
 
     buildMain();
 
@@ -241,13 +245,7 @@ public final class ContentView {
     HBox.setHgrow(sp, Priority.ALWAYS);
 
     bar.getChildren()
-        .addAll(
-            tagFilters.facetsNode(),
-            filterTypeToggle(),
-            sp,
-            resultCount,
-            sortDropdown(),
-            refreshBtn);
+        .addAll(tagFilters.facetsNode(), matchButton, sp, resultCount, sortButton, refreshBtn);
     return bar;
   }
 
@@ -300,6 +298,10 @@ public final class ContentView {
     }
     scanning = loading;
     refreshBtn.pseudoClassStateChanged(ACTIVE, loading);
+    tagFilters.facetsNode().setDisable(loading);
+    tagFilters.chipBarNode().setDisable(loading);
+    matchButton.setDisable(loading);
+    sortButton.setDisable(loading);
     if (loading) {
       refreshIcon.getStyleClass().setAll("ico-active");
       spin.play();
