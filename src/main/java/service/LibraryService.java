@@ -226,11 +226,14 @@ public final class LibraryService implements AutoCloseable {
 
   @Override
   public void close() {
+    // Stop taking work, give what is already running a moment to finish, then interrupt the rest.
+    executor.shutdown();
     try {
-      if (executor.awaitTermination(5, TimeUnit.SECONDS)) {
+      if (!executor.awaitTermination(5, TimeUnit.SECONDS)) {
         executor.shutdownNow();
       }
     } catch (InterruptedException e) {
+      executor.shutdownNow();
       Thread.currentThread().interrupt();
     }
     database.close();

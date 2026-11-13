@@ -1,6 +1,8 @@
 package com.vault.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTimeout;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import enums.FolderStatus;
@@ -8,9 +10,12 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import javax.imageio.ImageIO;
 import model.Media;
+import model.Setting;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import service.AppConfig;
@@ -58,5 +63,26 @@ class LibraryServiceTest {
       service.build("Broken", tempDir.resolve("missing").toString(), position).join();
       assertEquals(FolderStatus.NONE, service.folderData(position).join().status());
     }
+  }
+
+  // ---- shutdown -----------------------------------------------------------
+
+  @Test
+  void closeReturnsAtOnceWhenNothingIsRunning() {
+    LibraryService service = new LibraryService(new AppConfig(tempDir.resolve("data")));
+    service.settings().join();
+
+    assertTimeout(Duration.ofSeconds(1), service::close);
+  }
+
+  @Test
+  void closeLetsWorkAlreadySubmittedFinish() {
+    LibraryService service = new LibraryService(new AppConfig(tempDir.resolve("data")));
+    CompletableFuture<Setting> pending = service.settings();
+
+    service.close();
+
+    assertTrue(pending.isDone(), "close() returned before the pending query finished");
+    assertFalse(pending.isCompletedExceptionally(), "the pending query was dropped by close()");
   }
 }
