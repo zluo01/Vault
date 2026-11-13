@@ -3,6 +3,7 @@ package com.vault.service;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTimeout;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -14,6 +15,7 @@ import java.nio.file.Path;
 import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import javax.imageio.ImageIO;
@@ -89,6 +91,23 @@ class LibraryServiceTest {
       } finally {
         release.countDown();
       }
+    }
+  }
+
+  @Test
+  void scanThatFailsWithAnIoErrorMarksTheFolderError() {
+    AppConfig config = new AppConfig(tempDir.resolve("data"));
+    LibraryService.MediaScanner failing =
+        (root, skip) -> {
+          throw new IOException("drive went away");
+        };
+    try (LibraryService service = new LibraryService(config, failing)) {
+      int position = service.insertFolder("Movies", tempDir.toString()).join();
+
+      CompletableFuture<Void> build = service.build("Movies", tempDir.toString(), position);
+
+      assertThrows(CompletionException.class, build::join, "the caller must hear about it");
+      assertEquals(FolderStatus.ERROR, service.folderData(position).join().status());
     }
   }
 

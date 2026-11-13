@@ -187,16 +187,21 @@ public final class LibraryService implements AutoCloseable {
       database.insertNewMedia(name, parsedMedia);
       covers.join();
       database.updateFolderStatus(FolderStatus.NONE, position);
-    } catch (RuntimeException e) {
-      LOGGER.error("Failed to build library {}: {}", name, e.getMessage(), e);
-      database.updateFolderStatus(FolderStatus.ERROR, position);
-      throw e;
-    } catch (IOException e) {
-      throw new RuntimeException(e);
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
-      throw new RuntimeException(e);
+      throw failBuild(name, position, e);
+    } catch (IOException | RuntimeException e) {
+      throw failBuild(name, position, e);
     }
+  }
+
+  /**
+   * Record a failed build on its folder, so no exit leaves it in LOADING; returns what to throw.
+   */
+  private RuntimeException failBuild(final String name, final int position, final Exception cause) {
+    LOGGER.error("Failed to build library {}: {}", name, cause.getMessage(), cause);
+    database.updateFolderStatus(FolderStatus.ERROR, position);
+    return cause instanceof RuntimeException runtime ? runtime : new RuntimeException(cause);
   }
 
   private void convertCovers(
