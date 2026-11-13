@@ -16,6 +16,23 @@ final class GridViewScroller {
 
   GridViewScroller(GridView<?> grid) {
     this.grid = grid;
+
+    // without a fixed row height the flow binds off-screen rows just to measure them
+    grid.skinProperty()
+        .addListener(_ -> {
+          cachedFlow = null;
+          applyRowHeight();
+        });
+    grid.cellHeightProperty().addListener(_ -> applyRowHeight());
+    grid.verticalCellSpacingProperty().addListener(_ -> applyRowHeight());
+    applyRowHeight();
+  }
+
+  private void applyRowHeight() {
+    VirtualFlow<?> flow = virtualFlow();
+    if (flow != null) {
+      flow.setFixedCellSize(grid.getCellHeight() + grid.getVerticalCellSpacing() * 2);
+    }
   }
 
   void scrollToTop() {
@@ -90,7 +107,9 @@ final class GridViewScroller {
   /** The grid skin's flow, looked up once; null until the skin exists. */
   private VirtualFlow<?> virtualFlow() {
     if (cachedFlow == null) {
-      grid.applyCss();
+      if (grid.getSkin() == null) {
+        grid.applyCss();
+      }
       if (grid.lookup(".virtual-flow") instanceof VirtualFlow<?> found) {
         cachedFlow = found;
       }
