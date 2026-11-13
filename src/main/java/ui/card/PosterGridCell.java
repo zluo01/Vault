@@ -51,7 +51,6 @@ public final class PosterGridCell extends GridCell<Media> {
 
   private Media current;
   private String currentPoster;
-  private boolean hovered;
   private boolean lifted;
 
   public PosterGridCell(
@@ -126,17 +125,13 @@ public final class PosterGridCell extends GridCell<Media> {
     footer.setAlignment(Pos.CENTER_LEFT);
 
     card = new VBox(14, art, footer);
+    // The card is the cell's only content and is never detached: GridRowSkin removes the cells it
+    // no longer needs instead of emptying them.
+    setGraphic(card);
 
     lift = new TranslateTransition(Duration.millis(220), art);
     lift.setInterpolator(Ui.EASE_OUT);
-    art.setOnMouseEntered(e -> {
-      hovered = true;
-      updateSelect();
-    });
-    art.setOnMouseExited(e -> {
-      hovered = false;
-      updateSelect();
-    });
+    art.hoverProperty().addListener((obs, was, hover) -> updateLift());
 
     setOnMouseClicked(e -> {
       Media media = getItem();
@@ -156,42 +151,33 @@ public final class PosterGridCell extends GridCell<Media> {
   protected void updateItem(Media media, boolean empty) {
     super.updateItem(media, empty);
     if (empty || media == null) {
-      // Keep the poster image to prevent covers blinking on re-bind; loadPoster clears it when
-      // the item really changes.
-      current = null;
-      setGraphic(null);
-    } else {
-      if (media != current) {
-        current = media;
-        title.setText(media.title() + ".");
-        titleTip.setText(media.title());
-        year.setText(yearText(media));
-        detail.setText(detailText(media));
-        loadPoster(media.mainPoster());
-        setGraphic(card);
-      }
-      applyTone();
+      // GridRowSkin flips every cell through index -1 before each re-bind, usually to the very same
+      // item, so an empty update is not a reason to tear anything down.
+      return;
     }
-    // reset the status
-    lift.stop();
-    art.setTranslateY(0);
-    lifted = false;
-    folderBtn.setVisible(false);
-    updateSelectionStyle();
-  }
-
-  @Override
-  public void updateIndex(int index) {
-    super.updateIndex(index);
-    if (!isEmpty() && getItem() != null) {
-      applyTone();
+    if (media != current) {
+      current = media;
+      title.setText(media.title() + ".");
+      titleTip.setText(media.title());
+      year.setText(yearText(media));
+      detail.setText(detailText(media));
+      loadPoster(media.mainPoster());
+      // a recycled cell must not carry the previous item's lift over to the new one
+      lift.stop();
+      art.setTranslateY(0);
+      lifted = false;
+      folderBtn.setVisible(false);
     }
+    applyTone();
     updateSelectionStyle();
   }
 
   private void applyTone() {
-    art.getStyleClass().removeIf(c -> c.startsWith("tone-"));
-    art.getStyleClass().add("tone-" + Math.floorMod(Math.max(getIndex(), 0), 4));
+    String tone = "tone-" + Math.floorMod(Math.max(getIndex(), 0), 4);
+    if (!art.getStyleClass().contains(tone)) {
+      art.getStyleClass().removeIf(c -> c.startsWith("tone-"));
+      art.getStyleClass().add(tone);
+    }
   }
 
   private void loadPoster(String poster) {
@@ -205,7 +191,7 @@ public final class PosterGridCell extends GridCell<Media> {
         320,
         480,
         image -> {
-          if (image != null && current != null && Objects.equals(poster, currentPoster)) {
+          if (image != null && Objects.equals(poster, currentPoster)) {
             cover.setImage(image);
             crop();
           }
@@ -234,15 +220,15 @@ public final class PosterGridCell extends GridCell<Media> {
 
   private void updateSelectionStyle() {
     art.pseudoClassStateChanged(SELECTED, isSelectedCell());
-    updateSelect();
+    updateLift();
   }
 
   private boolean isSelectedCell() {
     return !isEmpty() && getItem() != null && getIndex() == selectedIndex.get();
   }
 
-  private void updateSelect() {
-    boolean up = hovered || isSelectedCell();
+  private void updateLift() {
+    boolean up = art.isHover() || isSelectedCell();
     if (up == lifted) {
       return;
     }
