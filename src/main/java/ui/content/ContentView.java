@@ -129,7 +129,7 @@ public final class ContentView {
 
     buildMain();
 
-    resultCount.textProperty().bind(viewModel.statusTextProperty());
+    resultCount.textProperty().bind(viewModel.statusText());
 
     viewModel
         .visibleMedia()
@@ -305,7 +305,6 @@ public final class ContentView {
       spin.play();
       gridHost.setOpacity(0.45);
       gridHost.setDisable(true);
-      viewModel.setStatus("SCANNING…");
       resultCount.getStyleClass().add("result-count-active");
     } else {
       spin.stop();
@@ -317,7 +316,6 @@ public final class ContentView {
       back.setFromValue(0.45);
       back.setToValue(1.0);
       back.play();
-      viewModel.resetStatusToCount();
     }
   }
 

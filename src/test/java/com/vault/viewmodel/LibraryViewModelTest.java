@@ -152,7 +152,22 @@ class LibraryViewModelTest {
 
     assertEquals("Films", viewModel.currentFolderProperty().get().name());
     assertEquals(2, viewModel.visibleMedia().size());
-    assertEquals("2 ITEMS", viewModel.statusTextProperty().get());
+    assertEquals("2 ITEMS", viewModel.statusText().get());
+  }
+
+  @Test
+  void statusStaysOnScanningWhileTheFolderIsBeingBuilt() throws Exception {
+    when(service.folderData(0))
+        .thenReturn(
+            CompletableFuture.completedFuture(folder("Films", 0).withStatus(FolderStatus.LOADING)));
+    when(service.folderMedia(eq(0), any()))
+        .thenReturn(CompletableFuture.completedFuture(List.of(movie("John Wick"), movie("Heat"))));
+
+    viewModel.selectFolder(0);
+    drainFx();
+
+    assertEquals(2, viewModel.visibleMedia().size(), "media still loads during a scan");
+    assertEquals("SCANNING…", viewModel.statusText().get());
   }
 
   @Test
@@ -179,7 +194,7 @@ class LibraryViewModelTest {
     viewModel.searchKeyProperty().set("heat");
 
     assertEquals(1, viewModel.visibleMedia().size());
-    assertEquals("1 ITEMS", viewModel.statusTextProperty().get());
+    assertEquals("1 ITEMS", viewModel.statusText().get());
   }
 
   // ---- tag filters ------------------------------------------------------

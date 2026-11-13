@@ -18,6 +18,8 @@ import java.util.function.Supplier;
 import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
+import javafx.beans.binding.StringExpression;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -63,7 +65,8 @@ public final class LibraryViewModel {
   private final FilteredList<Media> visibleMedia = new FilteredList<>(media);
   private final ObservableList<GroupedOption> tagGroups = FXCollections.observableArrayList();
   private final StringProperty searchKey = new SimpleStringProperty("");
-  private final StringProperty statusText = new SimpleStringProperty("0 ITEMS");
+  private final StringBinding statusText =
+      Bindings.createStringBinding(this::describeStatus, currentFolder, visibleMedia);
 
   // keep the tags per folder so change folder does not erase previous filtering
   private final Map<Integer, ObservableList<FilterOption>> selectedTagsByFolder = new HashMap<>();
@@ -86,8 +89,6 @@ public final class LibraryViewModel {
     visibleMedia
         .predicateProperty()
         .bind(Bindings.createObjectBinding(this::searchPredicate, searchKey));
-    visibleMedia.addListener(
-        (javafx.collections.ListChangeListener<Media>) _ -> resetStatusToCount());
     selectedFolderId.addListener((_, _, _) -> loadSelectedFolder());
   }
 
@@ -129,20 +130,20 @@ public final class LibraryViewModel {
     return searchKey;
   }
 
-  public StringProperty statusTextProperty() {
+  /** "SCANNING…" while the current folder is being built, otherwise the visible item count. */
+  public StringExpression statusText() {
     return statusText;
+  }
+
+  private String describeStatus() {
+    final FolderData folder = currentFolder.get();
+    return folder != null && folder.status() == FolderStatus.LOADING
+        ? "SCANNING…"
+        : visibleMedia.size() + " ITEMS";
   }
 
   public ObservableList<FilterOption> selectedTags(final int folderId) {
     return selectedTagsByFolder.computeIfAbsent(folderId, _ -> FXCollections.observableArrayList());
-  }
-
-  public void setStatus(final String text) {
-    statusText.set(text);
-  }
-
-  public void resetStatusToCount() {
-    statusText.set(visibleMedia.size() + " ITEMS");
   }
 
   public void selectFolder(final int folderId) {
