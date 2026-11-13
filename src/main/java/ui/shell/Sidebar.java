@@ -7,6 +7,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.css.PseudoClass;
@@ -60,7 +61,6 @@ public final class Sidebar {
   private final ObservableValue<Insets> rowPadding =
       collapsed.map(c -> new Insets(14, c ? 0 : 8, 14, c ? 0 : 8));
   private Timeline animation;
-  private boolean settingSeen;
 
   public Sidebar(
       LibraryViewModel viewModel, Runnable onImport, Runnable onSettings, Runnable onSelect) {
@@ -83,26 +83,26 @@ public final class Sidebar {
     viewModel.folders().addListener((ListChangeListener<FolderData>) _ -> refreshRows());
     refreshRows();
 
-    viewModel.settingProperty().addListener((_, _, setting) -> applySetting(setting));
+    // The persisted state only seeds the sidebar. From then on the sidebar owns it and just writes
+    // it back, so a late answer from the database can never replay an old toggle.
+    viewModel
+        .settingProperty()
+        .addListener(
+            new ChangeListener<Setting>() {
+              @Override
+              public void changed(
+                  ObservableValue<? extends Setting> source, Setting old, Setting setting) {
+                if (setting != null) {
+                  source.removeListener(this);
+                  collapsed.set(!setting.showSidePanel());
+                  setWidth(collapsed.get() ? COLLAPSED : EXPANDED);
+                }
+              }
+            });
   }
 
   public Region getNode() {
     return box;
-  }
-
-  private void applySetting(Setting setting) {
-    boolean target = setting != null && !setting.showSidePanel();
-    if (!settingSeen) {
-      settingSeen = true;
-      if (target != collapsed.get()) {
-        collapsed.set(target);
-        setWidth(target ? COLLAPSED : EXPANDED);
-      }
-      return;
-    }
-    if (target != collapsed.get()) {
-      animateTo(target);
-    }
   }
 
   public void toggle() {
