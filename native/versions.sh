@@ -12,8 +12,8 @@ NASM_VERSION=3.02
 NASM_SHA256=87336eba53b4acfe917424ab5d500d2b0054d9f5148d35c2273ccf2cfb712f0d
 
 # renovate: datasource=github-tags depName=pkgconf/pkgconf extractVersion=^pkgconf-(?<version>.+)$
-PKGCONF_VERSION=2.3.0
-PKGCONF_SHA256=3a9080ac51d03615e7c1910a0a2a8df08424892b5f13b0628a204d3fcce0ea8b
+PKGCONF_VERSION=3.0.10
+PKGCONF_SHA256=9371b2f6372da574d4c6dc96fe9b1463037bcf6afcb6671c1555afde7b17e2de
 
 # renovate: datasource=github-tags depName=webmproject/libwebp extractVersion=^v(?<version>.+)$
 LIBWEBP_VERSION=1.6.0
@@ -28,4 +28,4 @@ LIBAVIF_VERSION=1.4.2
 LIBAVIF_SHA256=2b645287340ba5a631d268b551dc2d72bd73ac33335962dd36dcdb6d8366921d
 
 # renovate: datasource=pypi depName=meson
-MESON_VERSION=1.12.0
+MESON_VERSION=1.12.1
