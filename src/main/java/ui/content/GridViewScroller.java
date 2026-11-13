@@ -12,6 +12,7 @@ final class GridViewScroller {
   private static final double SCROLL_MARGIN = 8;
 
   private final GridView<?> grid;
+  private VirtualFlow<?> cachedFlow;
 
   GridViewScroller(GridView<?> grid) {
     this.grid = grid;
@@ -69,19 +70,15 @@ final class GridViewScroller {
     double topOverflow = viewport.getMinY() + margin - cell.getMinY();
     double bottomOverflow = cell.getMaxY() - (viewport.getMaxY() - margin);
 
-    if (cell.getHeight() + margin * 2 > viewport.getHeight()) {
-      if (direction > 0 && bottomOverflow > 0) {
-        return bottomOverflow;
-      }
-      if (topOverflow > 0) {
-        return -topOverflow;
-      }
-      return bottomOverflow > 0 ? bottomOverflow : 0;
+    // Both can only overflow at once when the cell is taller than the viewport; then the edge in
+    // the direction of travel wins.
+    if (direction > 0 && bottomOverflow > 0) {
+      return bottomOverflow;
     }
     if (topOverflow > 0) {
       return -topOverflow;
     }
-    return bottomOverflow > 0 ? bottomOverflow : 0;
+    return Math.max(bottomOverflow, 0);
   }
 
   private Bounds viewportBounds(VirtualFlow<?> flow) {
@@ -90,9 +87,14 @@ final class GridViewScroller {
     return viewport.localToScene(viewport.getBoundsInLocal());
   }
 
+  /** The grid skin's flow, looked up once; null until the skin exists. */
   private VirtualFlow<?> virtualFlow() {
-    grid.applyCss();
-    Node node = grid.lookup(".virtual-flow");
-    return node instanceof VirtualFlow<?> flow ? flow : null;
+    if (cachedFlow == null) {
+      grid.applyCss();
+      if (grid.lookup(".virtual-flow") instanceof VirtualFlow<?> found) {
+        cachedFlow = found;
+      }
+    }
+    return cachedFlow;
   }
 }
