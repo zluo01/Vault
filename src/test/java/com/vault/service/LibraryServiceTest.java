@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
@@ -118,6 +120,58 @@ class LibraryServiceTest {
       Thread.currentThread().interrupt();
     }
     return List.of();
+  }
+
+  // ---- ordering -----------------------------------------------------------
+
+  @Test
+  void queriesFinishInTheOrderTheyWereIssued() {
+    try (LibraryService service = new LibraryService(new AppConfig(tempDir.resolve("data")))) {
+      int count = 2_000;
+      List<Integer> finished = Collections.synchronizedList(new ArrayList<>());
+      List<CompletableFuture<Void>> all = new ArrayList<>();
+      for (int i = 0; i < count; i++) {
+        int n = i;
+        all.add(service.settings().thenRun(() -> finished.add(n)));
+      }
+      CompletableFuture.allOf(all.toArray(CompletableFuture[]::new)).join();
+
+      assertEquals(count, finished.size());
+      for (int i = 0; i < count; i++) {
+        assertEquals(i, finished.get(i), "result " + i + " to arrive belonged to another query");
+      }
+    }
+  }
+
+  @Test
+  void theLastOfSeveralQuickWritesWins() {
+    try (LibraryService service = new LibraryService(new AppConfig(tempDir.resolve("data")))) {
+      for (int round = 0; round < 200; round++) {
+        CompletableFuture<Void> last = null;
+        for (int i = 0; i <= 5; i++) {
+          last = service.updateSkipFolders(List.of("round" + round + "-write" + i));
+        }
+        last.join();
+
+        assertEquals(List.of("round" + round + "-write5"), service.settings().join().skipFolders());
+      }
+    }
+  }
+
+  @Test
+  void deleteFolderRemovesTheFolderAndItsCovers() throws IOException {
+    AppConfig config = new AppConfig(tempDir.resolve("data"));
+    try (LibraryService service = new LibraryService(config)) {
+      service.insertFolder("Movies", tempDir.toString()).join();
+      Path cover = config.coversDir().resolve("Movies").resolve("John Wick").resolve("poster");
+      Files.createDirectories(cover.getParent());
+      Files.writeString(cover, "jpeg");
+
+      service.deleteFolder("Movies").join();
+
+      assertTrue(service.folderList().join().isEmpty());
+      assertFalse(Files.exists(config.coversDir().resolve("Movies")), "covers were left behind");
+    }
   }
 
   // ---- shutdown -----------------------------------------------------------

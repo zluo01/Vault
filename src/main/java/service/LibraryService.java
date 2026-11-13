@@ -42,7 +42,6 @@ public final class LibraryService implements AutoCloseable {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(LibraryService.class);
 
-  private static final int QUERY_THREADS = 3;
   private static final Duration SHUTDOWN_GRACE = Duration.ofSeconds(5);
 
   /** Finds and parses the media under a library root. */
@@ -55,6 +54,8 @@ public final class LibraryService implements AutoCloseable {
   private final AppConfig config;
   private final MediaScanner scanner;
 
+  // Database work for the UI runs on one thread. The single connection serializes it anyway, and
+  // one queue means results come back, and writes land, in the order they were asked for.
   private final ExecutorService queries;
 
   // Builds run for as long as a scan takes, so a query from the UI must never queue behind one.
@@ -78,8 +79,8 @@ public final class LibraryService implements AutoCloseable {
     this.database.initialization();
 
     this.queries =
-        Executors.newFixedThreadPool(
-            QUERY_THREADS, Thread.ofPlatform().name("vault-worker-", 1).daemon().factory());
+        Executors.newSingleThreadExecutor(
+            Thread.ofPlatform().name("vault-query").daemon().factory());
     this.builds =
         Executors.newThreadPerTaskExecutor(Thread.ofVirtual().name("vault-build-", 1).factory());
 
@@ -145,10 +146,10 @@ public final class LibraryService implements AutoCloseable {
   }
 
   public CompletableFuture<Void> deleteFolder(String name) {
-    return run(() -> {
-      database.deleteFolder(name);
-      deleteRecursively(config.coversDir().resolve(name));
-    });
+    // The covers can be thousands of files; removing them must not hold up the query thread.
+    return run(() -> database.deleteFolder(name))
+        .thenRunAsync(
+            () -> deleteRecursively(config.coversDir().resolve(name)), Thread::startVirtualThread);
   }
 
   public CompletableFuture<Integer> insertFolder(String name, String path) {
