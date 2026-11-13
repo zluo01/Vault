@@ -52,15 +52,7 @@ class DatabaseServiceTest {
       List<String> genres,
       List<String> actors,
       List<String> studios) {
-    Movie media =
-        Movie.builder()
-            .title(title)
-            .path(Path.of("/movies/" + title))
-            .poster("poster.jpg")
-            .year(year)
-            .runtime("120")
-            .file(file)
-            .build();
+    Movie media = new Movie(title, Path.of("/movies/" + title), "poster.jpg", year, "120", file);
     return new ParsedMedia(
         media,
         Map.of(
@@ -200,7 +192,7 @@ class DatabaseServiceTest {
     repo.insertFolderData("X", Path.of("/x"));
     ParsedMedia m =
         new ParsedMedia(
-            Movie.builder().title("M").path(Path.of("/x/M")).file("m.mkv").build(),
+            new Movie("M", Path.of("/x/M"), null, null, null, "m.mkv"),
             Map.of(TagCategory.GENRE, List.of("Action", "Action")));
     repo.insertNewMedia("X", List.of(m));
     assertEquals(List.of(tag("GENRE", "Action")), repo.getMediaTags(Path.of("/x/M")));
@@ -359,7 +351,7 @@ class DatabaseServiceTest {
     repo.insertFolderData("TV", Path.of("/tv"));
     ParsedMedia film =
         new ParsedMedia(
-            Movie.builder().title("Film").path(Path.of("/tv/Film")).file("f.mkv").build(),
+            new Movie("Film", Path.of("/tv/Film"), null, null, null, "f.mkv"),
             Map.of(TagCategory.GENRE, List.of("Action")));
     repo.insertNewMedia("TV", List.of(animeShow(), film));
     assertEquals(
@@ -371,20 +363,14 @@ class DatabaseServiceTest {
     repo.insertFolderData("Bare", Path.of("/bare"));
     ParsedMedia bare =
         new ParsedMedia(
-            Movie.builder().title("Bare").path(Path.of("/bare/Bare")).file("b.mkv").build(),
-            Map.of());
+            new Movie("Bare", Path.of("/bare/Bare"), null, null, null, "b.mkv"), Map.of());
     repo.insertNewMedia("Bare", List.of(bare));
     assertNull(repo.getFolderMedia(0, List.of(), covers).getFirst().mainPoster());
   }
 
   private static ParsedMedia animeShow() {
     TvShow show =
-        TvShow.builder()
-            .title("Show")
-            .path(Path.of("/tv/Show"))
-            .poster("main", "poster.jpg")
-            .poster("02", "season2.jpg")
-            .build();
+        new TvShow("Show", Path.of("/tv/Show"), Map.of("main", "poster.jpg", "02", "season2.jpg"));
     return new ParsedMedia(show, Map.of(TagCategory.GENRE, List.of("Anime")));
   }
 
@@ -403,11 +389,9 @@ class DatabaseServiceTest {
     // Paths invert the title order so TITLE_ASC is distinguishable from the path default.
     repo.insertFolderData("X", Path.of("/x"));
     ParsedMedia zulu =
-        new ParsedMedia(
-            Movie.builder().title("Zulu").path(Path.of("/x/aa")).file("z.mkv").build(), Map.of());
+        new ParsedMedia(new Movie("Zulu", Path.of("/x/aa"), null, null, null, "z.mkv"), Map.of());
     ParsedMedia alpha =
-        new ParsedMedia(
-            Movie.builder().title("Alpha").path(Path.of("/x/zz")).file("a.mkv").build(), Map.of());
+        new ParsedMedia(new Movie("Alpha", Path.of("/x/zz"), null, null, null, "a.mkv"), Map.of());
     repo.insertNewMedia("X", List.of(zulu, alpha));
     assertEquals(List.of("Zulu", "Alpha"), titles(repo.getFolderMedia(0, List.of(), covers)));
     repo.updateSortType(0, SortType.TITLE_ASC);
@@ -453,12 +437,7 @@ class DatabaseServiceTest {
   @Test
   void episodesGroupedByZeroPaddedSeason() {
     repo.insertFolderData("TV", Path.of("/tv"));
-    TvShow show =
-        TvShow.builder()
-            .title("Show")
-            .path(Path.of("/tv/Show"))
-            .poster("main", "poster.jpg")
-            .build();
+    TvShow show = new TvShow("Show", Path.of("/tv/Show"), Map.of("main", "poster.jpg"));
     repo.insertNewMedia(
         "TV",
         List.of(
@@ -472,14 +451,8 @@ class DatabaseServiceTest {
   }
 
   private static Episode episode(String title, String season, String number) {
-    return Episode.builder()
-        .title(title)
-        .file(title + ".mkv")
-        .season(season)
-        .episode(number)
-        .runtime("1440")
-        .path(Path.of("/tv/Show/Season " + season))
-        .build();
+    return new Episode(
+        title, title + ".mkv", season, number, "1440", Path.of("/tv/Show/Season " + season), null);
   }
 
   // --- settings ---

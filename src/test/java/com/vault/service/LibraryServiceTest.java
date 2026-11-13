@@ -158,8 +158,7 @@ class LibraryServiceTest {
       CountDownLatch writing, CountDownLatch release) {
     ParsedMedia movie =
         new ParsedMedia(
-            Movie.builder().title("Heat").path(tempDir.resolve("Heat")).file("heat.mkv").build(),
-            Map.of());
+            new Movie("Heat", tempDir.resolve("Heat"), null, null, null, "heat.mkv"), Map.of());
     AtomicInteger scans = new AtomicInteger();
     return (root, skip) -> {
       if (scans.getAndIncrement() == 0) {

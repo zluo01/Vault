@@ -19,7 +19,6 @@ import model.Movie;
 import model.ParsedMedia;
 import model.TvShow;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -71,51 +70,53 @@ public final class NfoParser {
       final Element root,
       final List<Path> posters,
       final List<Path> media) {
-    final var builder = Movie.builder().path(movieFolderPath);
-    final Map<TagCategory, List<String>> tags = new EnumMap<>(TagCategory.class);
-
-    final var nodes = root.getChildNodes();
-    for (int i = 0; i < nodes.getLength(); i++) {
-      final Node child = nodes.item(i);
-      if (child instanceof Element node) {
-        switch (node.getTagName()) {
-          case "title" -> text(node).ifPresent(builder::title);
-          case "year" -> text(node).ifPresent(builder::year);
-          case "runtime" -> text(node).ifPresent(builder::runtime);
-          case "poster" -> text(node).ifPresent(builder::poster);
-          default -> collectTag(node, tags);
-        }
-      }
-    }
-    if (!builder.isPosterSet() && !posters.isEmpty()) {
-      builder.poster(posters.getFirst().getFileName().toString());
-    }
-    if (!media.isEmpty()) {
-      builder.file(media.getFirst().getFileName().toString());
-    } else {
+    if (media.isEmpty()) {
       throw new IllegalArgumentException("Fail to find media file at " + movieFolderPath);
     }
-    return new ParsedMedia(builder.build(), tags);
+    final Map<String, String> fields = fields(root);
+    String poster = fields.get("poster");
+    if (poster == null && !posters.isEmpty()) {
+      poster = posters.getFirst().getFileName().toString();
+    }
+    final Movie movie =
+        new Movie(
+            fields.get("title"),
+            movieFolderPath,
+            poster,
+            fields.get("year"),
+            fields.get("runtime"),
+            media.getFirst().getFileName().toString());
+    return new ParsedMedia(movie, tags(root));
   }
 
   private static ParsedMedia parseTvShow(
       final Path tvShowFolderPath, final Element root, final List<Path> posters) {
-    final var builder = TvShow.builder().path(tvShowFolderPath);
-    final Map<TagCategory, List<String>> tags = new EnumMap<>(TagCategory.class);
+    final TvShow show =
+        new TvShow(fields(root).get("title"), tvShowFolderPath, seasonPosterMap(posters));
+    return new ParsedMedia(show, tags(root));
+  }
 
-    final var nodes = root.getChildNodes();
+  /** The last non-blank text of each direct child element, by tag name. */
+  private static Map<String, String> fields(final Element root) {
+    final Map<String, String> fields = new HashMap<>();
+    final NodeList nodes = root.getChildNodes();
     for (int i = 0; i < nodes.getLength(); i++) {
-      final Node child = nodes.item(i);
-      if (child instanceof Element node) {
-        if (node.getTagName().equals("title")) {
-          text(node).ifPresent(builder::title);
-        } else {
-          collectTag(node, tags);
-        }
+      if (nodes.item(i) instanceof Element node) {
+        text(node).ifPresent(value -> fields.put(node.getTagName(), value));
       }
     }
-    builder.posters(seasonPosterMap(posters));
-    return new ParsedMedia(builder.build(), tags);
+    return fields;
+  }
+
+  private static Map<TagCategory, List<String>> tags(final Element root) {
+    final Map<TagCategory, List<String>> tags = new EnumMap<>(TagCategory.class);
+    final NodeList nodes = root.getChildNodes();
+    for (int i = 0; i < nodes.getLength(); i++) {
+      if (nodes.item(i) instanceof Element node) {
+        collectTag(node, tags);
+      }
+    }
+    return tags;
   }
 
   private static void collectTag(final Element node, final Map<TagCategory, List<String>> tags) {
@@ -139,21 +140,6 @@ public final class NfoParser {
     if (media.isEmpty()) {
       throw new IllegalArgumentException("Media should not be empty for episode parsing.");
     }
-    final var builder = Episode.builder().path(nfoFilePath.getParent());
-    final var nodes = root.getChildNodes();
-    for (int i = 0; i < nodes.getLength(); i++) {
-      final Node child = nodes.item(i);
-      if (child instanceof Element node) {
-        switch (node.getTagName()) {
-          case "title" -> text(node).ifPresent(builder::title);
-          case "season" -> text(node).ifPresent(builder::season);
-          case "episode" -> text(node).ifPresent(builder::episode);
-          case "runtime" -> text(node).ifPresent(builder::runtime);
-          default -> {}
-        }
-      }
-    }
-
     final String nfoStem = PathUtils.getBaseName(nfoFilePath);
     final String mediaFile =
         media.stream()
@@ -163,14 +149,24 @@ public final class NfoParser {
             .orElseThrow(() ->
                 new IllegalArgumentException(
                     "Fail to find media file matching nfo " + nfoFilePath));
-    builder.file(mediaFile);
+    final String preview =
+        thumbs.stream()
+            .filter(p -> PathUtils.getBaseName(p).equals(nfoStem + "-thumb"))
+            .findFirst()
+            .map(p -> p.getFileName().toString())
+            .orElse(null);
 
-    thumbs.stream()
-        .filter(p -> PathUtils.getBaseName(p).equals(nfoStem + "-thumb"))
-        .findFirst()
-        .ifPresent(p -> builder.preview(p.getFileName().toString()));
-
-    return new ParsedMedia(builder.build(), Map.of());
+    final Map<String, String> fields = fields(root);
+    final Episode episode =
+        new Episode(
+            fields.get("title"),
+            mediaFile,
+            fields.get("season"),
+            fields.get("episode"),
+            fields.get("runtime"),
+            nfoFilePath.getParent(),
+            preview);
+    return new ParsedMedia(episode, Map.of());
   }
 
   private static Optional<String> actorName(final Element actor) {

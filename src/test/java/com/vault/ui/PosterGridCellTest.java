@@ -118,11 +118,7 @@ class PosterGridCellTest {
   }
 
   private static Media movie(String title) {
-    return Movie.builder()
-        .title(title)
-        .path(Path.of("/library", title))
-        .file(title + ".mkv")
-        .build();
+    return new Movie(title, Path.of("/library", title), null, null, null, title + ".mkv");
   }
 
   private static long reachableAfterGc(List<WeakReference<PosterGridCell>> refs)

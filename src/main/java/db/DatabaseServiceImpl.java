@@ -226,17 +226,15 @@ final class DatabaseServiceImpl implements DatabaseService {
             DatabaseAction.GET_EPISODES.query(),
             rs -> {
               Path episodePath = Path.of(rs.getString("path"));
-              return Episode.builder()
-                  .title(rs.getString("title"))
-                  .file(rs.getString("file"))
-                  .season(rs.getString("season"))
-                  .episode(rs.getString("episode"))
-                  .runtime(rs.getString("runtime"))
-                  .path(episodePath)
-                  .preview(
-                      coverUrl(
-                          folderName, folderRoot, episodePath, rs.getString("preview"), coversDir))
-                  .build();
+              return new Episode(
+                  rs.getString("title"),
+                  rs.getString("file"),
+                  rs.getString("season"),
+                  rs.getString("episode"),
+                  rs.getString("runtime"),
+                  episodePath,
+                  coverUrl(
+                      folderName, folderRoot, episodePath, rs.getString("preview"), coversDir));
             },
             showPath);
     final Map<String, List<Episode>> seasons = new LinkedHashMap<>();
@@ -407,14 +405,13 @@ final class DatabaseServiceImpl implements DatabaseService {
   private static Movie mapMovie(
       final ResultSet rs, final Path folderPath, final Map<String, String> posters)
       throws SQLException {
-    return Movie.builder()
-        .title(rs.getString("title"))
-        .path(folderPath)
-        .poster(posters.get("main"))
-        .year(rs.getString("year"))
-        .runtime(rs.getString("runtime"))
-        .file(rs.getString("file"))
-        .build();
+    return new Movie(
+        rs.getString("title"),
+        folderPath,
+        posters.get("main"),
+        rs.getString("year"),
+        rs.getString("runtime"),
+        rs.getString("file"));
   }
 
   private static Comic mapComic(
@@ -433,7 +430,7 @@ final class DatabaseServiceImpl implements DatabaseService {
   private static TvShow mapTvShow(
       final ResultSet rs, final Path folderPath, final Map<String, String> posters)
       throws SQLException {
-    return TvShow.builder().title(rs.getString("title")).path(folderPath).posters(posters).build();
+    return new TvShow(rs.getString("title"), folderPath, posters);
   }
 
   private Map<String, String> buildPosterUrls(

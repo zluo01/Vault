@@ -87,7 +87,7 @@ class LibraryViewModelTest {
   }
 
   private static Movie movie(String title) {
-    return Movie.builder().title(title).path(Path.of("/library", title)).file("movie.mkv").build();
+    return new Movie(title, Path.of("/library", title), null, null, null, "movie.mkv");
   }
 
   // ---- search predicate -------------------------------------------------
@@ -359,7 +359,7 @@ class LibraryViewModelTest {
   void fetchEpisodesWithoutCurrentFolderReturnsEmpty() {
     AtomicReference<Map<String, List<model.Episode>>> result = new AtomicReference<>();
     viewModel.fetchEpisodes(
-        model.TvShow.builder().title("Show").path(Path.of("/library/Show")).build(), result::set);
+        new model.TvShow("Show", Path.of("/library/Show"), Map.of()), result::set);
     assertEquals(Map.of(), result.get());
   }
 }
