@@ -53,17 +53,15 @@ public final class AsyncImageLoader {
 
   private static Image loadBlocking(final Request request) {
     final Optional<Path> local = localPath(request.source()).filter(Files::isRegularFile);
-    if (local.isPresent()) {
-      try (InputStream in = Files.newInputStream(local.get())) {
-        Image image = new Image(in, request.width(), request.height(), true, true);
-        return image.isError() ? null : image;
-      } catch (IOException ignored) {
-        return null;
-      }
+    if (local.isEmpty()) {
+      return null;
     }
-
-    Image image = new Image(request.source(), request.width(), request.height(), true, true, false);
-    return image.isError() ? null : image;
+    try (InputStream in = Files.newInputStream(local.get())) {
+      Image image = new Image(in, request.width(), request.height(), true, true);
+      return image.isError() ? null : image;
+    } catch (IOException ignored) {
+      return null;
+    }
   }
 
   private static void deliver(final Consumer<Image> onLoaded, final Image image) {
