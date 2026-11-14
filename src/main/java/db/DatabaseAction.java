@@ -2,12 +2,8 @@ package db;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Scanner;
 
 enum DatabaseAction {
   CLEAR_MEDIA,
@@ -34,28 +30,21 @@ enum DatabaseAction {
   UPDATE_SORT_TYPE,
   UPDATE_THEME;
 
-  private static final Map<DatabaseAction, String> QUERY_MAP;
-
-  static {
-    final Map<DatabaseAction, String> builder = new HashMap<>();
-    for (DatabaseAction action : DatabaseAction.values()) {
-      builder.put(action, getSQLContent(action));
-    }
-    QUERY_MAP = Collections.unmodifiableMap(builder);
-  }
-
-  private static String getSQLContent(final DatabaseAction action) {
-    final String sourcePath = "queries/" + action.name() + ".sql";
-    try (InputStream stream =
-            DatabaseAction.class.getClassLoader().getResourceAsStream(sourcePath);
-        Scanner scanner = new Scanner(Objects.requireNonNull(stream), StandardCharsets.UTF_8)) {
-      return scanner.useDelimiter("\\A").next();
-    } catch (IOException e) {
-      throw new RuntimeException("Fail to load sql query from file " + sourcePath, e);
-    }
-  }
+  private final String query = load("queries/" + name() + ".sql");
 
   String query() {
-    return QUERY_MAP.get(this);
+    return query;
+  }
+
+  static String load(final String path) {
+    try (InputStream stream = DatabaseAction.class.getClassLoader().getResourceAsStream(path)) {
+      final String sql = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
+      if (sql.isBlank()) {
+        throw new IllegalStateException("Empty sql query file " + path);
+      }
+      return sql;
+    } catch (IOException e) {
+      throw new UncheckedIOException("Fail to load sql query from file " + path, e);
+    }
   }
 }
