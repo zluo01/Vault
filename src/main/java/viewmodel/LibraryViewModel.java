@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 import java.util.concurrent.Executor;
@@ -399,7 +398,7 @@ public final class LibraryViewModel {
 
   public void openMedia(final Media media) {
     // TV shows are opened via the season/episode menu, handled by the UI.
-    switch (Objects.requireNonNull(media)) {
+    switch (media) {
       case Movie movie -> open(movie.path().resolve(movie.file()));
       case Comic comic -> open(comic.path());
       default -> {}
