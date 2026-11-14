@@ -298,22 +298,19 @@ public final class ContentView {
     }
     scanning = loading;
     refreshBtn.pseudoClassStateChanged(ACTIVE, loading);
+    resultCount.pseudoClassStateChanged(ACTIVE, loading);
     tagFilters.facetsNode().setDisable(loading);
     tagFilters.chipBarNode().setDisable(loading);
     matchButton.setDisable(loading);
     sortButton.setDisable(loading);
     if (loading) {
-      refreshIcon.getStyleClass().setAll("ico-active");
       spin.play();
       gridHost.setOpacity(0.45);
       gridHost.setDisable(true);
-      resultCount.getStyleClass().add("result-count-active");
     } else {
       spin.stop();
       refreshIcon.setRotate(0);
-      refreshIcon.getStyleClass().setAll("ico-mid");
       gridHost.setDisable(false);
-      resultCount.getStyleClass().remove("result-count-active");
       FadeTransition back = new FadeTransition(Duration.millis(260), gridHost);
       back.setFromValue(0.45);
       back.setToValue(1.0);

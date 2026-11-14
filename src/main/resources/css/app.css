@@ -911,6 +911,10 @@
     -fx-border-color: -vault-accent;
 }
 
+.refresh-btn:active .ico-mid {
+    -fx-stroke: -vault-accent;
+}
+
 /* ============================================================
    Icon strokes and small fills, routed through the palette
    tokens so both themes restyle them for free.
@@ -919,10 +923,9 @@
 .ico-mid    { -fx-stroke: -vault-mid; }
 .ico-faint  { -fx-stroke: -vault-faint; }
 .ico-square { -fx-stroke: -vault-bg; }
-.ico-active { -fx-stroke: -vault-accent; }
 
 .sort-dot-on         { -fx-background-color: -vault-accent; }
-.result-count-active { -fx-text-fill: -vault-accent; }
+.result-count:active { -fx-text-fill: -vault-accent; }
 
 /* monochrome poster tones shown while covers load or are missing */
 .tone-0 { -fx-background-color: -vault-tone-0; }
