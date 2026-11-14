@@ -18,6 +18,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import model.Comic;
 import model.Episode;
 import model.FilterOption;
@@ -103,11 +104,7 @@ final class DatabaseServiceImpl implements DatabaseService {
                 Map.entry(
                     rs.getString("folder"),
                     new FolderStats(rs.getInt("items"), rs.getInt("types"))));
-    Map<String, FolderStats> stats = new HashMap<>();
-    for (Map.Entry<String, FolderStats> entry : rows) {
-      stats.put(entry.getKey(), entry.getValue());
-    }
-    return stats;
+    return rows.stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 
   @Override
@@ -201,10 +198,11 @@ final class DatabaseServiceImpl implements DatabaseService {
             rs -> new FilterOption(rs.getString("category"), rs.getString("name")),
             position);
     // Rows arrive ordered by category then name; the insertion order carries into the groups.
-    Map<String, List<FilterOption>> groups = new LinkedHashMap<>();
-    for (FilterOption row : rows) {
-      groups.computeIfAbsent(row.group(), _ -> new ArrayList<>()).add(row);
-    }
+    Map<String, List<FilterOption>> groups =
+        rows.stream()
+            .collect(
+                Collectors.groupingBy(
+                    FilterOption::group, LinkedHashMap::new, Collectors.toList()));
     return groups.entrySet().stream()
         .map(entry -> new GroupedOption(entry.getKey(), entry.getValue()))
         .toList();
@@ -237,11 +235,10 @@ final class DatabaseServiceImpl implements DatabaseService {
                       folderName, folderRoot, episodePath, rs.getString("preview"), coversDir));
             },
             showPath);
-    final Map<String, List<Episode>> seasons = new LinkedHashMap<>();
-    for (Episode episode : episodes) {
-      seasons.computeIfAbsent(seasonKey(episode.season()), _ -> new ArrayList<>()).add(episode);
-    }
-    return seasons;
+    return episodes.stream()
+        .collect(
+            Collectors.groupingBy(
+                episode -> seasonKey(episode.season()), LinkedHashMap::new, Collectors.toList()));
   }
 
   @Override
