@@ -69,26 +69,21 @@ public final class Ui {
   /**
    * Make {@code trigger} open and close {@code popup}, flipping {@code chevron} while it is open.
    *
-   * <p>Auto-hide fires on the press, before the trigger's action runs, so a click meant to close
-   * the popup would otherwise re-open it at once. An action that arrives right after a hide is
-   * therefore taken as that closing click.
+   * <p>The popup must be shown with {@code trigger} as its owner: a press on the owner does not
+   * auto-hide it, so the click that follows finds it showing and closes it.
    *
    * @param show populates and shows the popup
    */
   public static void togglePopup(Button trigger, PopupWindow popup, Node chevron, Runnable show) {
-    long[] hiddenAt = {0};
     trigger.setOnAction(e -> {
-      if (popup.isShowing() || System.currentTimeMillis() - hiddenAt[0] < 200) {
+      if (popup.isShowing()) {
         popup.hide();
         return;
       }
       chevron.setRotate(180);
       show.run();
     });
-    popup.setOnHidden(e -> {
-      chevron.setRotate(0);
-      hiddenAt[0] = System.currentTimeMillis();
-    });
+    popup.setOnHidden(e -> chevron.setRotate(0));
   }
 
   public static SVGPath ico(String d, double width) {
