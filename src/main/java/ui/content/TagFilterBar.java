@@ -103,10 +103,7 @@ final class TagFilterBar {
     btn.setMinHeight(36);
     btn.setMaxHeight(36);
     btn.setAccessibleText("Filter by " + facetName);
-    IntegerBinding count =
-        Bindings.createIntegerBinding(
-            () -> (int) chosen.stream().filter(tag -> tag.group().equals(groupKey)).count(),
-            chosen);
+    IntegerBinding count = Bindings.size(chosen.filtered(tag -> tag.group().equals(groupKey)));
     badge.textProperty().bind(count.asString());
     badge.visibleProperty().bind(count.greaterThan(0));
     badge.managedProperty().bind(badge.visibleProperty());

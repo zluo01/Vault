@@ -16,6 +16,7 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import model.FilterOption;
 import model.FolderData;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -87,6 +88,40 @@ class ContentViewTest {
 
         viewModel.currentFolderProperty().set(null);
         assertEquals(List.of("", "00", SortType.DEFAULT.label(), "OR"), headerTexts(content));
+        return null;
+      });
+    }
+  }
+
+  @Test
+  void aFilterBadgeCountsTheSelectedTagsOfItsCategory() throws Exception {
+    try (LibraryService service = new LibraryService(new AppConfig(tempDir.resolve("data")))) {
+      onFx(() -> {
+        LibraryViewModel viewModel = new LibraryViewModel(service, message -> {}, null);
+        ContentView content =
+            new ContentView(viewModel, null, new Toast(), new ThemeManager(service));
+        new Scene(content.getNode());
+        Label badge =
+            content.getNode().lookupAll(".facet").stream()
+                .map(Button.class::cast)
+                .filter(button -> "Filter by Genre".equals(button.getAccessibleText()))
+                .map(button -> (Label) button.getGraphic().lookup(".facet-badge"))
+                .findFirst()
+                .orElseThrow();
+        assertFalse(badge.isVisible());
+
+        viewModel.modifyTag(0, new FilterOption("GENRE", "Action"));
+        viewModel.modifyTag(0, new FilterOption("GENRE", "Drama"));
+        viewModel.modifyTag(0, new FilterOption("ACTOR", "Someone"));
+        assertEquals("2", badge.getText());
+        assertTrue(badge.isVisible());
+
+        System.gc();
+        viewModel.modifyTag(0, new FilterOption("GENRE", "Action"));
+        assertEquals("1", badge.getText());
+
+        viewModel.clearTags(0);
+        assertFalse(badge.isVisible());
         return null;
       });
     }
