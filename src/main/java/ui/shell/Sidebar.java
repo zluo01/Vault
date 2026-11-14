@@ -232,8 +232,7 @@ public final class Sidebar {
 
     BooleanBinding active = viewModel.selectedFolderIdProperty().isEqualTo(folder.position());
     accent.visibleProperty().bind(active);
-    row.pseudoClassStateChanged(ACTIVE, active.get());
-    active.addListener((_, _, now) -> row.pseudoClassStateChanged(ACTIVE, now));
+    active.subscribe(now -> row.pseudoClassStateChanged(ACTIVE, now));
 
     return new StackPane(row, accent);
   }

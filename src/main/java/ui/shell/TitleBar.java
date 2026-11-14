@@ -140,9 +140,9 @@ public final class TitleBar {
     b.setOnAction(_ -> themes.cycle());
     Tooltip tip = new Tooltip();
     b.setTooltip(tip);
-    Runnable sync =
-        () -> {
-          var mode = themes.modeProperty().get();
+    themes
+        .modeProperty()
+        .subscribe(mode -> {
           icon.setContent(
               switch (mode) {
                 case SYSTEM -> ICO_THEME_SYSTEM;
@@ -152,9 +152,7 @@ public final class TitleBar {
           String name = "Theme: " + mode.name().toLowerCase() + " (click to change)";
           tip.setText(name);
           b.setAccessibleText(name);
-        };
-    themes.modeProperty().addListener((_, _, _) -> sync.run());
-    sync.run();
+        });
     return b;
   }
 

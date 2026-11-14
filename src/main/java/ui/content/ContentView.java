@@ -159,7 +159,7 @@ public final class ContentView {
                     scroller.scrollToTop();
                   }
                 });
-    viewModel.currentFolderProperty().addListener((obs, old, data) -> onFolderData(data));
+    viewModel.currentFolderProperty().subscribe(this::onFolderData);
     viewModel
         .selectedFolderIdProperty()
         .addListener((obs, old, value) -> {
@@ -168,7 +168,6 @@ public final class ContentView {
           scroller.scrollToTop();
         });
 
-    onFolderData(viewModel.currentFolderProperty().get());
     updatePlaceholders();
   }
 
