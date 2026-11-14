@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import model.FolderData;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -65,6 +66,44 @@ class ContentViewTest {
         return null;
       });
     }
+  }
+
+  @Test
+  void theHeaderShowsTheCurrentFolderAndItsDefaultsWithoutOne() throws Exception {
+    try (LibraryService service = new LibraryService(new AppConfig(tempDir.resolve("data")))) {
+      onFx(() -> {
+        LibraryViewModel viewModel = new LibraryViewModel(service, message -> {}, null);
+        ContentView content =
+            new ContentView(viewModel, null, new Toast(), new ThemeManager(service));
+        new Scene(content.getNode());
+
+        viewModel
+            .currentFolderProperty()
+            .set(
+                new FolderData(
+                    "Films", 6, "/x", SortType.TITLE_ASC, FilterType.AND, FolderStatus.NONE));
+        assertEquals(
+            List.of("Films", "07", SortType.TITLE_ASC.label(), "AND"), headerTexts(content));
+
+        viewModel.currentFolderProperty().set(null);
+        assertEquals(List.of("", "00", SortType.DEFAULT.label(), "OR"), headerTexts(content));
+        return null;
+      });
+    }
+  }
+
+  private static List<String> headerTexts(ContentView content) {
+    List<Label> values =
+        content.getNode().lookupAll(".facet").stream()
+            .map(Button.class::cast)
+            .filter(button -> !button.getAccessibleText().startsWith("Filter by"))
+            .map(button -> (Label) button.getGraphic().lookup(".facet-text"))
+            .toList();
+    return List.of(
+        ((Label) content.getNode().lookup(".h1")).getText(),
+        ((Label) content.getNode().lookup(".kicker")).getText(),
+        values.get(1).getText(),
+        values.get(0).getText());
   }
 
   private static FolderData folder(FolderStatus status) {

@@ -13,6 +13,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.css.PseudoClass;
 import javafx.geometry.Insets;
@@ -134,6 +135,17 @@ public final class ContentView {
     buildMain();
 
     resultCount.textProperty().bind(viewModel.statusText());
+    final ObservableValue<FolderData> folder = viewModel.currentFolderProperty();
+    headerTitle.textProperty().bind(folder.map(FolderData::name).orElse(""));
+    headerKicker
+        .textProperty()
+        .bind(folder.map(data -> String.format("%02d", data.position() + 1)).orElse("00"));
+    sortValue
+        .textProperty()
+        .bind(folder.map(data -> data.sort().label()).orElse(SortType.DEFAULT.label()));
+    filterTypeValue
+        .textProperty()
+        .bind(folder.map(data -> data.filterType().name()).orElse(FilterType.OR.name()));
 
     viewModel
         .visibleMedia()
@@ -268,17 +280,6 @@ public final class ContentView {
   // Folder state (title, sort label, scanning/error)
   // =====================================================================
   private void onFolderData(FolderData data) {
-    if (data != null) {
-      headerTitle.setText(data.name());
-      headerKicker.setText(String.format("%02d", data.position() + 1));
-      sortValue.setText(data.sort().label());
-      filterTypeValue.setText(data.filterType().name());
-    } else {
-      headerTitle.setText("");
-      headerKicker.setText("00");
-      sortValue.setText(SortType.DEFAULT.label());
-      filterTypeValue.setText(FilterType.OR.name());
-    }
     setScanning(data != null && data.status() == FolderStatus.LOADING);
     updatePlaceholders();
   }
