@@ -12,7 +12,7 @@ NASM_VERSION=3.02
 NASM_SHA256=87336eba53b4acfe917424ab5d500d2b0054d9f5148d35c2273ccf2cfb712f0d
 
 # renovate: datasource=github-tags depName=pkgconf/pkgconf extractVersion=^pkgconf-(?<version>.+)$
-PKGCONF_VERSION=3.0.10
+PKGCONF_VERSION=3.0.11
 PKGCONF_SHA256=9371b2f6372da574d4c6dc96fe9b1463037bcf6afcb6671c1555afde7b17e2de
 
 # renovate: datasource=github-tags depName=webmproject/libwebp extractVersion=^v(?<version>.+)$
@@ -20,7 +20,7 @@ LIBWEBP_VERSION=1.6.0
 LIBWEBP_SHA256=e4ab7009bf0629fd11982d4c2aa83964cf244cffba7347ecd39019a9e38c4564
 
 # renovate: datasource=gitlab-tags depName=videolan/dav1d registryUrl=https://code.videolan.org
-DAV1D_VERSION=1.5.4
+DAV1D_VERSION=1.5.5
 DAV1D_SHA256=686616b7c69eb88d44459391ab25cac13b6647a3b288835c5784e71c1514a5c5
 
 # renovate: datasource=github-tags depName=AOMediaCodec/libavif extractVersion=^v(?<version>.+)$
